@@ -4,8 +4,9 @@ import articles__aiConsciousnessHardProblemMdx from './articles__ai-consciousnes
 import articles__indiasClinicalUnderdogMdx from './articles__indias-clinical-underdog.mdx.json' assert { type: 'json' }
 import articles__inventionOfTimeBabylonMdx from './articles__invention-of-time-babylon.mdx.json' assert { type: 'json' }
 import articles__libraryOfAlexandriaMdx from './articles__library-of-alexandria.mdx.json' assert { type: 'json' }
+import articles__miraclesAndCoincidencesMdx from './articles__miracles-and-coincidences.mdx.json' assert { type: 'json' }
 import articles__moneyForgetsLocalCurrenciesMdx from './articles__money-forgets-local-currencies.mdx.json' assert { type: 'json' }
 import articles__silenceArchitectureCathedralsMdx from './articles__silence-architecture-cathedrals.mdx.json' assert { type: 'json' }
 import articles__theArchitectureOfTheHumanBodyMdx from './articles__the-architecture-of-the-human-body.mdx.json' assert { type: 'json' }
 
-export const allArticles = [articles__aiConsciousnessHardProblemMdx, articles__indiasClinicalUnderdogMdx, articles__inventionOfTimeBabylonMdx, articles__libraryOfAlexandriaMdx, articles__moneyForgetsLocalCurrenciesMdx, articles__silenceArchitectureCathedralsMdx, articles__theArchitectureOfTheHumanBodyMdx]
+export const allArticles = [articles__aiConsciousnessHardProblemMdx, articles__indiasClinicalUnderdogMdx, articles__inventionOfTimeBabylonMdx, articles__libraryOfAlexandriaMdx, articles__miraclesAndCoincidencesMdx, articles__moneyForgetsLocalCurrenciesMdx, articles__silenceArchitectureCathedralsMdx, articles__theArchitectureOfTheHumanBodyMdx]
