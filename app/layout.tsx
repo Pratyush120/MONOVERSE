@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: "Monoverse | Understanding Reality",
     template: "%s | Monoverse",
   },
-  description: "Monoverse is an intellectual publication dedicated to understanding reality through interdisciplinary inquiry. We publish essays connecting philosophy, history, science, technology, and culture.",
+  description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
   keywords: ["philosophy", "science", "history", "technology", "AI", "literature", "economics", "culture", "intellectual magazine"],
   authors: [{ name: "Monoverse Editorial" }],
   creator: "Monoverse",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     url: "https://monoverse.pub",
     siteName: "Monoverse",
     title: "Monoverse | Understanding Reality",
-    description: "An intellectual publication dedicated to interdisciplinary inquiry.",
+    description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
     images: [
       {
         url: "/og-image.jpg",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Monoverse | Understanding Reality",
-    description: "An intellectual publication dedicated to interdisciplinary inquiry.",
+    description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
     images: ["/og-image.jpg"],
     creator: "@monoversemag",
   },

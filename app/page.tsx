@@ -66,6 +66,49 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* About Section (Below Hero) */}
+      <section className="border-b border-border bg-card/50">
+        <div className="max-w-7xl mx-auto px-6 py-20 md:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+            <div className="lg:col-span-5">
+              <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                About Monoverse
+              </h2>
+              <div className="w-12 h-1 bg-bronze mb-8"></div>
+              <p className="font-body text-2xl text-foreground font-medium leading-snug">
+                Understanding reality through research, literature, philosophy, history, technology, and civilization.
+              </p>
+            </div>
+            
+            <div className="lg:col-span-7 prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-text-secondary prose-p:leading-relaxed">
+              <p>
+                We live in an age of unlimited information and diminishing understanding. 
+                Every day, thousands of articles explain what happened. Few ask <em>why</em> it happened. 
+                Even fewer connect today&apos;s headlines with centuries of history, human psychology, 
+                philosophy, economics, science, and the long arc of civilization.
+              </p>
+              <p>
+                Monoverse exists to close that gap. This is an independent research publication 
+                dedicated to exploring the ideas that shape our world—not through ideology or 
+                sensationalism, but through careful inquiry, evidence, and first-principles thinking.
+              </p>
+              <div className="mt-8">
+                <a 
+                  href="/about" 
+                  className="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.1em] text-bronze hover:text-foreground transition-colors font-semibold"
+                >
+                  Read our full philosophy
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.33331 8H12.6666" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex items-center gap-4 mb-12">
