@@ -26,7 +26,8 @@ const CATEGORIES = [
   { name: 'Philosophy', count: 42, description: 'Essays on existence, ethics, and the nature of reality.' },
   { name: 'History', count: 38, description: 'Examining the past to understand the foundations of the present.' },
   { name: 'Science', count: 29, description: 'Inquiry into the physical universe, from quantum mechanics to cosmology.' },
-  { name: 'AI', count: 15, description: 'The philosophical and cultural implications of artificial intelligence.' }
+  { name: 'AI', count: 15, description: 'The philosophical and cultural implications of artificial intelligence.' },
+  { name: 'Health', count: 12, description: 'Explorations of human well-being, medicine, and the body.' }
 ];
 
 export default function Home() {
