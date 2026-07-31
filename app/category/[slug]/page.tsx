@@ -14,11 +14,12 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   economics: "Systems of value, exchange, and human behavior.",
   literature: "The written word as a mirror to humanity.",
   civilizations: "The rise, architecture, and fall of human societies.",
+  health: "Explorations of human well-being, medicine, and the body.",
 };
 
 export async function generateStaticParams() {
   const categories = Array.from(new Set(allArticles.map((a) => a.category.toLowerCase().replace(/\s+/g, '-'))));
-  const defaultCats = ['philosophy', 'science', 'history', 'technology', 'artificial-intelligence', 'ai', 'culture', 'economics', 'literature', 'civilizations'];
+  const defaultCats = ['philosophy', 'science', 'history', 'technology', 'artificial-intelligence', 'ai', 'culture', 'economics', 'literature', 'civilizations', 'health'];
   const allSlugs = Array.from(new Set([...categories, ...defaultCats]));
   
   return allSlugs.map((slug) => ({

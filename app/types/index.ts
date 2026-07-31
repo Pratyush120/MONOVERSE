@@ -35,4 +35,5 @@ export const CATEGORY_LAYOUTS: Record<string, CategoryInfo["layout"]> = {
   economics: "standard",
   psychology: "standard",
   culture: "standard",
+  health: "standard",
 };
