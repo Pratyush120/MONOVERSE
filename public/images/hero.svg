@@ -1,19 +1,23 @@
 <svg width="1661" height="982" viewBox="0 0 1661 982" fill="none" xmlns="http://www.w3.org/2000/svg">
 <style>
   .tree {
-    animation: fadeGrow 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: treeIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     opacity: 0;
     transform-origin: center center;
   }
   .monoverse {
-    animation: fadeGrow 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 1.5s;
+    animation: monoIn 1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    animation-delay: 1.4s;
     opacity: 0;
     transform-origin: center center;
   }
-  @keyframes fadeGrow {
-    from { opacity: 0; transform: scale(0.94); }
-    to   { opacity: 1; transform: scale(1); }
+  @keyframes treeIn {
+    from { opacity: 0; transform: scale(0.93) translateY(6px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes monoIn {
+    from { opacity: 0; transform: scale(0.97) translateY(-4px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 </style>
 
