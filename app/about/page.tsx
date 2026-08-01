@@ -55,7 +55,7 @@ export default function AboutPage() {
             <li>Philosophy & Critical Thinking</li>
             <li>History & Civilizations</li>
             <li>Science & Emerging Technology</li>
-            <li>Artificial Intelligence</li>
+            <li>Pop Culture & Cinema</li>
             <li>Economics & Public Policy</li>
           </ul>
           <ul className="mt-0 mb-0">
