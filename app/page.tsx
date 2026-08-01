@@ -29,7 +29,7 @@ const CATEGORIES = [
   { name: "History",      href: "/category/history",      description: "The past as a lens to read the present." },
   { name: "Technology",   href: "/category/technology",   description: "On tools, systems, and what they make of us." },
   { name: "Health",       href: "/category/health",       description: "The body as a system, not a collection of symptoms." },
-  { name: "The Marginalia", href: "/about",               description: "Notes from the editor, dispatches from the margins." },
+  { name: "Pop Culture & Cinema", href: "/category/pop-culture-&-cinema", description: "Analyzing the modern mythologies of screen and society." },
 ];
 
 // Stitch: Ornamental diamond divider
