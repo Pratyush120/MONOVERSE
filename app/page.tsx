@@ -2,24 +2,24 @@ import { ArticleCard } from "./components/ArticleCard";
 import { CategoryCard } from "./components/CategoryCard";
 import { Newsletter } from "./components/Newsletter";
 import { allArticles } from "contentlayer/generated";
+import Image from "next/image";
 
-const ConnectionLines = () => (
-  <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.08] dark:opacity-[0.06] text-bronze" preserveAspectRatio="none">
-    <line className="connection-line" x1="10%" y1="20%" x2="30%" y2="45%" stroke="currentColor" strokeWidth="1" />
-    <line className="connection-line" x1="30%" y1="45%" x2="50%" y2="35%" stroke="currentColor" strokeWidth="1" />
-    <line className="connection-line" x1="50%" y1="35%" x2="70%" y2="55%" stroke="currentColor" strokeWidth="1" />
-    <line className="connection-line" x1="70%" y1="55%" x2="85%" y2="30%" stroke="currentColor" strokeWidth="1" />
-    <line className="connection-line" x1="25%" y1="60%" x2="55%" y2="75%" stroke="currentColor" strokeWidth="1" />
-    <line className="connection-line" x1="55%" y1="75%" x2="80%" y2="65%" stroke="currentColor" strokeWidth="1" />
-    <circle cx="10%" cy="20%" r="3" fill="currentColor" />
-    <circle cx="30%" cy="45%" r="3" fill="currentColor" />
-    <circle cx="50%" cy="35%" r="3" fill="currentColor" />
-    <circle cx="70%" cy="55%" r="3" fill="currentColor" />
-    <circle cx="85%" cy="30%" r="3" fill="currentColor" />
-    <circle cx="25%" cy="60%" r="3" fill="currentColor" />
-    <circle cx="55%" cy="75%" r="3" fill="currentColor" />
-    <circle cx="80%" cy="65%" r="3" fill="currentColor" />
-  </svg>
+const HeroBackground = () => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden bg-[#111111] z-0">
+    {/* Faint paper grain (using a simple CSS noise pattern or SVG filter) */}
+    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
+    
+    {/* Radial light behind logo */}
+    <div className="absolute top-[100px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-bronze/10 rounded-full blur-[120px] opacity-[0.05]"></div>
+    
+    {/* Celestial geometric SVG & Delicate construction lines */}
+    <svg className="absolute inset-0 w-full h-full opacity-[0.04] text-bronze" preserveAspectRatio="xMidYMid slice">
+      <circle cx="50%" cy="30%" r="400" stroke="currentColor" strokeWidth="1" fill="none" strokeDasharray="4 8" />
+      <circle cx="50%" cy="30%" r="600" stroke="currentColor" strokeWidth="1" fill="none" />
+      <line x1="50%" y1="0" x2="50%" y2="100%" stroke="currentColor" strokeWidth="1" />
+      <line x1="0" y1="30%" x2="100%" y2="30%" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  </div>
 );
 
 const CATEGORIES = [
@@ -36,19 +36,53 @@ export default function Home() {
   const gridArticles = sortedArticles.slice(1, 5);
 
   return (
-    <div className="animate-fade-slow">
+    <div>
       {/* 1. Hero */}
-      <section className="relative pt-[160px] pb-[120px] overflow-hidden bg-background">
-        <ConnectionLines />
-        <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mb-8">
-            <h1 className="font-hero text-[64px] md:text-[84px] tracking-tight leading-[1.05] mb-6 text-foreground">
-              Understanding<br/>Reality.
-            </h1>
-            <p className="font-body text-[20px] text-text-secondary leading-relaxed max-w-2xl">
-              An intellectual publication focused on philosophy, history, civilizations, and science. We seek the signal in the noise.
-            </p>
+      <section className="relative pt-[160px] pb-[80px] overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
+        <HeroBackground />
+        
+        <div className="max-w-[1000px] mx-auto px-6 relative z-10 flex flex-col items-center text-center w-full">
+          
+          {/* Logo */}
+          <div className="w-[160px] md:w-[200px] mb-[48px] animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+            <Image src="/images/monoverselogo.svg" alt="Monoverse" width={200} height={100} className="w-full h-auto" priority />
           </div>
+
+          {/* Headline */}
+          <h1 className="font-hero text-[40px] md:text-[56px] lg:text-[68px] tracking-tight leading-[1.1] mb-[32px] text-foreground text-balance animate-fade-in opacity-0" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
+            Understanding Reality Through<br className="hidden md:block"/> Philosophy, Science, History, Health & Technology
+          </h1>
+
+          {/* Supporting Copy */}
+          <p className="font-body text-[20px] md:text-[22px] text-text-secondary leading-[1.6] max-w-[680px] mb-[40px] text-balance animate-fade-in opacity-0" style={{ animationDelay: '1.0s', animationFillMode: 'forwards' }}>
+            We publish deeply researched essays that connect ideas across disciplines, helping curious minds understand the systems shaping our world.
+          </p>
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-[80px] animate-fade-in opacity-0" style={{ animationDelay: '1.4s', animationFillMode: 'forwards' }}>
+            <a href="/archive" className="font-meta text-[13px] uppercase tracking-[0.15em] text-foreground border border-border hover:border-bronze hover:text-bronze px-8 py-4 transition-all duration-300">
+              Begin Reading
+            </a>
+            <a href="/about" className="font-meta text-[13px] uppercase tracking-[0.15em] text-text-secondary hover:text-bronze transition-all duration-300">
+              Read the Manifesto
+            </a>
+          </div>
+
+          {/* Edition Bar */}
+          <div className="w-full flex flex-col items-center animate-fade-in opacity-0" style={{ animationDelay: '1.8s', animationFillMode: 'forwards' }}>
+            <div className="flex items-center gap-4 text-bronze/40 mb-6 w-full max-w-[600px] mx-auto justify-center">
+              <div className="h-px bg-bronze/30 flex-1 max-w-[120px]"></div>
+              <span className="text-[18px]">✦</span>
+              <div className="h-px bg-bronze/30 flex-1 max-w-[120px]"></div>
+            </div>
+            <div className="font-meta text-[11px] md:text-[12px] uppercase tracking-[0.2em] text-text-secondary">
+              Volume I • August 2026 • Independent Publication • Est. 2026
+            </div>
+            <div className="mt-12 text-bronze/40 text-[20px] animate-bounce">
+              ↓
+            </div>
+          </div>
+          
         </div>
       </section>
 

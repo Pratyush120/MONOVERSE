@@ -47,6 +47,7 @@
 
   --animate-fade-slow: fade-in 800ms ease-out forwards;
   --animate-fade-up: fade-up 800ms ease-out forwards;
+  --animate-fade-in: fade-in 1000ms ease-out forwards;
 }
 
 :root {
