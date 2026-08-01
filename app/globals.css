@@ -181,3 +181,51 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Ultra-slow background layer drift — imperceptible but alive */
+@keyframes drift-1 {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(2px, 1px); }
+  50%  { transform: translate(1px, 3px); }
+  75%  { transform: translate(-1px, 2px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes drift-2 {
+  0%   { transform: translate(0px, 0px); }
+  33%  { transform: translate(-2px, 1px); }
+  66%  { transform: translate(1px, -2px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes drift-3 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  50%  { transform: translate(3px, -1px) scale(1.002); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Section reveal utility */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Respect reduced motion at all times */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+}

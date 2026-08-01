@@ -21,10 +21,10 @@ export function Header() {
 
   return (
     <header 
-      className={`sticky top-0 z-40 border-b border-border transition-all duration-300 ${
+      className={`sticky top-0 z-40 transition-all duration-[250ms] ${
         scrolled 
-          ? "bg-background/90 backdrop-blur-md h-[72px]" 
-          : "bg-background h-[96px]"
+          ? "bg-background/90 backdrop-blur-md h-[68px] border-b border-border shadow-sm" 
+          : "bg-transparent h-[96px] border-b border-transparent"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-6 h-full flex items-center justify-between">

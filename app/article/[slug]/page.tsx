@@ -9,6 +9,8 @@ import { AuthorBio } from "../../components/AuthorBio";
 import { DisciplineTags } from "../../components/DisciplineTags";
 import { Newsletter } from "../../components/Newsletter";
 import { TableOfContents } from "../../components/TableOfContents";
+import { RevealImage } from "../../components/RevealImage";
+import { SectionReveal } from "../../components/SectionReveal";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -76,11 +78,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
         </header>
         
-        {/* Hero Image */}
+        {/* Hero Image — scale 1.06 → 1 on scroll */}
         <div className="max-w-[1280px] mx-auto px-6 mb-24">
-          <div className="aspect-[21/9] md:aspect-[2.5/1] overflow-hidden rounded-[16px] relative w-full">
+          <RevealImage className="aspect-[21/9] md:aspect-[2.5/1] rounded-[16px] relative w-full">
             <Image src={article.image} alt={article.title} fill className="object-cover" priority />
-          </div>
+          </RevealImage>
         </div>
         
         {/* Content Area with TOC */}
@@ -99,16 +101,17 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <MDXRemote source={article.body.raw} components={mdxComponents as any} />
               </div>
               
-              <footer className="mt-24 pt-12 border-t border-border">
-                <div className="mb-12">
-                  <h4 className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary mb-6 font-semibold">Connecting Disciplines</h4>
-                  <DisciplineTags disciplines={article.disciplines} />
-                </div>
-                
-                <div className="my-16">
-                  <AuthorBio author={article.author} role={article.authorRole} expanded />
-                </div>
-              </footer>
+              <SectionReveal>
+                <footer className="mt-24 pt-12 border-t border-border">
+                  <div className="mb-12">
+                    <h4 className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary mb-6 font-semibold">Connecting Disciplines</h4>
+                    <DisciplineTags disciplines={article.disciplines} />
+                  </div>
+                  <div className="my-16">
+                    <AuthorBio author={article.author} role={article.authorRole} expanded />
+                  </div>
+                </footer>
+              </SectionReveal>
             </div>
             
             {/* Right spacer for centering in grid */}

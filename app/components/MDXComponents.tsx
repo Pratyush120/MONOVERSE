@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { PullQuote } from "./PullQuote";
+import { RevealImage } from "./RevealImage";
+import { RevealQuote } from "./RevealQuote";
 import { slug } from "github-slugger";
 
 const generateId = (children: any) => {
@@ -10,9 +12,30 @@ const generateId = (children: any) => {
   return "";
 };
 
+// Wrap next/image in RevealImage for scroll-reveal
+const RevealedImage = (props: any) => (
+  <RevealImage className="rounded-[8px] my-12">
+    <Image {...props} className="w-full h-auto" />
+  </RevealImage>
+);
+
+// Wrap PullQuote in RevealQuote for animated border
+const RevealedPullQuote = (props: any) => (
+  <RevealQuote>
+    <p className="font-pull-quote text-[28px] md:text-[36px] italic leading-[1.4] text-foreground font-medium">
+      &ldquo;{props.text}&rdquo;
+    </p>
+    {props.source && (
+      <cite className="block mt-6 font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary not-italic font-semibold">
+        — {props.source}
+      </cite>
+    )}
+  </RevealQuote>
+);
+
 export const mdxComponents = {
-  Image,
-  PullQuote,
+  Image: RevealedImage,
+  PullQuote: RevealedPullQuote,
   h2: ({ className, children, ...props }: any) => (
     <h2 id={generateId(children)} className="font-section-heading text-[32px] md:text-[44px] mt-20 mb-8 font-semibold text-foreground scroll-mt-32" {...props}>
       {children}
@@ -38,3 +61,4 @@ export const mdxComponents = {
     <blockquote className="border-l-[1px] border-bronze/50 pl-8 py-2 my-12 italic font-body text-[22px] text-foreground leading-[1.6]" {...props} />
   ),
 };
+
