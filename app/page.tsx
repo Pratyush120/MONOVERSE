@@ -44,8 +44,8 @@ export default function Home() {
         <div className="max-w-[1000px] mx-auto px-6 relative z-10 flex flex-col items-center text-center w-full">
           
           {/* Logo */}
-          <div className="w-[160px] md:w-[200px] mb-[48px] animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-            <Image src="/images/monoverselogo.svg" alt="Monoverse" width={200} height={100} className="w-full h-auto" priority />
+          <div className="w-[240px] md:w-[360px] lg:w-[480px] mb-[48px] animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+            <Image src="/images/monoverselogo.svg" alt="Monoverse" width={480} height={240} className="w-full h-auto drop-shadow-xl" priority />
           </div>
 
           {/* Headline */}
