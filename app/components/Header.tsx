@@ -53,7 +53,7 @@ export function Header() {
           : "bg-background h-[80px] border-b border-outline-variant"
       }`}
     >
-      <div className="max-w-[1440px] mx-auto px-[64px] h-full flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] h-full flex items-center justify-between">
         
         {/* Logo — SVG, never recreated with typography */}
         <Link href="/" className="flex items-center flex-shrink-0" aria-label="Monoverse Home">

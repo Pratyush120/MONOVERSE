@@ -69,8 +69,8 @@ export default function Home() {
           Max 760px, Source Serif 4 body, centered
           ══════════════════════════════════════════════════════ */}
       <SectionReveal>
-        <section className="border-t border-outline-variant py-[120px]">
-          <div className="max-w-[1440px] mx-auto px-[64px]">
+        <section className="border-t border-outline-variant py-[64px] md:py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <div className="max-w-[680px] mx-auto">
               <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[32px] text-center">
                 Editor&apos;s Note
@@ -110,8 +110,8 @@ export default function Home() {
           ══════════════════════════════════════════════════════ */}
       {featuredArticle && (
         <SectionReveal delay={80}>
-          <section className="bg-surface-low border-y border-outline-variant py-[80px]">
-            <div className="max-w-[1440px] mx-auto px-[64px]">
+          <section className="bg-surface-low border-y border-outline-variant py-[48px] md:py-[80px]">
+            <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
               <div className="flex items-center justify-center mb-[56px]">
                 <OrnamentDivider label="Featured Essay" />
               </div>
@@ -129,8 +129,8 @@ export default function Home() {
           4. LATEST ESSAYS — 2-column journal grid
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="py-[120px]">
-          <div className="max-w-[1440px] mx-auto px-[64px]">
+        <section className="py-[64px] md:py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <div className="flex items-center mb-[56px]">
               <OrnamentDivider label="Latest Essays" />
             </div>
@@ -158,8 +158,8 @@ export default function Home() {
           Centered, max 760px, bronze rule above/below
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="bg-surface-low border-y border-outline-variant py-[120px]">
-          <div className="max-w-[760px] mx-auto px-[64px] text-center">
+        <section className="bg-surface-low border-y border-outline-variant py-[64px] md:py-[120px]">
+          <div className="max-w-[760px] mx-auto px-[24px] md:px-[64px] text-center">
             <div className="text-bronze text-[18px] mb-[32px]">◆</div>
             <blockquote
               className="font-quote italic font-normal text-foreground leading-[1.4] mb-[32px]"
@@ -178,8 +178,8 @@ export default function Home() {
           Labels in parentheses per Stitch spec
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="py-[120px]">
-          <div className="max-w-[1440px] mx-auto px-[64px]">
+        <section className="py-[64px] md:py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <div className="flex items-center mb-[56px]">
               <OrnamentDivider label="Explore by Subject" />
             </div>
@@ -188,7 +188,7 @@ export default function Home() {
                 <a
                   key={cat.name}
                   href={cat.href}
-                  className="group bg-background p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group bg-background p-[24px] md:p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{cat.name}</span>
                   <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[180ms]">
@@ -205,9 +205,9 @@ export default function Home() {
           7. ABOUT MONOVERSE — 2-column editorial layout
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="bg-surface-low border-y border-outline-variant py-[120px]">
-          <div className="max-w-[1440px] mx-auto px-[64px]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[80px] items-start">
+        <section className="bg-surface-low border-y border-outline-variant py-[64px] md:py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[80px] items-start">
               <div>
                 <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[24px]">
                   About Monoverse
@@ -251,8 +251,8 @@ export default function Home() {
           8. START HERE — Reading Journey
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="py-[120px]">
-          <div className="max-w-[1440px] mx-auto px-[64px]">
+        <section className="py-[64px] md:py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <div className="flex items-center mb-[56px]">
               <OrnamentDivider label="Start Here" />
             </div>
@@ -283,7 +283,7 @@ export default function Home() {
                 <a
                   key={card.title}
                   href={card.href}
-                  className="group bg-background p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group bg-background p-[24px] md:p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{card.label}</span>
                   <h3 className="font-display text-[28px] font-normal leading-[1.25] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[16px]">

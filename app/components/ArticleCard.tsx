@@ -84,7 +84,7 @@ export function ArticleCard({
             className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
           />
         </div>
-        <div className="md:w-[45%] flex flex-col justify-center p-[40px] md:pl-0 md:pr-[48px] md:py-[48px]">
+        <div className="md:w-[45%] flex flex-col justify-center p-[24px] md:p-[40px] md:pl-0 md:pr-[48px] md:py-[48px]">
           <span className="taxonomy-tag mb-[16px] block">{category}</span>
           <h3 className="font-display text-[40px] font-normal leading-[1.15] tracking-[-0.01em] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[20px]">
             {title}
@@ -120,7 +120,7 @@ export function ArticleCard({
         />
       </div>
       {/* Content */}
-      <div className="p-[32px] flex flex-col flex-1">
+      <div className="p-[24px] md:p-[32px] flex flex-col flex-1">
         <span className="taxonomy-tag mb-[12px] block">{category}</span>
         <h3 className="font-display text-[28px] font-normal leading-[1.25] tracking-[-0.005em] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[12px]">
           {title}

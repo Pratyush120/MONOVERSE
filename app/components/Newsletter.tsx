@@ -7,8 +7,8 @@
 
 export function Newsletter() {
   return (
-    <section className="bg-surface-low border-t border-outline-variant py-[120px]">
-      <div className="max-w-[1440px] mx-auto px-[64px]">
+    <section className="bg-surface-low border-t border-outline-variant py-[64px] md:py-[120px]">
+      <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
         <div className="max-w-[640px] mx-auto text-center">
           
           {/* Bronze ornament */}
