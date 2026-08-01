@@ -85,32 +85,29 @@ export function Hero() {
         variants={item}
         initial="hidden"
         animate="show"
-        className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{ y: illustrationY, x: shiftX }}
       >
-        <div className="relative w-[90vw] max-w-[1500px] h-full">
-          <Image
-            src="/images/hero.svg"
-            alt="Monoverse Hero Illustration"
-            fill
-            className="object-contain object-center"
-            priority
-          />
-        </div>
+        <Image
+          src="/images/hero.svg"
+          alt="Monoverse Hero Illustration"
+          fill
+          className="object-cover object-center w-full h-full"
+          priority
+        />
       </motion.div>
 
-      {/* Content - Just the buttons now */}
+      {/* Content - Just the buttons now, aligned bottom-right */}
       <motion.div 
-        className="relative z-10 w-full max-w-[1400px] px-[24px] md:px-[48px] flex flex-col items-center justify-center h-full pt-[8vh]"
+        className="relative z-10 w-full h-full flex flex-col justify-end items-end p-[40px] md:p-[64px] pointer-events-none"
         variants={container}
         initial="hidden"
         animate="show"
       >
-        
         {/* CTA buttons */}
         <motion.div
           variants={item}
-          className="flex flex-col sm:flex-row items-center justify-center gap-[24px] w-full sm:w-auto mt-auto mb-[15vh]"
+          className="flex flex-col sm:flex-row gap-[16px] md:gap-[20px] pointer-events-auto"
           style={{ opacity: buttonsOpacity }}
         >
           <a 
@@ -138,7 +135,6 @@ export function Hero() {
             Read the Manifesto
           </a>
         </motion.div>
-
       </motion.div>
     </section>
   );
