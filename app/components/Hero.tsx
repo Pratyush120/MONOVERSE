@@ -14,7 +14,6 @@ export function Hero() {
   });
 
   const illustrationY = useTransform(scrollYProgress, [0, 1], [0, -18]);
-  const buttonsOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.6]);
   const glowOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
   // Mouse interactions
@@ -97,45 +96,13 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Content - Just the buttons now, aligned bottom-right */}
+      {/* Content wrapper - kept empty or can be removed if not needed */}
       <motion.div 
-        className="relative z-10 w-full h-full flex flex-col justify-end items-end p-[40px] md:p-[64px] pointer-events-none"
+        className="relative z-10 w-full h-full pointer-events-none"
         variants={container}
         initial="hidden"
         animate="show"
-      >
-        {/* CTA buttons */}
-        <motion.div
-          variants={item}
-          className="flex flex-col sm:flex-row gap-[16px] md:gap-[20px] pointer-events-auto"
-          style={{ opacity: buttonsOpacity }}
-        >
-          <a 
-            href="/archive" 
-            className="w-full sm:w-auto text-center font-nav uppercase transition-all duration-[220ms] bg-[#0A2414] hover:bg-[#103A20] text-[#E0EBE4] border border-[#164D2B]"
-            style={{
-              padding: "18px 40px",
-              borderRadius: "4px",
-              letterSpacing: "0.18em",
-              fontSize: "14px"
-            }}
-          >
-            Begin Reading
-          </a>
-          <a 
-            href="/about" 
-            className="w-full sm:w-auto text-center font-nav uppercase transition-all duration-[220ms] bg-[#0A2414] hover:bg-[#103A20] text-[#E0EBE4] border border-[#164D2B]"
-            style={{
-              padding: "18px 40px",
-              borderRadius: "4px",
-              letterSpacing: "0.18em",
-              fontSize: "14px"
-            }}
-          >
-            Read the Manifesto
-          </a>
-        </motion.div>
-      </motion.div>
+      />
     </section>
   );
 }
