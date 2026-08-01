@@ -1,100 +1,72 @@
-import type { Metadata } from "next";
-import { 
-  EB_Garamond,
-  Source_Serif_4,
-  Libre_Franklin,
-  Parisienne,
-  Lora,
-} from "next/font/google";
-import { Providers } from "./components/Providers";
+import { Prata, Hina_Mincho, Newsreader, Marcellus, Luxurious_Roman, Ovo, Pinyon_Script } from 'next/font/google';
+import './globals.css';
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import "./globals.css";
+import { Providers } from "./components/Providers";
 
-// Stitch Design System — The Monoverse System
-// Display & Hero: EB Garamond
-const ebGaramond = EB_Garamond({ 
-  subsets: ["latin"], 
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-eb-garamond",
-  display: "swap",
-});
-// Primary Body: Source Serif 4 (Stitch "Lucian" aesthetic)
-const sourceSerif = Source_Serif_4({ 
-  subsets: ["latin"], 
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-source-serif",
-  display: "swap",
-});
-// Navigation & Labels: Libre Franklin (Stitch "Barrels" aesthetic)
-const libreFranklin = Libre_Franklin({ 
-  subsets: ["latin"], 
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-libre-franklin",
-  display: "swap",
-});
-// Signature: Parisienne
-const parisienne = Parisienne({ subsets: ["latin"], weight: "400", variable: "--font-parisienne", display: "swap" });
-// Legacy body fallback: Lora (kept for MDX content compatibility)
-const lora = Lora({ subsets: ["latin"], variable: "--font-lora", display: "swap" });
+// Luxury Typography Overhaul
+// Mapping user requests to closest/exact Google Fonts
 
-export const metadata: Metadata = {
-  title: {
-    default: "Monoverse | Understanding Reality",
-    template: "%s | Monoverse",
-  },
-  description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
-  keywords: ["philosophy", "science", "history", "technology", "AI", "literature", "economics", "culture", "intellectual magazine"],
-  authors: [{ name: "Monoverse Editorial" }],
-  creator: "Monoverse",
-  publisher: "Monoverse",
-  metadataBase: new URL("https://monoverse.pub"),
-  alternates: {
-    canonical: "/",
-    types: {
-      "application/rss+xml": "/rss.xml",
-    },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://monoverse.pub",
-    siteName: "Monoverse",
-    title: "Monoverse | Understanding Reality",
-    description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Monoverse — Understanding Reality",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Monoverse | Understanding Reality",
-    description: "Monoverse is an independent research publication exploring philosophy, history, technology, artificial intelligence, science, literature, economics, and civilization through long-form essays, interdisciplinary research, and first-principles thinking.",
-    images: ["/og-image.jpg"],
-    creator: "@monoversemag",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "your-verification-code",
-  },
+// Primary Display (Ramillas fallback)
+const prata = Prata({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-display',
+});
+
+// Editorial Headlines
+const hinaMincho = Hina_Mincho({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-headline',
+});
+
+// Long-form Reading (Pure Serif Pro / Marixiana Elzevir fallback)
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['normal', 'italic'],
+  variable: '--font-body',
+});
+
+// Navigation / Buttons (Barrels fallback)
+const marcellus = Marcellus({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nav',
+});
+
+// Small Editorial Labels
+const luxurious = Luxurious_Roman({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-label',
+});
+
+// Metadata / Captions
+const ovo = Ovo({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-meta',
+});
+
+// Signature
+const pinyon = Pinyon_Script({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-signature',
+});
+
+export const metadata = {
+  title: 'Monoverse',
+  description: 'An independent research publication dedicated to understanding reality.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -102,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html 
       lang="en" 
       suppressHydrationWarning 
-      className={`${ebGaramond.variable} ${sourceSerif.variable} ${libreFranklin.variable} ${parisienne.variable} ${lora.variable}`}
+      className={`${prata.variable} ${hinaMincho.variable} ${newsreader.variable} ${marcellus.variable} ${luxurious.variable} ${ovo.variable} ${pinyon.variable}`}
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />

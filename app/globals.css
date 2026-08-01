@@ -26,28 +26,28 @@
   --color-border: var(--outline-variant);
   --color-card: var(--surface-container-lowest);
 
-  /* Typography — Stitch Specified Roles */
-  --font-display: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
-  --font-hero: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
-  --font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-label: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
-  --font-nav: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
-  --font-meta: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
-  --font-button: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
-  --font-quote: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
-  --font-section-heading: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-article-title: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
-  --font-signature: var(--font-parisienne), cursive;
-  --font-logo: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
+  /* Typography — Luxury Editorial System */
+  --font-display: var(--font-display), "Times New Roman", serif;
+  --font-headline: var(--font-headline), "Times New Roman", serif;
+  --font-body: var(--font-body), "Georgia", serif;
+  --font-nav: var(--font-nav), "Times New Roman", serif;
+  --font-label: var(--font-label), "Georgia", serif;
+  --font-meta: var(--font-meta), "Georgia", serif;
+  --font-button: var(--font-nav), "Times New Roman", serif;
+  --font-quote: var(--font-display), "Times New Roman", serif;
+  --font-section-heading: var(--font-display), "Times New Roman", serif;
+  --font-article-title: var(--font-headline), "Times New Roman", serif;
+  --font-signature: var(--font-signature), cursive;
+  --font-logo: var(--font-display), "Times New Roman", serif;
 
-  /* Typography Scale — Stitch Specified */
-  --text-display: 84px;      /* EB Garamond, 400, 92px lh, -0.02em */
-  --text-headline-lg: 48px;  /* Source Serif 4, 600, 56px lh */
-  --text-headline-md: 32px;  /* Source Serif 4, 600, 40px lh */
-  --text-section-title: 14px;/* Libre Franklin, 700, 20px lh, 0.15em ls */
-  --text-body: 18px;         /* Source Serif 4, 400, 32px lh */
-  --text-quote: 32px;        /* EB Garamond, 400, 44px lh */
-  --text-meta: 12px;         /* Libre Franklin, 500, 16px lh */
+  /* Typography Scale — Luxury Spec */
+  --text-display: 84px;      /* Ramillas fallback */
+  --text-headline-lg: 64px;  /* Hina Mincho */
+  --text-headline-md: 42px;  /* Section Heading */
+  --text-section-title: 12px;/* Luxurious */
+  --text-body: 20px;         /* Marixiana Elzevir fallback */
+  --text-quote: 40px;        /* Ramillas fallback */
+  --text-meta: 13px;         /* Ovo */
 
   /* Spacing — Stitch 8px unit system */
   --spacing-unit: 8px;

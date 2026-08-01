@@ -61,21 +61,18 @@ export default function Home() {
           1. HERO — The Observatory
           EB Garamond display, Ivory base, paper grain + astro SVG
           ══════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[92vh] flex flex-col items-center justify-start pt-[160px] pb-[160px]">
         
-        {/* Background system: charcoal base + grain + astronomical SVG + bronze light */}
-        {/* In the Stitch light theme, the hero uses the Ivory surface with subtle grain */}
-        <div className="absolute inset-0 bg-background z-0">
-          {/* Paper grain at 8% opacity */}
+        {/* Background system: Dark charcoal + grain + astronomical SVG + soft light (max 7%) */}
+        <div className="absolute inset-0 bg-[#111111] z-0">
           <div
-            className="absolute inset-0 paper-grain opacity-[0.08]"
-            style={{ mixBlendMode: "multiply" }}
+            className="absolute inset-0 paper-grain opacity-[0.06]"
+            style={{ mixBlendMode: "overlay" }}
           />
-          {/* Astronomical construction lines at 6% */}
           <svg
             className="absolute inset-0 w-full h-full"
             preserveAspectRatio="xMidYMid slice"
-            style={{ opacity: 0.06, color: "var(--outline)" }}
+            style={{ opacity: 0.04, color: "#EDE8DF" }}
           >
             <circle cx="50%" cy="40%" r="480" stroke="currentColor" strokeWidth="0.5" fill="none" />
             <circle cx="50%" cy="40%" r="300" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="3 14" />
@@ -83,90 +80,103 @@ export default function Home() {
             <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="currentColor" strokeWidth="0.5" />
             <line x1="0%" y1="40%" x2="100%" y2="40%" stroke="currentColor" strokeWidth="0.5" />
           </svg>
-          {/* Subtle bronze radial warmth */}
           <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full"
-            style={{ background: "radial-gradient(ellipse, rgba(182,138,74,0.06) 0%, transparent 70%)", filter: "blur(60px)" }}
+            className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full"
+            style={{ background: "radial-gradient(ellipse, rgba(237,232,223,0.07) 0%, transparent 70%)", filter: "blur(60px)" }}
           />
         </div>
 
-        <HeroScrollEffect>
-          <div className="relative z-10 max-w-[1440px] mx-auto px-[64px] w-full py-[120px] md:py-[160px]">
-            
-            {/* Volume / Issue metadata — Libre Franklin */}
-            <div
-              className="font-meta text-[11px] uppercase tracking-[0.25em] text-text-secondary mb-[40px] animate-fade-in opacity-0"
-              style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
-            >
-              Volume I &nbsp;·&nbsp; Issue No. 1 &nbsp;·&nbsp; August 2026
-            </div>
-
-            {/* Logo — SVG masthead, max 200px, centered on hero */}
-            <div
-              data-hero-logo
-              className="mb-[56px] animate-fade-in opacity-0"
-              style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
-            >
-              <Image
-                src="/images/monoverselogo.svg"
-                alt="Monoverse"
-                width={320}
-                height={80}
-                className="h-[52px] md:h-[68px] w-auto"
-                priority
-              />
-            </div>
-
-            {/* Display headline — EB Garamond, 84px, weight 400, -0.02em tracking */}
-            <h1
-              data-hero-headline
-              className="font-display font-normal text-foreground mb-[32px] animate-fade-in opacity-0"
-              style={{
-                fontSize: "clamp(48px, 6vw, 84px)",
-                lineHeight: "1.08",
-                letterSpacing: "-0.02em",
-                animationDelay: "0.6s",
-                animationFillMode: "forwards",
-                maxWidth: "820px",
-              }}
-            >
-              Understanding Reality
-            </h1>
-
-            {/* Supporting paragraph — Source Serif 4, 20px */}
-            <p
-              className="font-body text-[18px] md:text-[20px] leading-[1.7] text-text-secondary mb-[48px] animate-fade-in opacity-0"
-              style={{ maxWidth: "560px", animationDelay: "1.0s", animationFillMode: "forwards" }}
-            >
-              An independent research publication dedicated to philosophy, science, history, technology, and the forces that shape civilizations.
-            </p>
-
-            {/* CTA buttons — Book label style, uppercase Libre Franklin */}
-            <div
-              className="flex flex-col sm:flex-row items-start gap-[16px] mb-[80px] animate-fade-in opacity-0"
-              style={{ animationDelay: "1.3s", animationFillMode: "forwards" }}
-            >
-              <a href="/archive" className="btn-primary">
-                Begin Reading
-              </a>
-              <a href="/about" className="btn-ghost">
-                Read the Manifesto
-              </a>
-            </div>
-
-            {/* Edition bar */}
-            <div
-              className="animate-fade-in opacity-0"
-              style={{ animationDelay: "1.6s", animationFillMode: "forwards" }}
-            >
-              <OrnamentDivider />
-              <div className="pt-[20px] font-meta text-[10px] uppercase tracking-[0.25em] text-outline">
-                Vol. I &nbsp;◆&nbsp; August 2026 &nbsp;◆&nbsp; Independent Publication &nbsp;◆&nbsp; Est. 2026
-              </div>
-            </div>
-
+        <div className="relative z-10 w-full max-w-[1440px] px-[64px] flex flex-col items-center text-center">
+          
+          {/* Logo — SVG masthead, 290px desktop */}
+          <div
+            className="mb-[56px] opacity-0"
+            style={{ animation: "fade-in 900ms ease-in forwards", animationDelay: "0ms" }}
+          >
+            <Image
+              src="/images/monoverselogo.svg"
+              alt="Monoverse"
+              width={290}
+              height={80}
+              className="w-[170px] md:w-[220px] lg:w-[290px] h-auto brightness-0 invert"
+              priority
+            />
           </div>
-        </HeroScrollEffect>
+
+          {/* Display headline — Ramillas (var(--font-display)), 84-92px */}
+          <h1
+            className="font-display font-normal text-[#EDE8DF] opacity-0"
+            style={{
+              fontSize: "clamp(48px, 6vw, 92px)",
+              lineHeight: "1.05",
+              letterSpacing: "-0.02em",
+              maxWidth: "900px",
+              marginBottom: "36px",
+              animation: "fade-in 900ms ease-in forwards",
+              animationDelay: "200ms"
+            }}
+          >
+            Understanding Reality
+          </h1>
+
+          {/* Supporting paragraph — Pure Serif Pro (var(--font-body)), 22px */}
+          <p
+            className="font-body text-[#B8AFA4] opacity-0"
+            style={{
+              fontSize: "22px",
+              lineHeight: "1.8",
+              maxWidth: "620px",
+              marginBottom: "48px",
+              animation: "fade-in 900ms ease-in forwards",
+              animationDelay: "400ms"
+            }}
+          >
+            An independent research publication dedicated to philosophy, science, history, technology, and the forces that shape civilizations.
+          </p>
+
+          {/* CTA buttons — Thin borders, 20px gap */}
+          <div
+            className="flex flex-col sm:flex-row items-center justify-center gap-[20px] mb-[72px] opacity-0"
+            style={{ animation: "fade-in 900ms ease-in forwards", animationDelay: "600ms" }}
+          >
+            <a href="/archive" className="font-nav text-[14px] uppercase tracking-[0.15em] px-[28px] py-[14px] border border-[#EDE8DF] text-[#EDE8DF] hover:bg-bronze hover:border-bronze hover:text-white transition-all duration-[250ms]">
+              Begin Reading
+            </a>
+            <a href="/about" className="font-nav text-[14px] uppercase tracking-[0.15em] px-[28px] py-[14px] border border-[#3D3630] text-[#B8AFA4] hover:border-bronze hover:text-bronze transition-all duration-[250ms]">
+              Read the Manifesto
+            </a>
+          </div>
+
+          {/* Editorial Divider */}
+          <div
+            className="flex items-center justify-center gap-[16px] mb-[24px] opacity-0"
+            style={{ animation: "fade-in 900ms ease-in forwards", animationDelay: "800ms" }}
+          >
+            <span className="w-[48px] h-[0.5px] bg-[#B8AFA4]" />
+            <span className="text-bronze text-[14px]">✦</span>
+            <span className="w-[48px] h-[0.5px] bg-[#B8AFA4]" />
+          </div>
+
+          {/* Publication Line — Ovo (var(--font-meta)) */}
+          <div
+            className="font-meta text-[12px] text-[#8A7B6E] tracking-widest opacity-0"
+            style={{ animation: "fade-in 900ms ease-in forwards", animationDelay: "800ms" }}
+          >
+            Volume I • Independent Publication • Est. 2026
+          </div>
+
+        </div>
+
+        {/* Scroll Indicator */}
+        <div
+          className="absolute bottom-[80px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[12px] opacity-0"
+          style={{ animation: "fade-in 900ms ease-in forwards", animationDelay: "800ms" }}
+        >
+          <span className="font-nav text-[10px] uppercase tracking-[0.2em] text-[#8A7B6E]">
+            Scroll
+          </span>
+          <span className="text-[#8A7B6E] text-[12px]">↓</span>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════

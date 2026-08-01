@@ -6,7 +6,9 @@ import Image from "next/image";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 
-// Stitch design: navigation uses Libre Franklin ("Barrels"), uppercase, minimal
+import { usePathname } from "next/navigation";
+
+// Luxury typography: navigation uses Barrels (Marcellus fallback), uppercase, minimal
 // Header is separated from content by a single full-width construction line
 // On scroll: bg becomes surface-low, height reduces, thin bottom border appears
 
@@ -20,18 +22,33 @@ const NAV_LINKS = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 30);
+      setPastHero(window.scrollY > (window.innerHeight * 0.8));
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
+    // Initial check
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Hide header on homepage until scrolled past hero
+  const isHiddenOnHome = isHomePage && !pastHero;
+
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-[250ms] ${
-        scrolled
+      className={`fixed top-0 w-full z-40 transition-all duration-[400ms] ease-out ${
+        isHiddenOnHome 
+          ? "opacity-0 -translate-y-full pointer-events-none" 
+          : "opacity-100 translate-y-0"
+      } ${
+        scrolled && !isHiddenOnHome
           ? "bg-surface/95 backdrop-blur-sm h-[64px] border-b border-outline-variant shadow-[0_1px_0_var(--outline-variant)]"
           : "bg-background h-[80px] border-b border-outline-variant"
       }`}
