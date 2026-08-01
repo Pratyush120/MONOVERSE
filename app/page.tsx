@@ -1,228 +1,348 @@
+// The Observatory — Monoverse Homepage
+// Faithful implementation of Stitch Design: The Monoverse System
+// 
+// Design spec: 
+// - Ivory #FCF9F3 background, never pure white
+// - EB Garamond for display headings (84px, 400 weight, -0.02em tracking)
+// - Source Serif 4 for body (18px, 32px line-height)
+// - Libre Franklin for labels, meta, nav (uppercase, 0.15em tracking)
+// - 0px border-radius everywhere
+// - Bronze #B68A4A for accents
+// - Paper grain at 8% opacity
+// - Astronomical construction lines at 5-8% opacity
+// - Cards = journal pages with 1px ghost charcoal border
+// - Category labels = (Philosophy) format with parentheses
+
 import { ArticleCard } from "./components/ArticleCard";
-import { CategoryCard } from "./components/CategoryCard";
 import { Newsletter } from "./components/Newsletter";
 import { SectionReveal } from "./components/SectionReveal";
-import { ComplexBackground } from "./components/ComplexBackground";
 import { HeroScrollEffect } from "./components/HeroScrollEffect";
+import { ComplexBackground } from "./components/ComplexBackground";
 import { allArticles } from "contentlayer/generated";
 import Image from "next/image";
 
+// Stitch: Categories with parenthetical taxonomy display
 const CATEGORIES = [
-  { name: 'Philosophy', count: 42, description: 'Essays on existence, ethics, and the nature of reality.' },
-  { name: 'History', count: 38, description: 'Examining the past to understand the foundations of the present.' },
-  { name: 'Science', count: 29, description: 'Inquiry into the physical universe, from quantum mechanics to cosmology.' },
-  { name: 'AI', count: 15, description: 'The philosophical and cultural implications of artificial intelligence.' },
-  { name: 'Health', count: 12, description: 'Explorations of human well-being, medicine, and the body.' }
+  { name: "Philosophy",   href: "/category/philosophy",   description: "On existence, ethics, and the nature of reality." },
+  { name: "Science",      href: "/category/science",      description: "From quantum mechanics to the edge of the cosmos." },
+  { name: "History",      href: "/category/history",      description: "The past as a lens to read the present." },
+  { name: "Technology",   href: "/category/technology",   description: "On tools, systems, and what they make of us." },
+  { name: "Health",       href: "/category/health",       description: "The body as a system, not a collection of symptoms." },
+  { name: "The Marginalia", href: "/about",               description: "Notes from the editor, dispatches from the margins." },
 ];
 
+// Stitch: Ornamental diamond divider
+function OrnamentDivider({ label }: { label?: string }) {
+  return (
+    <div className="ornament-divider my-0 w-full">
+      {label ? (
+        <span className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-text-secondary px-[16px] whitespace-nowrap">
+          {label}
+        </span>
+      ) : (
+        <span className="text-bronze text-[14px] px-[16px]">◆</span>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
-  const sortedArticles = allArticles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sortedArticles = allArticles.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
   const featuredArticle = sortedArticles[0];
-  const gridArticles = sortedArticles.slice(1, 5);
+  const latestArticles  = sortedArticles.slice(1, 5);
+  const moreArticles    = sortedArticles.slice(5, 7);
 
   return (
-    <div>
+    <div className="bg-background">
 
-      {/* ─── 1. HERO ───────────────────────────────────── */}
-      <section className="relative overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
+      {/* ═══════════════════════════════════════════════════════
+          1. HERO — The Observatory
+          EB Garamond display, Ivory base, paper grain + astro SVG
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+        
+        {/* Background system: charcoal base + grain + astronomical SVG + bronze light */}
+        {/* In the Stitch light theme, the hero uses the Ivory surface with subtle grain */}
+        <div className="absolute inset-0 bg-background z-0">
+          {/* Paper grain at 8% opacity */}
+          <div
+            className="absolute inset-0 paper-grain opacity-[0.08]"
+            style={{ mixBlendMode: "multiply" }}
+          />
+          {/* Astronomical construction lines at 6% */}
+          <svg
+            className="absolute inset-0 w-full h-full"
+            preserveAspectRatio="xMidYMid slice"
+            style={{ opacity: 0.06, color: "var(--outline)" }}
+          >
+            <circle cx="50%" cy="40%" r="480" stroke="currentColor" strokeWidth="0.5" fill="none" />
+            <circle cx="50%" cy="40%" r="300" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="3 14" />
+            <circle cx="50%" cy="40%" r="140" stroke="currentColor" strokeWidth="0.5" fill="none" />
+            <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="currentColor" strokeWidth="0.5" />
+            <line x1="0%" y1="40%" x2="100%" y2="40%" stroke="currentColor" strokeWidth="0.5" />
+          </svg>
+          {/* Subtle bronze radial warmth */}
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full"
+            style={{ background: "radial-gradient(ellipse, rgba(182,138,74,0.06) 0%, transparent 70%)", filter: "blur(60px)" }}
+          />
+        </div>
 
-        {/* Multi-layer drifting background */}
-        <ComplexBackground />
-
-        {/* Scroll-aware logo scale + headline translate */}
         <HeroScrollEffect>
-          <div className="max-w-[1000px] mx-auto px-6 relative z-10 flex flex-col items-center text-center w-full pt-[160px] pb-[80px]">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-[64px] w-full py-[120px] md:py-[160px]">
+            
+            {/* Volume / Issue metadata — Libre Franklin */}
+            <div
+              className="font-meta text-[11px] uppercase tracking-[0.25em] text-text-secondary mb-[40px] animate-fade-in opacity-0"
+              style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
+            >
+              Volume I &nbsp;·&nbsp; Issue No. 1 &nbsp;·&nbsp; August 2026
+            </div>
 
-            {/* Logo — fades in first at 0.2s */}
+            {/* Logo — SVG masthead, max 200px, centered on hero */}
             <div
               data-hero-logo
-              className="w-[240px] md:w-[360px] lg:w-[480px] mb-[48px] animate-fade-in opacity-0"
-              style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
+              className="mb-[56px] animate-fade-in opacity-0"
+              style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
             >
               <Image
                 src="/images/monoverselogo.svg"
                 alt="Monoverse"
-                width={480}
-                height={240}
-                className="w-full h-auto"
+                width={320}
+                height={80}
+                className="h-[52px] md:h-[68px] w-auto"
                 priority
               />
             </div>
 
-            {/* Headline — fades in at 0.6s */}
+            {/* Display headline — EB Garamond, 84px, weight 400, -0.02em tracking */}
             <h1
               data-hero-headline
-              className="font-hero text-[40px] md:text-[56px] lg:text-[68px] tracking-tight leading-[1.1] mb-[32px] text-foreground text-balance animate-fade-in opacity-0"
-              style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+              className="font-display font-normal text-foreground mb-[32px] animate-fade-in opacity-0"
+              style={{
+                fontSize: "clamp(48px, 6vw, 84px)",
+                lineHeight: "1.08",
+                letterSpacing: "-0.02em",
+                animationDelay: "0.6s",
+                animationFillMode: "forwards",
+                maxWidth: "820px",
+              }}
             >
-              Understanding Reality Through
-              <br className="hidden md:block" />
-              {" "}Philosophy, Science, History, Health & Technology
+              Understanding Reality
             </h1>
 
-            {/* Supporting copy — fades in at 1.0s */}
+            {/* Supporting paragraph — Source Serif 4, 20px */}
             <p
-              className="font-body text-[20px] md:text-[22px] text-text-secondary leading-[1.6] max-w-[680px] mb-[40px] text-balance animate-fade-in opacity-0"
-              style={{ animationDelay: '1.0s', animationFillMode: 'forwards' }}
+              className="font-body text-[18px] md:text-[20px] leading-[1.7] text-text-secondary mb-[48px] animate-fade-in opacity-0"
+              style={{ maxWidth: "560px", animationDelay: "1.0s", animationFillMode: "forwards" }}
             >
-              We publish deeply researched essays that connect ideas across disciplines, helping curious minds understand the systems shaping our world.
+              An independent research publication dedicated to philosophy, science, history, technology, and the forces that shape civilizations.
             </p>
 
-            {/* Buttons — fade in at 1.4s, thin border, bronze hover at 180ms */}
+            {/* CTA buttons — Book label style, uppercase Libre Franklin */}
             <div
-              className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-[80px] animate-fade-in opacity-0"
-              style={{ animationDelay: '1.4s', animationFillMode: 'forwards' }}
+              className="flex flex-col sm:flex-row items-start gap-[16px] mb-[80px] animate-fade-in opacity-0"
+              style={{ animationDelay: "1.3s", animationFillMode: "forwards" }}
             >
-              <a
-                href="/archive"
-                className="font-meta text-[13px] uppercase tracking-[0.15em] text-foreground border border-border hover:border-bronze hover:text-bronze px-8 py-4 transition-colors duration-[180ms]"
-              >
+              <a href="/archive" className="btn-primary">
                 Begin Reading
               </a>
-              <a
-                href="/about"
-                className="font-meta text-[13px] uppercase tracking-[0.15em] text-text-secondary hover:text-bronze transition-colors duration-[180ms]"
-              >
+              <a href="/about" className="btn-ghost">
                 Read the Manifesto
               </a>
             </div>
 
-            {/* Edition bar + scroll indicator — fades in last at 1.8s */}
+            {/* Edition bar */}
             <div
-              className="w-full flex flex-col items-center animate-fade-in opacity-0"
-              style={{ animationDelay: '1.8s', animationFillMode: 'forwards' }}
+              className="animate-fade-in opacity-0"
+              style={{ animationDelay: "1.6s", animationFillMode: "forwards" }}
             >
-              <div className="flex items-center gap-4 mb-6 w-full max-w-[600px] mx-auto justify-center">
-                <div className="h-px bg-bronze/30 flex-1 max-w-[120px]" />
-                <span className="text-[16px] text-bronze/50">✦</span>
-                <div className="h-px bg-bronze/30 flex-1 max-w-[120px]" />
+              <OrnamentDivider />
+              <div className="pt-[20px] font-meta text-[10px] uppercase tracking-[0.25em] text-outline">
+                Vol. I &nbsp;◆&nbsp; August 2026 &nbsp;◆&nbsp; Independent Publication &nbsp;◆&nbsp; Est. 2026
               </div>
-              <div className="font-meta text-[11px] md:text-[12px] uppercase tracking-[0.2em] text-text-secondary">
-                Volume I • August 2026 • Independent Publication • Est. 2026
-              </div>
-              <div className="mt-12 text-bronze/30 text-[18px] animate-bounce">↓</div>
             </div>
 
           </div>
         </HeroScrollEffect>
       </section>
 
-      {/* ─── 2. EDITOR'S NOTE ────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════
+          2. EDITOR'S NOTE
+          Max 760px, Source Serif 4 body, centered
+          ══════════════════════════════════════════════════════ */}
       <SectionReveal>
-        <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
-          <div className="max-w-[760px] mx-auto border-t border-border pt-12">
-            <h2 className="font-meta text-[13px] uppercase tracking-[0.2em] text-bronze font-semibold mb-8 text-center">
-              Editor&apos;s Note
-            </h2>
-            <div className="prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-[20px] prose-p:leading-[1.8] prose-p:text-text-primary max-w-none">
-              <p>
-                We live in an age overflowing with information yet increasingly starved of understanding. Every day, we consume thousands of opinions, headlines, and fragments of knowledge, but rarely pause to ask how they connect.
-              </p>
-              <p>Monoverse exists to bridge those connections.</p>
-              <p>
-                Here, philosophy meets science, history informs technology, health is viewed as a system rather than a symptom, and ideas are explored through research instead of trends. Every essay is an invitation to think more deeply, question assumptions, and understand the forces shaping our world.
-              </p>
-              <p>
-                This is not a publication built for endless scrolling. It is built for careful reading, intellectual curiosity, and conversations that endure long after the page is closed.
-              </p>
-              <p>Welcome to Monoverse.</p>
-            </div>
-            <div className="mt-16 text-center">
-              <p className="font-signature text-4xl text-foreground mb-2">— Pratyush Mohanty</p>
-              <p className="font-meta text-[13px] text-text-secondary uppercase tracking-widest">Founder & Editor</p>
+        <section className="border-t border-outline-variant py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[64px]">
+            <div className="max-w-[680px] mx-auto">
+              <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[32px] text-center">
+                Editor&apos;s Note
+              </div>
+              <div className="space-y-[24px] text-center">
+                <p className="font-body text-[20px] leading-[1.75] text-foreground">
+                  We live in an age overflowing with information yet increasingly starved of understanding.
+                  Every day, we consume thousands of opinions, headlines, and fragments of knowledge,
+                  but rarely pause to ask how they connect.
+                </p>
+                <p className="font-body text-[20px] leading-[1.75] text-foreground font-semibold">
+                  Monoverse exists to bridge those connections.
+                </p>
+                <p className="font-body text-[18px] leading-[1.8] text-text-secondary">
+                  Here, philosophy meets science, history informs technology, and ideas are explored
+                  through research instead of trends. Every essay is an invitation to think more deeply,
+                  question assumptions, and understand the forces shaping our world.
+                </p>
+                <p className="font-body text-[18px] leading-[1.8] text-text-secondary">
+                  This is not a publication built for endless scrolling.
+                  It is built for careful reading, intellectual curiosity, and conversations
+                  that endure long after the page is closed.
+                </p>
+              </div>
+              <div className="mt-[48px] text-center">
+                <p className="font-signature text-[40px] text-foreground mb-[4px]">— Pratyush Mohanty</p>
+                <p className="font-meta text-[11px] uppercase tracking-[0.2em] text-text-secondary">Founder & Editor</p>
+              </div>
             </div>
           </div>
         </section>
       </SectionReveal>
 
-      {/* ─── 3. FEATURED ESSAY ────────────────────────── */}
-      <SectionReveal delay={80}>
-        <section className="bg-surface border-y border-border py-[120px]">
-          <div className="max-w-[1280px] mx-auto px-6">
-            <div className="flex items-center justify-center gap-4 mb-16">
-              <div className="h-px bg-border flex-1 max-w-[200px]" />
-              <span className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary font-semibold">Featured Essay</span>
-              <div className="h-px bg-border flex-1 max-w-[200px]" />
-            </div>
-            {featuredArticle && (
+      {/* ═══════════════════════════════════════════════════════
+          3. FEATURED ESSAY
+          Full-width with large image, ornament divider header
+          ══════════════════════════════════════════════════════ */}
+      {featuredArticle && (
+        <SectionReveal delay={80}>
+          <section className="bg-surface-low border-y border-outline-variant py-[80px]">
+            <div className="max-w-[1440px] mx-auto px-[64px]">
+              <div className="flex items-center justify-center mb-[56px]">
+                <OrnamentDivider label="Featured Essay" />
+              </div>
               <ArticleCard
                 {...featuredArticle}
                 readTime={featuredArticle.readingTime.text}
                 variant="featured"
               />
-            )}
-          </div>
-        </section>
-      </SectionReveal>
-
-      {/* ─── 4. LATEST ESSAYS ─────────────────────────── */}
-      <SectionReveal delay={80}>
-        <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
-          <div className="mb-16 text-center">
-            <h2 className="font-section-heading text-[44px] tracking-tight">Latest Essays</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[40px] gap-y-[80px]">
-            {gridArticles.map((article) => (
-              <ArticleCard
-                key={article.slug}
-                {...article}
-                readTime={article.readingTime.text}
-                variant="default"
-              />
-            ))}
-          </div>
-        </section>
-      </SectionReveal>
-
-      {/* ─── 5. TOPIC EXPLORER ────────────────────────── */}
-      <SectionReveal delay={80}>
-        <section className="bg-surface py-[120px] border-y border-border">
-          <div className="max-w-[1280px] mx-auto px-6">
-            <div className="mb-16 text-center">
-              <h2 className="font-section-heading text-[44px] tracking-tight">Topic Explorer</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[24px]">
-              {CATEGORIES.map((category) => (
-                <CategoryCard key={category.name} {...category} />
+          </section>
+        </SectionReveal>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════
+          4. LATEST ESSAYS — 2-column journal grid
+          ══════════════════════════════════════════════════════ */}
+      <SectionReveal delay={80}>
+        <section className="py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[64px]">
+            <div className="flex items-center mb-[56px]">
+              <OrnamentDivider label="Latest Essays" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-outline-variant border border-outline-variant">
+              {latestArticles.map((article) => (
+                <ArticleCard
+                  key={article.slug}
+                  {...article}
+                  readTime={article.readingTime.text}
+                  variant="default"
+                />
+              ))}
+            </div>
+            <div className="mt-[40px] flex justify-center">
+              <a href="/archive" className="btn-ghost">
+                View the Full Archive
+              </a>
+            </div>
+          </div>
+        </section>
+      </SectionReveal>
+
+      {/* ═══════════════════════════════════════════════════════
+          5. PULL QUOTE — Large EB Garamond italic
+          Centered, max 760px, bronze rule above/below
+          ══════════════════════════════════════════════════════ */}
+      <SectionReveal delay={80}>
+        <section className="bg-surface-low border-y border-outline-variant py-[120px]">
+          <div className="max-w-[760px] mx-auto px-[64px] text-center">
+            <div className="text-bronze text-[18px] mb-[32px]">◆</div>
+            <blockquote
+              className="font-quote italic font-normal text-foreground leading-[1.4] mb-[32px]"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.01em" }}
+            >
+              &ldquo;The observatory is not a room, but a perspective — a lens
+              through which we view the permanence of ideas.&rdquo;
+            </blockquote>
+            <div className="text-bronze text-[18px]">◆</div>
+          </div>
+        </section>
+      </SectionReveal>
+
+      {/* ═══════════════════════════════════════════════════════
+          6. TOPIC EXPLORER — Taxonomy grid
+          Labels in parentheses per Stitch spec
+          ══════════════════════════════════════════════════════ */}
+      <SectionReveal delay={80}>
+        <section className="py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[64px]">
+            <div className="flex items-center mb-[56px]">
+              <OrnamentDivider label="Explore by Subject" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-outline-variant border border-outline-variant">
+              {CATEGORIES.map((cat) => (
+                <a
+                  key={cat.name}
+                  href={cat.href}
+                  className="group bg-background p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
+                >
+                  <span className="taxonomy-tag block mb-[16px]">{cat.name}</span>
+                  <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[180ms]">
+                    {cat.description}
+                  </p>
+                </a>
               ))}
             </div>
           </div>
         </section>
       </SectionReveal>
 
-      {/* ─── 6. ABOUT MONOVERSE ───────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════
+          7. ABOUT MONOVERSE — 2-column editorial layout
+          ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="border-b border-border bg-background">
-          <div className="max-w-[1280px] mx-auto px-6 py-[120px]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-              <div className="lg:col-span-5">
-                <h2 className="font-section-heading text-[44px] tracking-tight mb-8">About Monoverse</h2>
-                <div className="w-12 h-px bg-text-secondary mb-8" />
-                <p className="font-body text-[20px] text-foreground font-medium leading-[1.6]">
-                  Understanding reality through research, literature, philosophy, history, technology, and civilization.
+        <section className="bg-surface-low border-y border-outline-variant py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[64px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[80px] items-start">
+              <div>
+                <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[24px]">
+                  About Monoverse
+                </div>
+                <h2 className="font-display font-normal text-foreground mb-[24px]"
+                  style={{ fontSize: "clamp(36px, 3vw, 48px)", lineHeight: "1.15", letterSpacing: "-0.015em" }}>
+                  Understanding Reality
+                </h2>
+                <div className="w-[40px] h-[0.5px] bg-bronze mb-[24px]" />
+                <p className="font-body text-[18px] leading-[1.75] text-foreground font-medium">
+                  Through research, literature, philosophy, history, technology, and the study of civilizations.
                 </p>
               </div>
-              <div className="lg:col-span-7 prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-[18px] prose-p:text-text-secondary prose-p:leading-[1.8]">
-                <p>
+              <div className="space-y-[20px]">
+                <p className="font-body text-[17px] leading-[1.8] text-text-secondary">
                   We live in an age of unlimited information and diminishing understanding.
-                  Every day, thousands of articles explain what happened. Few ask <em>why</em> it happened.
+                  Every day, thousands of articles explain <em>what</em> happened. Few ask <em>why</em> it happened.
                   Even fewer connect today&apos;s headlines with centuries of history, human psychology,
                   philosophy, economics, science, and the long arc of civilization.
                 </p>
-                <p>
+                <p className="font-body text-[17px] leading-[1.8] text-text-secondary">
                   Monoverse exists to close that gap. This is an independent research publication
-                  dedicated to exploring the ideas that shape our world—not through ideology or
+                  dedicated to exploring the ideas that shape our world — not through ideology or
                   sensationalism, but through careful inquiry, evidence, and first-principles thinking.
                 </p>
-                <div className="mt-12">
-                  <a
-                    href="/about"
-                    className="inline-flex items-center gap-2 font-button text-[14px] uppercase tracking-[0.1em] text-text-primary hover:text-bronze transition-colors duration-[180ms]"
-                  >
+                <div className="pt-[16px]">
+                  <a href="/about" className="btn-ghost inline-flex items-center gap-[10px]">
                     Read our full philosophy
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M3.33331 8H12.6666" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2.33 7H11.67M7 2.33L11.67 7L7 11.67" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </a>
                 </div>
@@ -232,68 +352,65 @@ export default function Home() {
         </section>
       </SectionReveal>
 
-      {/* ─── 7. START HERE ────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════
+          8. START HERE — Reading Journey
+          ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
-        <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
-          <div className="text-center max-w-[760px] mx-auto mb-[80px]">
-            <h2 className="font-section-heading text-[44px] tracking-tight mb-6">Start Here</h2>
-            <p className="font-body text-[20px] text-text-secondary">
-              Begin your journey through Monoverse with these essential essays.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px] mb-[80px]">
-            {[
-              {
-                label: "Read First",
-                title: "Why Monoverse Exists",
-                desc: "A manifesto explaining why this publication was created and how understanding reality requires connecting philosophy, science, history, health, and technology.",
-                time: "8 min read",
-              },
-              {
-                label: "Essential Concept",
-                title: "The First Principles of Reality",
-                desc: "An exploration of systems thinking, interconnectedness, and the hidden structures that shape our everyday lives.",
-                time: "12 min read",
-              },
-              {
-                label: "Deep Dive",
-                title: "The Age of Intelligent Machines",
-                desc: "Artificial intelligence is not just another technological revolution—it is reshaping work, creativity, education, and civilization itself.",
-                time: "15 min read",
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                className="flex flex-col h-full bg-card p-[40px] rounded-[16px] group border border-transparent hover:border-border transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-xl"
-                style={{ willChange: "transform" }}
-              >
-                <div className="text-text-secondary font-meta text-[13px] uppercase tracking-widest mb-6">{card.label}</div>
-                <h3 className="font-article-title text-[32px] font-semibold mb-6 group-hover:text-bronze transition-colors duration-[180ms] leading-[1.2]">
-                  {card.title}
-                </h3>
-                <p className="font-body text-[18px] text-text-secondary leading-[1.6] flex-1">{card.desc}</p>
-                <div className="mt-8 font-meta text-[13px] text-text-secondary uppercase tracking-widest">{card.time}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <a
-              href="/archive"
-              className="font-meta text-[13px] uppercase tracking-[0.15em] text-text-secondary border border-border hover:border-bronze hover:text-bronze px-8 py-4 transition-colors duration-[180ms]"
-            >
-              Continue Reading
-            </a>
+        <section className="py-[120px]">
+          <div className="max-w-[1440px] mx-auto px-[64px]">
+            <div className="flex items-center mb-[56px]">
+              <OrnamentDivider label="Start Here" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-outline-variant border border-outline-variant mb-[40px]">
+              {[
+                {
+                  label: "Read First",
+                  title: "Why Monoverse Exists",
+                  desc: "A manifesto explaining why this publication was created and how understanding reality requires connecting philosophy, science, history, health, and technology.",
+                  time: "8 min read",
+                  href: "/about",
+                },
+                {
+                  label: "Essential Concept",
+                  title: "The First Principles of Reality",
+                  desc: "An exploration of systems thinking, interconnectedness, and the hidden structures that shape our everyday lives.",
+                  time: "12 min read",
+                  href: "/archive",
+                },
+                {
+                  label: "Deep Dive",
+                  title: "The Age of Intelligent Machines",
+                  desc: "Artificial intelligence is not just another technological revolution — it is reshaping work, creativity, education, and civilization itself.",
+                  time: "15 min read",
+                  href: "/category/technology",
+                },
+              ].map((card) => (
+                <a
+                  key={card.title}
+                  href={card.href}
+                  className="group bg-background p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
+                >
+                  <span className="taxonomy-tag block mb-[16px]">{card.label}</span>
+                  <h3 className="font-display text-[28px] font-normal leading-[1.25] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[16px]">
+                    {card.title}
+                  </h3>
+                  <p className="font-body text-[16px] leading-[1.7] text-text-secondary flex-1">{card.desc}</p>
+                  <div className="font-meta text-[11px] uppercase tracking-[0.12em] text-outline mt-[24px] pt-[16px] border-t border-outline-variant">
+                    {card.time}
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
       </SectionReveal>
 
-      {/* ─── 8. NEWSLETTER ────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════
+          9. NEWSLETTER
+          ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
         <Newsletter />
       </SectionReveal>
-
     </div>
   );
 }

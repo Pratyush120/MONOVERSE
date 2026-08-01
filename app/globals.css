@@ -5,101 +5,149 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ─── STITCH DESIGN TOKENS ──────────────────────────────────── */
+  /* The Monoverse System — Editorial Academic Luxury             */
+
+  /* Colors */
+  --color-surface: var(--surface);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-card: var(--card);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-bronze: var(--accent-bronze);
-  --color-lavender: var(--accent-lavender);
-  --color-border: var(--border-color);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-low: var(--surface-container-low);
+  --color-surface-high: var(--surface-container-high);
+  --color-text-primary: var(--on-surface);
+  --color-text-secondary: var(--on-surface-variant);
+  --color-bronze: var(--bronze-accent);
+  --color-charcoal: var(--charcoal);
+  --color-navy: var(--observatory-navy);
+  --color-lavender: var(--manuscript-lavender);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-border: var(--outline-variant);
+  --color-card: var(--surface-container-lowest);
 
-  --font-logo: var(--font-prata), serif;
-  --font-hero: var(--font-lora), serif;
-  --font-article-title: var(--font-cormorant), serif;
-  --font-section-heading: var(--font-libre), serif;
-  --font-body: var(--font-lora), serif;
-  --font-nav: var(--font-prata), serif;
-  --font-button: var(--font-montserrat), sans-serif;
-  --font-meta: var(--font-montserrat), sans-serif;
-  --font-pull-quote: var(--font-eb-garamond), serif;
+  /* Typography — Stitch Specified Roles */
+  --font-display: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
+  --font-hero: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
+  --font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  --font-label: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
+  --font-nav: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
+  --font-meta: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
+  --font-button: var(--font-libre-franklin), "Libre Franklin", system-ui, sans-serif;
+  --font-quote: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
+  --font-section-heading: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  --font-article-title: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
   --font-signature: var(--font-parisienne), cursive;
+  --font-logo: var(--font-eb-garamond), "EB Garamond", Georgia, serif;
 
-  /* Typography Scale */
-  --text-display: 84px;
-  --text-h1: 60px;
-  --text-h2: 44px;
-  --text-h3: 32px;
-  --text-body-large: 20px;
-  --text-body: 18px;
-  --text-small: 15px;
-  --text-caption: 13px;
-  --text-button: 14px;
-  --text-nav: 18px;
-  --text-meta: 13px;
+  /* Typography Scale — Stitch Specified */
+  --text-display: 84px;      /* EB Garamond, 400, 92px lh, -0.02em */
+  --text-headline-lg: 48px;  /* Source Serif 4, 600, 56px lh */
+  --text-headline-md: 32px;  /* Source Serif 4, 600, 40px lh */
+  --text-section-title: 14px;/* Libre Franklin, 700, 20px lh, 0.15em ls */
+  --text-body: 18px;         /* Source Serif 4, 400, 32px lh */
+  --text-quote: 32px;        /* EB Garamond, 400, 44px lh */
+  --text-meta: 12px;         /* Libre Franklin, 500, 16px lh */
 
-  /* Spacing */
+  /* Spacing — Stitch 8px unit system */
+  --spacing-unit: 8px;
+  --spacing-edge: 64px;      /* Desktop margins */
+  --spacing-mobile: 24px;    /* Mobile margins */
+  --spacing-gutter: 32px;
+  --spacing-manuscript: 48px;
   --spacing-section: 120px;
-  --spacing-card: 40px;
-  --max-width-article: 760px;
-  --max-width-container: 1280px;
 
+  /* Shape — 0px radius everywhere per Stitch spec */
+  --radius-none: 0px;
+
+  /* Motion — Stitch: weighted, purposeful, no bounce */
   --animate-fade-slow: fade-in 800ms ease-out forwards;
   --animate-fade-up: fade-up 800ms ease-out forwards;
   --animate-fade-in: fade-in 1000ms ease-out forwards;
 }
 
+/* ─── LIGHT MODE (Stitch Default — Ivory Base) ──────────────── */
 :root {
-  /* Light Mode Equivalents */
-  --background: #FAFAFA;
-  --surface: #F4F4F4;
-  --card: #FFFFFF;
-  --text-primary: #121212;
-  --text-secondary: #5F5F5F;
-  --accent-bronze: #B08D57;
-  --accent-lavender: #A88BFF;
-  --border-color: rgba(0,0,0,0.08);
+  --background: #FCF9F3;
+  --surface: #FCF9F3;
+  --surface-dim: #DCDAD4;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F6F3ED;
+  --surface-container: #F0EEE8;
+  --surface-container-high: #EBE8E2;
+  --surface-container-highest: #E5E2DC;
 
-  --foreground: #121212;
+  --foreground: #1C1C18;
+  --on-surface: #1C1C18;
+  --on-surface-variant: #4F4539;
+
+  --outline: #817567;
+  --outline-variant: #D3C4B4;
+
+  --bronze-accent: #B68A4A;
+  --charcoal: #111111;
+  --observatory-navy: #17243A;
+  --manuscript-lavender: #8F7CCF;
+
+  /* Shadcn compatibility */
+  --card: #FFFFFF;
+  --card-foreground: #1C1C18;
   --popover: #FFFFFF;
-  --popover-foreground: #121212;
-  --primary: #B08D57;
-  --primary-foreground: #FAFAFA;
-  --secondary: #F4F4F4;
-  --secondary-foreground: #121212;
-  --muted: #F4F4F4;
-  --muted-foreground: #5F5F5F;
-  --destructive: #ef4444;
-  --border: rgba(0,0,0,0.08);
-  --input: rgba(0,0,0,0.08);
-  --ring: #B08D57;
-  --radius: 16px;
+  --popover-foreground: #1C1C18;
+  --primary: #7C571C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0EEE8;
+  --secondary-foreground: #1C1C18;
+  --muted: #F0EEE8;
+  --muted-foreground: #4F4539;
+  --accent: #B68A4A;
+  --accent-foreground: #FFFFFF;
+  --destructive: #BA1A1A;
+  --border: #D3C4B4;
+  --input: #D3C4B4;
+  --ring: #B68A4A;
+  --radius: 0px; /* Stitch: strictly orthogonal */
 }
 
+/* ─── DARK MODE ─────────────────────────────────────────────── */
 .dark {
-  --background: #0D0D0D;
-  --surface: #171717;
-  --card: #202020;
-  --text-primary: #F4F4F2;
-  --text-secondary: #B7B7B0;
-  --accent-bronze: #B08D57;
-  --accent-lavender: #A88BFF;
-  --border-color: rgba(255,255,255,0.08);
+  --background: #0D0D0B;
+  --surface: #131311;
+  --surface-dim: #1A1A17;
+  --surface-container-lowest: #0A0A08;
+  --surface-container-low: #1A1A17;
+  --surface-container: #201E1B;
+  --surface-container-high: #282520;
+  --surface-container-highest: #312E29;
 
-  --foreground: #F4F4F2;
-  --popover: #0D0D0D;
-  --popover-foreground: #F4F4F2;
-  --primary: #B08D57;
-  --primary-foreground: #0D0D0D;
-  --secondary: #171717;
-  --secondary-foreground: #F4F4F2;
-  --muted: #171717;
-  --muted-foreground: #B7B7B0;
-  --destructive: #ef4444;
-  --border: rgba(255,255,255,0.08);
-  --input: rgba(255,255,255,0.08);
-  --ring: #B08D57;
+  --foreground: #EDE8DF;
+  --on-surface: #EDE8DF;
+  --on-surface-variant: #B8AFA4;
+
+  --outline: #8A7B6E;
+  --outline-variant: #3D3630;
+
+  --bronze-accent: #C9A06A;
+  --charcoal: #EDE8DF;
+  --observatory-navy: #4A6B96;
+  --manuscript-lavender: #B8A5E8;
+
+  --card: #1A1A17;
+  --card-foreground: #EDE8DF;
+  --popover: #131311;
+  --popover-foreground: #EDE8DF;
+  --primary: #C9A06A;
+  --primary-foreground: #0D0D0B;
+  --secondary: #201E1B;
+  --secondary-foreground: #EDE8DF;
+  --muted: #201E1B;
+  --muted-foreground: #B8AFA4;
+  --accent: #C9A06A;
+  --accent-foreground: #0D0D0B;
+  --destructive: #CF6679;
+  --border: #3D3630;
+  --input: #3D3630;
+  --ring: #C9A06A;
 }
 
 @layer base {
@@ -107,109 +155,170 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
   body {
     font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
     background-color: var(--background);
-    color: var(--text-primary);
+    color: var(--on-surface);
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
+  /* Stitch: Selection uses bronze */
   ::selection {
-    background-color: rgba(176, 141, 87, 0.2);
+    background-color: rgba(182, 138, 74, 0.15);
     color: inherit;
   }
 
   *:focus-visible {
-    outline: 2px solid var(--accent-bronze);
-    outline-offset: 2px;
+    outline: 1px solid var(--bronze-accent);
+    outline-offset: 3px;
   }
 }
 
 @layer components {
+  /* ─── DROP CAP ───────────────────────────────────────────── */
   .drop-cap::first-letter {
     float: left;
-    font-family: var(--font-article-title);
-    font-size: 5rem;
-    line-height: 0.8;
-    padding-right: 0.75rem;
-    padding-top: 0.25rem;
-    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 5.5rem;
+    line-height: 0.78;
+    padding-right: 0.5rem;
+    padding-top: 0.1rem;
+    color: var(--on-surface);
+    font-weight: 400;
   }
 
+  /* ─── NAVIGATION LINK ────────────────────────────────────── */
   .nav-link {
     position: relative;
+    font-family: var(--font-nav);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    transition: color 250ms ease;
   }
-  
+  .nav-link:hover {
+    color: var(--on-surface);
+  }
+  /* Stitch: single thin underline on hover */
   .nav-link::after {
     content: '';
     position: absolute;
     width: 0;
-    height: 1px;
+    height: 0.5px;
     bottom: -4px;
     left: 0;
-    background-color: var(--text-primary);
-    transition: width 0.3s ease;
+    background-color: var(--bronze-accent);
+    transition: width 300ms ease;
   }
-
-  .nav-link:hover::after {
+  .nav-link:hover::after,
+  .nav-link[aria-current="page"]::after {
     width: 100%;
   }
-  
-  .btn-minimal {
+
+  /* ─── BUTTONS — Book Labels (Stitch) ─────────────────────── */
+  /* Primary: 1px charcoal border, uppercase Libre Franklin, bronze hover */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-button);
-    font-size: 14px;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1.5rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: 1px solid var(--on-surface);
+    color: var(--on-surface);
+    background: transparent;
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
   }
-  
-  .btn-minimal:hover {
-    border-color: var(--accent-bronze);
-    color: var(--accent-bronze);
+  .btn-primary:hover {
+    background-color: var(--bronze-accent);
+    border-color: var(--bronze-accent);
+    color: #FFFFFF;
+  }
+
+  /* Ghost: outline-variant border */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-button);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    background: transparent;
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+  .btn-ghost:hover {
+    border-color: var(--bronze-accent);
+    color: var(--bronze-accent);
+  }
+
+  /* ─── ORNAMENTAL DIVIDER ─────────────────────────────────── */
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--bronze-accent);
+  }
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background-color: var(--outline-variant);
+  }
+
+  /* ─── TAXONOMY TAG — (Philosophy) style ──────────────────── */
+  .taxonomy-tag {
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bronze-accent);
+  }
+  .taxonomy-tag::before { content: '('; }
+  .taxonomy-tag::after  { content: ')'; }
+
+  /* ─── CARD — Journal Page (Stitch) ───────────────────────── */
+  .journal-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid rgba(28, 28, 24, 0.1);
+    transition: border-color 250ms ease;
+  }
+  .dark .journal-card {
+    border-color: rgba(237, 232, 223, 0.08);
+  }
+  .journal-card:hover {
+    border-color: var(--outline-variant);
+  }
+
+  /* ─── PAPER GRAIN BACKGROUND ─────────────────────────────── */
+  .paper-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
   }
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Ultra-slow background layer drift — imperceptible but alive */
-@keyframes drift-1 {
-  0%   { transform: translate(0px, 0px); }
-  25%  { transform: translate(2px, 1px); }
-  50%  { transform: translate(1px, 3px); }
-  75%  { transform: translate(-1px, 2px); }
-  100% { transform: translate(0px, 0px); }
-}
-
-@keyframes drift-2 {
-  0%   { transform: translate(0px, 0px); }
-  33%  { transform: translate(-2px, 1px); }
-  66%  { transform: translate(1px, -2px); }
-  100% { transform: translate(0px, 0px); }
-}
-
-@keyframes drift-3 {
-  0%   { transform: translate(0px, 0px) scale(1); }
-  50%  { transform: translate(3px, -1px) scale(1.002); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-
-/* Section reveal utility */
+/* ─── SECTION REVEAL ─────────────────────────────────────────── */
 .reveal-section {
   opacity: 0;
   transform: translateY(24px);
 }
-
 .reveal-section.in-view {
   opacity: 1;
   transform: translateY(0);
@@ -217,7 +326,38 @@
               transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Respect reduced motion at all times */
+/* ─── KEYFRAMES ──────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Background layer ultra-slow drift */
+@keyframes drift-1 {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(2px, 1px); }
+  50%  { transform: translate(1px, 3px); }
+  75%  { transform: translate(-1px, 2px); }
+  100% { transform: translate(0px, 0px); }
+}
+@keyframes drift-2 {
+  0%   { transform: translate(0px, 0px); }
+  33%  { transform: translate(-2px, 1px); }
+  66%  { transform: translate(1px, -2px); }
+  100% { transform: translate(0px, 0px); }
+}
+@keyframes drift-3 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  50%  { transform: translate(3px, -1px) scale(1.002); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* ─── REDUCED MOTION ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
