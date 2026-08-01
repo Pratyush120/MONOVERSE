@@ -36,91 +36,114 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   if (!article) notFound();
 
+  // Stitch Design: Drop cap logic wrapper
+  // We'll apply the .drop-cap class to the markdown container
+  
   return (
-    <>
+    <div className="bg-background">
       <ReadingProgress />
       
-      <article className="pt-16 pb-24">
-        {/* Header */}
-        <header className="max-w-[760px] mx-auto px-6 text-center mb-16">
-          <div className="mb-8">
-            <span className="font-meta text-[13px] uppercase tracking-[0.2em] text-bronze font-semibold">{article.category}</span>
+      {/* ═══════════════════════════════════════════════════════
+          ARTICLE HEADER
+          EB Garamond 84px max, centered, Libre Franklin meta
+          ══════════════════════════════════════════════════════ */}
+      <article className="pt-[120px] pb-[120px]">
+        <header className="max-w-[960px] mx-auto px-[64px] text-center mb-[80px]">
+          
+          <div className="mb-[32px] flex items-center justify-center gap-[16px]">
+            <span className="text-bronze text-[14px]">◆</span>
+            <span className="font-meta text-[11px] uppercase tracking-[0.2em] text-bronze font-semibold">
+              Vol. I — Issue 1
+            </span>
+            <span className="text-bronze text-[14px]">◆</span>
           </div>
           
-          <h1 className="font-article-title text-[48px] md:text-[60px] font-semibold leading-[1.1] mb-8 text-foreground text-balance">
+          <h1 className="font-display font-normal text-foreground mb-[32px] text-balance"
+              style={{ fontSize: "clamp(48px, 6vw, 84px)", lineHeight: "1.1", letterSpacing: "-0.01em" }}>
             {article.title}
           </h1>
           
-          <p className="font-body text-[20px] text-text-secondary leading-[1.6] mb-12 text-balance">
+          <p className="font-body text-[20px] md:text-[24px] text-text-secondary leading-[1.6] mb-[48px] max-w-[760px] mx-auto text-balance">
             {article.description}
           </p>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <AuthorBio author={article.author} role={article.authorRole} compact />
-            
-            <div className="hidden md:block w-[4px] h-[4px] rounded-full bg-border" />
-            
-            <div className="flex items-center gap-6 font-meta text-[13px] uppercase tracking-widest text-text-secondary">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-[24px]">
+            <div className="flex items-center gap-[16px] font-meta text-[11px] uppercase tracking-[0.15em] text-outline">
+              <span className="text-foreground">{article.author}</span>
+              <span className="text-outline-variant text-[8px]">◆</span>
               <time dateTime={article.date}>
                 {new Date(article.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
               </time>
-              <div className="flex items-center gap-2">
-                <span>{article.readingTime.text}</span>
-              </div>
-            </div>
-            
-            <div className="hidden md:block w-[4px] h-[4px] rounded-full bg-border" />
-            
-            <div className="flex items-center gap-4">
-              <BookmarkButton slug={article.slug} />
-              <ShareButtons slug={article.slug} title={article.title} />
+              <span className="text-outline-variant text-[8px]">◆</span>
+              <span>{article.readingTime.text}</span>
             </div>
           </div>
         </header>
         
-        {/* Hero Image — scale 1.06 → 1 on scroll */}
-        <div className="max-w-[1280px] mx-auto px-6 mb-24">
-          <RevealImage className="aspect-[21/9] md:aspect-[2.5/1] rounded-[16px] relative w-full">
+        {/* ═══════════════════════════════════════════════════════
+            HERO IMAGE
+            0px radius (orthogonal), full width of container
+            ══════════════════════════════════════════════════════ */}
+        <div className="max-w-[1440px] mx-auto px-[64px] mb-[120px]">
+          <RevealImage className="aspect-[21/9] relative w-full border border-outline-variant">
             <Image src={article.image} alt={article.title} fill className="object-cover" priority />
           </RevealImage>
         </div>
         
-        {/* Content Area with TOC */}
-        <div className="max-w-[1280px] mx-auto px-6">
-          <div className="flex flex-col xl:flex-row gap-16 relative items-start justify-center">
+        {/* ═══════════════════════════════════════════════════════
+            CONTENT AREA
+            Source Serif 4, drop caps, wide margins
+            ══════════════════════════════════════════════════════ */}
+        <div className="max-w-[1440px] mx-auto px-[64px]">
+          <div className="flex flex-col xl:flex-row gap-[64px] relative items-start justify-center">
             
-            {/* Left sidebar: TOC */}
-            <div className="hidden xl:block w-[240px] flex-shrink-0">
+            {/* Left sidebar: Navigation / TOC */}
+            <div className="hidden xl:block w-[280px] flex-shrink-0 sticky top-[120px]">
               <TableOfContents toc={article.toc} />
             </div>
 
             {/* Main Content */}
-            <div className="max-w-[760px] w-full flex-shrink-0">
-              <div className="prose prose-lg dark:prose-invert max-w-none 
+            <div className="max-w-[680px] w-full flex-shrink-0">
+              <div className="prose prose-lg max-w-none drop-cap
                               prose-a:text-bronze prose-a:no-underline hover:prose-a:underline">
                 <MDXRemote source={article.body.raw} components={mdxComponents as any} />
               </div>
               
               <SectionReveal>
-                <footer className="mt-24 pt-12 border-t border-border">
-                  <div className="mb-12">
-                    <h4 className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary mb-6 font-semibold">Connecting Disciplines</h4>
+                <footer className="mt-[120px] pt-[64px] border-t border-outline-variant">
+                  <div className="flex justify-between items-center mb-[48px]">
+                    <div className="flex items-center gap-[16px]">
+                      <BookmarkButton slug={article.slug} />
+                      <ShareButtons slug={article.slug} title={article.title} />
+                    </div>
+                  </div>
+                  
+                  <div className="mb-[64px]">
+                    <h4 className="font-meta text-[11px] uppercase tracking-[0.2em] text-outline mb-[24px] font-semibold">
+                      Connecting Disciplines
+                    </h4>
                     <DisciplineTags disciplines={article.disciplines} />
                   </div>
-                  <div className="my-16">
+                  
+                  <div className="my-[64px]">
                     <AuthorBio author={article.author} role={article.authorRole} expanded />
                   </div>
                 </footer>
               </SectionReveal>
             </div>
             
-            {/* Right spacer for centering in grid */}
-            <div className="hidden xl:block w-[240px] flex-shrink-0"></div>
+            {/* Right sidebar: The Marginalia (Citations/Notes) */}
+            <div className="hidden xl:block w-[280px] flex-shrink-0 sticky top-[120px]">
+              <div className="font-label text-[10px] font-[700] uppercase tracking-[0.2em] text-outline mb-[24px]">
+                The Marginalia
+              </div>
+              <div className="text-[14px] font-body leading-[1.6] text-text-secondary p-[24px] bg-surface-low border border-outline-variant">
+                <em>Editor&apos;s Note:</em> Citations, scholarly references, and cross-disciplinary connections appear here during reading, bringing the depth of the Monoverse archive to the forefront.
+              </div>
+            </div>
           </div>
         </div>
       </article>
-
-      <Newsletter />
-    </>
+    </div>
   );
 }

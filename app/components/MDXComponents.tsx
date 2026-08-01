@@ -12,21 +12,21 @@ const generateId = (children: any) => {
   return "";
 };
 
-// Wrap next/image in RevealImage for scroll-reveal
+// Stitch: 0px border-radius, full width image
 const RevealedImage = (props: any) => (
-  <RevealImage className="rounded-[8px] my-12">
+  <RevealImage className="my-[48px] w-full">
     <Image {...props} className="w-full h-auto" />
   </RevealImage>
 );
 
-// Wrap PullQuote in RevealQuote for animated border
+// Stitch: Pull quotes use EB Garamond italic, 32px
 const RevealedPullQuote = (props: any) => (
   <RevealQuote>
-    <p className="font-pull-quote text-[28px] md:text-[36px] italic leading-[1.4] text-foreground font-medium">
+    <p className="font-quote text-[32px] md:text-[40px] italic leading-[1.3] text-foreground font-normal text-center">
       &ldquo;{props.text}&rdquo;
     </p>
     {props.source && (
-      <cite className="block mt-6 font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary not-italic font-semibold">
+      <cite className="block mt-[24px] font-meta text-[11px] uppercase tracking-[0.2em] text-text-secondary not-italic font-semibold text-center">
         — {props.source}
       </cite>
     )}
@@ -37,28 +37,29 @@ export const mdxComponents = {
   Image: RevealedImage,
   PullQuote: RevealedPullQuote,
   h2: ({ className, children, ...props }: any) => (
-    <h2 id={generateId(children)} className="font-section-heading text-[32px] md:text-[44px] mt-20 mb-8 font-semibold text-foreground scroll-mt-32" {...props}>
+    <h2 id={generateId(children)} className="font-display text-[36px] md:text-[48px] mt-[80px] mb-[32px] font-normal text-foreground scroll-mt-32" {...props}>
       {children}
     </h2>
   ),
   h3: ({ className, children, ...props }: any) => (
-    <h3 id={generateId(children)} className="font-section-heading text-[24px] md:text-[32px] mt-16 mb-6 font-medium text-foreground scroll-mt-32" {...props}>
+    <h3 id={generateId(children)} className="font-display text-[28px] md:text-[36px] mt-[64px] mb-[24px] font-normal text-foreground scroll-mt-32" {...props}>
       {children}
     </h3>
   ),
   p: ({ className, ...props }: any) => (
-    <p className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary mb-8" {...props} />
+    <p className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary mb-[32px]" {...props} />
   ),
   ul: ({ className, ...props }: any) => (
-    <ul className="my-8 ml-6 list-none space-y-4" {...props} />
+    <ul className="my-[32px] ml-[24px] list-none space-y-[16px]" {...props} />
   ),
+  // Stitch: Small bronze square bullets
   li: ({ className, children, ...props }: any) => (
-    <li className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-bronze before:rounded-full" {...props}>
+    <li className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary relative pl-[32px] before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-[6px] before:h-[6px] before:bg-bronze before:rounded-none" {...props}>
       {children}
     </li>
   ),
+  // Stitch: Quotations have thin left border, EB Garamond italic
   blockquote: ({ className, ...props }: any) => (
-    <blockquote className="border-l-[1px] border-bronze/50 pl-8 py-2 my-12 italic font-body text-[22px] text-foreground leading-[1.6]" {...props} />
+    <blockquote className="border-l border-bronze pl-[32px] py-[8px] my-[48px] italic font-quote text-[28px] text-foreground leading-[1.5]" {...props} />
   ),
 };
-
