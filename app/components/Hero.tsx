@@ -40,32 +40,32 @@ export function Hero() {
     >
       {/* Background System */}
       <motion.div 
-        className="absolute inset-0 bg-[#111111] z-0"
+        className="absolute inset-0 z-0"
         style={{ y: bgY }}
       >
-        <div
-          className="absolute inset-0 paper-grain opacity-[0.06]"
-          style={{ mixBlendMode: "overlay" }}
-        />
-        
-        {/* User's specified background.svg */}
-        <div className="absolute inset-0 w-full h-full opacity-[0.08] mix-blend-screen">
+        {/* User's specified background.svg without transparency to let colors pop */}
+        <div className="absolute inset-0 w-full h-full">
           <Image
             src="/images/background.svg"
-            alt="Astronomical Construction Lines"
+            alt="Monoverse Background"
             fill
             className="object-cover object-center"
             priority
           />
         </div>
+
+        <div
+          className="absolute inset-0 paper-grain opacity-[0.06]"
+          style={{ mixBlendMode: "overlay" }}
+        />
         
         {/* Slow glowing breathing effect on the radial light */}
         <motion.div
           animate={{ opacity: [0.4, 0.7, 0.4] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] lg:w-[800px] h-[300px] md:h-[500px] rounded-full"
+          className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[300px] md:w-[600px] lg:w-[800px] h-[300px] md:h-[500px] rounded-full pointer-events-none"
           style={{ 
-            background: "radial-gradient(ellipse, rgba(237,232,223,0.08) 0%, transparent 70%)", 
+            background: "radial-gradient(ellipse, rgba(237,232,223,0.06) 0%, transparent 70%)", 
             filter: "blur(60px)" 
           }}
         />
