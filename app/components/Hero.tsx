@@ -87,13 +87,26 @@ export function Hero() {
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ y: illustrationY, x: shiftX }}
       >
-        <Image
-          src="/images/hero.svg"
-          alt="Monoverse Hero Illustration"
-          fill
-          className="object-cover object-center w-full h-full"
-          priority
-        />
+        {/* Desktop View SVG */}
+        <div className="hidden md:block w-full h-full relative">
+          <Image
+            src="/images/hero.svg"
+            alt="Monoverse Hero Illustration"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+        {/* Mobile View SVG */}
+        <div className="block md:hidden w-full h-full relative">
+          <Image
+            src="/images/Android Compact - 1.svg"
+            alt="Monoverse Mobile Hero Illustration"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
       </motion.div>
 
       {/* Content wrapper - kept empty or can be removed if not needed */}
