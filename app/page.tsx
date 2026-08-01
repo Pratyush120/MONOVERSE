@@ -36,16 +36,16 @@ export default function Home() {
   const gridArticles = sortedArticles.slice(1, 5);
 
   return (
-    <>
+    <div className="animate-fade-slow">
       {/* 1. Hero */}
-      <section className="relative pt-24 pb-16 overflow-hidden bg-card transition-colors duration-500">
+      <section className="relative pt-[160px] pb-[120px] overflow-hidden bg-background">
         <ConnectionLines />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="max-w-3xl mb-8">
-            <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+        <div className="max-w-[1280px] mx-auto px-6 relative z-10">
+          <div className="max-w-4xl mb-8">
+            <h1 className="font-hero text-[64px] md:text-[84px] tracking-tight leading-[1.05] mb-6 text-foreground">
               Understanding<br/>Reality.
             </h1>
-            <p className="font-body text-xl md:text-2xl text-text-secondary leading-relaxed">
+            <p className="font-body text-[20px] text-text-secondary leading-relaxed max-w-2xl">
               An intellectual publication focused on philosophy, history, civilizations, and science. We seek the signal in the noise.
             </p>
           </div>
@@ -53,12 +53,12 @@ export default function Home() {
       </section>
 
       {/* 2. Editor's Note */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="max-w-3xl border-l-4 border-bronze pl-8 md:pl-12 py-4">
-          <h2 className="font-mono text-sm uppercase tracking-[0.2em] text-bronze font-semibold mb-8">
+      <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
+        <div className="max-w-[760px] mx-auto border-t border-border pt-12">
+          <h2 className="font-meta text-[13px] uppercase tracking-[0.2em] text-bronze font-semibold mb-8 text-center">
             Editor&apos;s Note
           </h2>
-          <div className="prose prose-xl dark:prose-invert prose-p:font-display prose-p:leading-relaxed prose-p:text-foreground">
+          <div className="prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-[20px] prose-p:leading-[1.8] prose-p:text-text-primary max-w-none">
             <p>
               We live in an age overflowing with information yet increasingly starved of understanding. Every day, we consume thousands of opinions, headlines, and fragments of knowledge, but rarely pause to ask how they connect.
             </p>
@@ -73,20 +73,20 @@ export default function Home() {
             </p>
             <p>Welcome to Monoverse.</p>
           </div>
-          <div className="mt-12">
-            <p className="font-display text-xl font-bold text-foreground">— Pratyush Mohanty</p>
-            <p className="font-mono text-sm text-text-secondary mt-1">Founder & Editor</p>
+          <div className="mt-16 text-center">
+            <p className="font-signature text-4xl text-foreground mb-2">— Pratyush Mohanty</p>
+            <p className="font-meta text-[13px] text-text-secondary uppercase tracking-widest">Founder & Editor</p>
           </div>
         </div>
       </section>
 
       {/* 3. Featured Essay */}
-      <section className="bg-card/30 border-y border-border py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-4 mb-12">
-            <div className="h-px bg-bronze flex-1 opacity-20" />
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-bronze font-semibold">Featured Essay</span>
-            <div className="h-px bg-bronze flex-1 opacity-20" />
+      <section className="bg-surface border-y border-border py-[120px]">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="flex items-center justify-center gap-4 mb-16">
+            <div className="h-px bg-border flex-1 max-w-[200px]" />
+            <span className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary font-semibold">Featured Essay</span>
+            <div className="h-px bg-border flex-1 max-w-[200px]" />
           </div>
           
           {featuredArticle && (
@@ -100,13 +100,12 @@ export default function Home() {
       </section>
       
       {/* 4. Latest Essays */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <div className="flex items-center gap-4 mb-12">
-          <h2 className="font-display text-3xl font-semibold tracking-tight">Latest Essays</h2>
-          <div className="h-px bg-border flex-1" />
+      <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
+        <div className="mb-16 text-center">
+          <h2 className="font-section-heading text-[44px] tracking-tight">Latest Essays</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-8 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[40px] gap-y-[80px]">
           {gridArticles.map((article) => (
             <ArticleCard 
               key={article.slug}
@@ -119,14 +118,13 @@ export default function Home() {
       </section>
       
       {/* 5. Topic Explorer */}
-      <section className="bg-card py-24 border-y border-border">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="font-display text-3xl font-semibold tracking-tight">Topic Explorer</h2>
-            <div className="h-px bg-border flex-1 ml-8 hidden md:block" />
+      <section className="bg-surface py-[120px] border-y border-border">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="mb-16 text-center">
+            <h2 className="font-section-heading text-[44px] tracking-tight">Topic Explorer</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[24px]">
             {CATEGORIES.map((category) => (
               <CategoryCard 
                 key={category.name}
@@ -138,20 +136,20 @@ export default function Home() {
       </section>
 
       {/* 6. About Monoverse */}
-      <section className="border-b border-border bg-card/50">
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+      <section className="border-b border-border bg-background">
+        <div className="max-w-[1280px] mx-auto px-6 py-[120px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
             <div className="lg:col-span-5">
-              <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6">
+              <h2 className="font-section-heading text-[44px] tracking-tight mb-8">
                 About Monoverse
               </h2>
-              <div className="w-12 h-1 bg-bronze mb-8"></div>
-              <p className="font-body text-2xl text-foreground font-medium leading-snug">
+              <div className="w-12 h-px bg-text-secondary mb-8"></div>
+              <p className="font-body text-[20px] text-foreground font-medium leading-[1.6]">
                 Understanding reality through research, literature, philosophy, history, technology, and civilization.
               </p>
             </div>
             
-            <div className="lg:col-span-7 prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-text-secondary prose-p:leading-relaxed">
+            <div className="lg:col-span-7 prose prose-lg dark:prose-invert prose-p:font-body prose-p:text-[18px] prose-p:text-text-secondary prose-p:leading-[1.8]">
               <p>
                 We live in an age of unlimited information and diminishing understanding. 
                 Every day, thousands of articles explain what happened. Few ask <em>why</em> it happened. 
@@ -163,15 +161,15 @@ export default function Home() {
                 dedicated to exploring the ideas that shape our world—not through ideology or 
                 sensationalism, but through careful inquiry, evidence, and first-principles thinking.
               </p>
-              <div className="mt-8">
+              <div className="mt-12">
                 <a 
                   href="/about" 
-                  className="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.1em] text-bronze hover:text-foreground transition-colors font-semibold"
+                  className="inline-flex items-center gap-2 font-button text-[14px] uppercase tracking-[0.1em] text-text-primary hover:text-bronze transition-colors"
                 >
                   Read our full philosophy
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.33331 8H12.6666" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M3.33331 8H12.6666" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </a>
               </div>
@@ -181,63 +179,60 @@ export default function Home() {
       </section>
 
       {/* 7. Reading Journey (Start Here) */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-display text-4xl font-bold tracking-tight mb-4">Start Here</h2>
-          <p className="font-body text-xl text-text-secondary">
+      <section className="max-w-[1280px] mx-auto px-6 py-[120px]">
+        <div className="text-center max-w-[760px] mx-auto mb-[80px]">
+          <h2 className="font-section-heading text-[44px] tracking-tight mb-6">Start Here</h2>
+          <p className="font-body text-[20px] text-text-secondary">
             Begin your journey through Monoverse with these essential essays.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px] mb-[80px]">
           {/* Card 1 */}
-          <div className="flex flex-col h-full border border-border p-8 rounded-2xl bg-card hover:border-bronze/50 transition-colors group">
-            <div className="text-bronze font-mono text-xs uppercase tracking-widest font-semibold mb-4 opacity-70">Read First</div>
-            <h3 className="font-display text-2xl font-semibold mb-4 group-hover:text-bronze transition-colors">
+          <div className="flex flex-col h-full bg-card p-[40px] rounded-[16px] hover:shadow-2xl transition-all duration-300 group border border-transparent hover:border-border">
+            <div className="text-text-secondary font-meta text-[13px] uppercase tracking-widest mb-6">Read First</div>
+            <h3 className="font-article-title text-[32px] font-semibold mb-6 group-hover:text-bronze transition-colors leading-[1.2]">
               Why Monoverse Exists
             </h3>
-            <p className="font-body text-text-secondary leading-relaxed flex-1">
+            <p className="font-body text-[18px] text-text-secondary leading-[1.6] flex-1">
               A manifesto explaining why this publication was created and how understanding reality requires connecting philosophy, science, history, health, and technology.
             </p>
-            <div className="mt-8 font-mono text-xs text-text-secondary flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div className="mt-8 font-meta text-[13px] text-text-secondary flex items-center gap-2 uppercase tracking-widest">
               8 min read
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="flex flex-col h-full border border-border p-8 rounded-2xl bg-card hover:border-bronze/50 transition-colors group">
-            <div className="text-bronze font-mono text-xs uppercase tracking-widest font-semibold mb-4 opacity-70">Essential Concept</div>
-            <h3 className="font-display text-2xl font-semibold mb-4 group-hover:text-bronze transition-colors">
+          <div className="flex flex-col h-full bg-card p-[40px] rounded-[16px] hover:shadow-2xl transition-all duration-300 group border border-transparent hover:border-border">
+            <div className="text-text-secondary font-meta text-[13px] uppercase tracking-widest mb-6">Essential Concept</div>
+            <h3 className="font-article-title text-[32px] font-semibold mb-6 group-hover:text-bronze transition-colors leading-[1.2]">
               The First Principles of Reality
             </h3>
-            <p className="font-body text-text-secondary leading-relaxed flex-1">
+            <p className="font-body text-[18px] text-text-secondary leading-[1.6] flex-1">
               An exploration of systems thinking, interconnectedness, and the hidden structures that shape our everyday lives.
             </p>
-            <div className="mt-8 font-mono text-xs text-text-secondary flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div className="mt-8 font-meta text-[13px] text-text-secondary flex items-center gap-2 uppercase tracking-widest">
               12 min read
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="flex flex-col h-full border border-border p-8 rounded-2xl bg-card hover:border-bronze/50 transition-colors group">
-            <div className="text-bronze font-mono text-xs uppercase tracking-widest font-semibold mb-4 opacity-70">Deep Dive</div>
-            <h3 className="font-display text-2xl font-semibold mb-4 group-hover:text-bronze transition-colors">
+          <div className="flex flex-col h-full bg-card p-[40px] rounded-[16px] hover:shadow-2xl transition-all duration-300 group border border-transparent hover:border-border">
+            <div className="text-text-secondary font-meta text-[13px] uppercase tracking-widest mb-6">Deep Dive</div>
+            <h3 className="font-article-title text-[32px] font-semibold mb-6 group-hover:text-bronze transition-colors leading-[1.2]">
               The Age of Intelligent Machines
             </h3>
-            <p className="font-body text-text-secondary leading-relaxed flex-1">
+            <p className="font-body text-[18px] text-text-secondary leading-[1.6] flex-1">
               Artificial intelligence is not just another technological revolution—it is reshaping work, creativity, education, and civilization itself.
             </p>
-            <div className="mt-8 font-mono text-xs text-text-secondary flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div className="mt-8 font-meta text-[13px] text-text-secondary flex items-center gap-2 uppercase tracking-widest">
               15 min read
             </div>
           </div>
         </div>
 
         <div className="text-center">
-          <a href="/archive" className="inline-flex items-center justify-center px-8 py-4 bg-foreground text-background font-mono text-sm uppercase tracking-[0.1em] font-semibold hover:bg-bronze transition-colors rounded-full">
+          <a href="/archive" className="btn-minimal text-text-primary hover:text-bronze">
             Continue Reading →
           </a>
         </div>
@@ -245,6 +240,6 @@ export default function Home() {
 
       {/* 8. Newsletter */}
       <Newsletter />
-    </>
+    </div>
   );
 }

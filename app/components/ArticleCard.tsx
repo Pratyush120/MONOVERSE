@@ -8,23 +8,29 @@ interface ArticleCardProps {
   category: string;
   author: string;
   readTime: string;
+  date?: string;
   image: string;
   variant?: "default" | "featured" | "compact";
 }
 
-export function ArticleCard({ slug, title, description, category, author, readTime, image, variant = "default" }: ArticleCardProps) {
+export function ArticleCard({ slug, title, description, category, author, readTime, date = "Oct 24, 2023", image, variant = "default" }: ArticleCardProps) {
+  
   if (variant === "compact") {
     return (
-      <Link href={`/article/${slug}`} className="group flex gap-5">
-        <div className="w-28 h-28 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded-lg">
-          <Image src={image} alt={title} width={128} height={128} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <Link href={`/article/${slug}`} className="group flex gap-6 p-[20px] bg-card rounded-[16px] hover:shadow-xl transition-all duration-[250ms] border border-transparent hover:border-border">
+        <div className="w-[120px] h-[120px] flex-shrink-0 overflow-hidden rounded-[8px]">
+          <Image src={image} alt={title} width={120} height={120} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[250ms]" />
         </div>
         <div className="flex flex-col justify-center">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze">{category}</span>
-          <h3 className="font-display text-lg md:text-xl font-semibold mt-1 mb-2 group-hover:text-bronze transition-colors duration-300 leading-tight">{title}</h3>
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-text-secondary">
+          <span className="font-meta text-[13px] uppercase tracking-widest text-bronze mb-2">{category}</span>
+          <h3 className="font-article-title text-[24px] font-semibold mb-2 group-hover:text-bronze transition-colors duration-[250ms] leading-[1.2] relative inline-block">
+            <span className="bg-gradient-to-r from-bronze to-bronze bg-[length:0%_1px] bg-left-bottom bg-no-repeat group-hover:bg-[length:100%_1px] transition-all duration-[250ms] ease-out">
+              {title}
+            </span>
+          </h3>
+          <div className="flex items-center gap-2 font-meta text-[13px] text-text-secondary uppercase tracking-widest mt-auto">
             <span>{author}</span>
-            <span className="w-1 h-1 rounded-full bg-bronze" />
+            <span className="w-1 h-1 rounded-full bg-bronze/50" />
             <span>{readTime}</span>
           </div>
         </div>
@@ -34,37 +40,45 @@ export function ArticleCard({ slug, title, description, category, author, readTi
 
   if (variant === "featured") {
     return (
-      <Link href={`/article/${slug}`} className="group block">
-        <div className="aspect-[16/10] overflow-hidden rounded-lg mb-5">
-          <Image src={image} alt={title} width={800} height={500} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <Link href={`/article/${slug}`} className="group flex flex-col md:flex-row gap-[40px] bg-card p-[40px] rounded-[16px] hover:shadow-xl transition-all duration-[250ms] border border-transparent hover:border-border">
+        <div className="md:w-[60%] aspect-[16/10] overflow-hidden rounded-[8px]">
+          <Image src={image} alt={title} width={800} height={500} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[250ms]" />
         </div>
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze">{category}</span>
-        <h3 className="font-display text-2xl md:text-3xl font-semibold mt-2 mb-3 group-hover:text-bronze transition-colors duration-300">{title}</h3>
-        <p className="font-body text-base leading-relaxed text-text-secondary mb-4 line-clamp-3">{description}</p>
-        <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-wider text-text-secondary">
-          <span>{author}</span>
-          <span className="w-1 h-1 rounded-full bg-bronze" />
-          <span>{readTime}</span>
+        <div className="md:w-[40%] flex flex-col justify-center">
+          <span className="font-meta text-[13px] uppercase tracking-widest text-bronze mb-4">{category}</span>
+          <h3 className="font-article-title text-[44px] font-semibold mb-4 group-hover:text-bronze transition-colors duration-[250ms] leading-[1.1]">
+            <span className="bg-gradient-to-r from-bronze to-bronze bg-[length:0%_1px] bg-left-bottom bg-no-repeat group-hover:bg-[length:100%_1px] transition-all duration-[250ms] ease-out">
+              {title}
+            </span>
+          </h3>
+          <p className="font-body text-[18px] leading-[1.6] text-text-secondary mb-8">{description}</p>
+          <div className="flex items-center gap-3 font-meta text-[13px] text-text-secondary uppercase tracking-widest mt-auto">
+            <span>{author}</span>
+            <span className="w-1 h-1 rounded-full bg-bronze/50" />
+            <span>{readTime}</span>
+            <span className="w-1 h-1 rounded-full bg-bronze/50" />
+            <span>{date}</span>
+          </div>
         </div>
       </Link>
     );
   }
 
   return (
-    <Link href={`/article/${slug}`} className="group block">
-      <div className="aspect-[4/3] overflow-hidden rounded-lg mb-5 relative">
-        <Image src={image} alt={title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-        <div className="absolute top-4 left-4">
-          <span className="font-mono text-[10px] uppercase tracking-wider bg-bronze text-white px-2 py-1 rounded">
-            {category}
-          </span>
-        </div>
+    <Link href={`/article/${slug}`} className="group flex flex-col bg-card p-[40px] rounded-[16px] hover:shadow-xl transition-all duration-[250ms] border border-transparent hover:border-border h-full">
+      <div className="aspect-[4/3] overflow-hidden rounded-[8px] mb-6 relative">
+        <Image src={image} alt={title} width={400} height={300} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[250ms]" />
       </div>
-      <h3 className="font-display text-xl font-semibold mb-2 group-hover:text-bronze transition-colors duration-300 leading-tight">{title}</h3>
-      <p className="font-body text-sm leading-relaxed text-text-secondary mb-3 line-clamp-2">{description}</p>
-      <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-text-secondary">
+      <span className="font-meta text-[13px] uppercase tracking-widest text-bronze mb-4">{category}</span>
+      <h3 className="font-article-title text-[32px] font-semibold mb-4 group-hover:text-bronze transition-colors duration-[250ms] leading-[1.2]">
+        <span className="bg-gradient-to-r from-bronze to-bronze bg-[length:0%_1px] bg-left-bottom bg-no-repeat group-hover:bg-[length:100%_1px] transition-all duration-[250ms] ease-out">
+          {title}
+        </span>
+      </h3>
+      <p className="font-body text-[18px] leading-[1.6] text-text-secondary mb-6 flex-1">{description}</p>
+      <div className="flex items-center gap-3 font-meta text-[13px] text-text-secondary uppercase tracking-widest mt-auto">
         <span>{author}</span>
-        <span className="w-1 h-1 rounded-full bg-bronze" />
+        <span className="w-1 h-1 rounded-full bg-bronze/50" />
         <span>{readTime}</span>
       </div>
     </Link>

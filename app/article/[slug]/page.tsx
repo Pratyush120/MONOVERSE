@@ -8,6 +8,7 @@ import { ShareButtons } from "../../components/ShareButtons";
 import { AuthorBio } from "../../components/AuthorBio";
 import { DisciplineTags } from "../../components/DisciplineTags";
 import { Newsletter } from "../../components/Newsletter";
+import { TableOfContents } from "../../components/TableOfContents";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -37,26 +38,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     <>
       <ReadingProgress />
       
-      <article className="max-w-7xl mx-auto px-6 pt-16 pb-24">
-        <header className="max-w-3xl mx-auto text-center mb-16">
+      <article className="pt-16 pb-24">
+        {/* Header */}
+        <header className="max-w-[760px] mx-auto px-6 text-center mb-16">
           <div className="mb-8">
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze">{article.category}</span>
+            <span className="font-meta text-[13px] uppercase tracking-[0.2em] text-bronze font-semibold">{article.category}</span>
           </div>
           
-          <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-8 text-balance">
+          <h1 className="font-article-title text-[48px] md:text-[60px] font-semibold leading-[1.1] mb-8 text-foreground text-balance">
             {article.title}
           </h1>
           
-          <p className="font-body text-xl md:text-2xl text-text-secondary leading-relaxed mb-10 text-balance">
+          <p className="font-body text-[20px] text-text-secondary leading-[1.6] mb-12 text-balance">
             {article.description}
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <AuthorBio author={article.author} role={article.authorRole} compact />
             
-            <div className="hidden md:block w-1 h-1 rounded-full bg-border" />
+            <div className="hidden md:block w-[4px] h-[4px] rounded-full bg-border" />
             
-            <div className="flex items-center gap-6 font-mono text-[10px] uppercase tracking-wider text-text-secondary">
+            <div className="flex items-center gap-6 font-meta text-[13px] uppercase tracking-widest text-text-secondary">
               <time dateTime={article.date}>
                 {new Date(article.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
               </time>
@@ -65,7 +67,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </div>
             </div>
             
-            <div className="hidden md:block w-1 h-1 rounded-full bg-border" />
+            <div className="hidden md:block w-[4px] h-[4px] rounded-full bg-border" />
             
             <div className="flex items-center gap-4">
               <BookmarkButton slug={article.slug} />
@@ -74,29 +76,45 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
         </header>
         
-        <div className="aspect-[21/9] md:aspect-[2.5/1] overflow-hidden rounded-2xl mb-24 max-w-5xl mx-auto relative">
-          <Image src={article.image} alt={article.title} fill className="object-cover" priority />
-        </div>
-        
-        <div className="max-w-3xl mx-auto">
-          <div className="prose prose-lg dark:prose-invert max-w-none 
-                          prose-p:font-body prose-p:text-lg prose-p:leading-relaxed prose-p:text-text-secondary
-                          prose-headings:font-display prose-headings:text-foreground
-                          prose-a:text-bronze prose-a:no-underline hover:prose-a:underline">
-            <MDXRemote source={article.body.raw} components={mdxComponents as any} />
+        {/* Hero Image */}
+        <div className="max-w-[1280px] mx-auto px-6 mb-24">
+          <div className="aspect-[21/9] md:aspect-[2.5/1] overflow-hidden rounded-[16px] relative w-full">
+            <Image src={article.image} alt={article.title} fill className="object-cover" priority />
           </div>
         </div>
         
-        <footer className="max-w-3xl mx-auto mt-24 pt-12 border-t border-border">
-          <div className="mb-12">
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-4">Connecting Disciplines</h4>
-            <DisciplineTags disciplines={article.disciplines} />
+        {/* Content Area with TOC */}
+        <div className="max-w-[1280px] mx-auto px-6">
+          <div className="flex flex-col xl:flex-row gap-16 relative items-start justify-center">
+            
+            {/* Left sidebar: TOC */}
+            <div className="hidden xl:block w-[240px] flex-shrink-0">
+              <TableOfContents toc={article.toc} />
+            </div>
+
+            {/* Main Content */}
+            <div className="max-w-[760px] w-full flex-shrink-0">
+              <div className="prose prose-lg dark:prose-invert max-w-none 
+                              prose-a:text-bronze prose-a:no-underline hover:prose-a:underline">
+                <MDXRemote source={article.body.raw} components={mdxComponents as any} />
+              </div>
+              
+              <footer className="mt-24 pt-12 border-t border-border">
+                <div className="mb-12">
+                  <h4 className="font-meta text-[13px] uppercase tracking-[0.2em] text-text-secondary mb-6 font-semibold">Connecting Disciplines</h4>
+                  <DisciplineTags disciplines={article.disciplines} />
+                </div>
+                
+                <div className="my-16">
+                  <AuthorBio author={article.author} role={article.authorRole} expanded />
+                </div>
+              </footer>
+            </div>
+            
+            {/* Right spacer for centering in grid */}
+            <div className="hidden xl:block w-[240px] flex-shrink-0"></div>
           </div>
-          
-          <div className="my-16">
-            <AuthorBio author={article.author} role={article.authorRole} expanded />
-          </div>
-        </footer>
+        </div>
       </article>
 
       <Newsletter />

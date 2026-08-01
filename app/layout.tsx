@@ -1,9 +1,26 @@
 import type { Metadata } from "next";
+import { 
+  Prata, 
+  Lora, 
+  Cormorant_Garamond, 
+  Libre_Baskerville, 
+  Montserrat, 
+  EB_Garamond, 
+  Parisienne 
+} from "next/font/google";
 import { Providers } from "./components/Providers";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
+
+const prata = Prata({ subsets: ["latin"], weight: "400", variable: "--font-prata" });
+const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-cormorant" });
+const libre = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-libre" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
+const ebGaramond = EB_Garamond({ subsets: ["latin"], variable: "--font-eb-garamond" });
+const parisienne = Parisienne({ subsets: ["latin"], weight: "400", variable: "--font-parisienne" });
 
 export const metadata: Metadata = {
   title: {
@@ -63,13 +80,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${prata.variable} ${lora.variable} ${cormorant.variable} ${libre.variable} ${montserrat.variable} ${ebGaramond.variable} ${parisienne.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#FAF8F4" />
+        <meta name="theme-color" content="#0D0D0D" />
         <meta name="color-scheme" content="light dark" />
       </head>
       <body>
