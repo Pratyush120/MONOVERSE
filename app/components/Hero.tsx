@@ -73,80 +73,74 @@ export function Hero() {
 
       {/* Content */}
       <motion.div 
-        className="relative z-10 w-full max-w-[1440px] px-[24px] md:px-[48px] lg:px-[64px] flex flex-col items-center text-center"
+        className="relative z-10 w-full max-w-[1440px] px-[24px] md:px-[48px] lg:px-[64px] flex flex-col items-center"
         style={{ y: textY, opacity }}
         variants={container}
         initial="hidden"
         animate="show"
       >
         
-        {/* Logo */}
-        <motion.div variants={item} className="mb-[40px] md:mb-[48px] lg:mb-[56px]">
+        {/* Masthead Authority */}
+        <motion.div variants={item} className="flex flex-col items-center w-full mb-[64px] md:mb-[80px]">
           <Image
             src="/images/monoverselogo.svg"
             alt="Monoverse"
             width={290}
             height={80}
-            className="w-[170px] md:w-[220px] lg:w-[290px] h-auto brightness-0 invert"
+            className="w-[170px] md:w-[220px] lg:w-[290px] h-auto brightness-0 invert mb-[24px] md:mb-[32px]"
             priority
           />
+          <div className="flex items-center gap-[16px] md:gap-[24px] w-full max-w-[400px] md:max-w-[500px]">
+            <div className="flex-grow h-[1px] bg-[#8A7B6E] opacity-30" />
+            <span className="font-meta text-[9px] md:text-[11px] text-[#8A7B6E] tracking-[0.2em] uppercase whitespace-nowrap">
+              Volume I <span className="text-bronze mx-2">✦</span> Issue No. 04
+            </span>
+            <div className="flex-grow h-[1px] bg-[#8A7B6E] opacity-30" />
+          </div>
         </motion.div>
 
-        {/* Display headline */}
+        {/* Display headline - Architectural Rigor */}
         <motion.h1
           variants={item}
-          className="font-display font-normal text-[#EDE8DF]"
+          className="font-display font-normal text-[#EDE8DF] text-center"
           style={{
-            fontSize: "clamp(48px, 6vw, 92px)",
-            lineHeight: "1.05",
+            fontSize: "clamp(56px, 8vw, 112px)",
+            lineHeight: "1.02",
             letterSpacing: "-0.02em",
-            maxWidth: "900px",
-            marginBottom: "36px",
+            maxWidth: "1000px",
+            marginBottom: "64px",
           }}
         >
           Understanding Reality
         </motion.h1>
 
-        {/* Supporting paragraph */}
-        <motion.p
-          variants={item}
-          className="font-body text-[#B8AFA4]"
-          style={{
-            fontSize: "clamp(18px, 2vw, 22px)",
-            lineHeight: "1.8",
-            maxWidth: "620px",
-            marginBottom: "48px",
-          }}
-        >
-          An independent research publication dedicated to philosophy, science, history, technology, and the forces that shape civilizations.
-        </motion.p>
+        {/* Deep Reading Priority & Asymmetrical Journal Tension */}
+        <motion.div variants={item} className="w-full max-w-[620px] text-left mx-auto mb-[72px]">
+          <p
+            className="font-body text-[#B8AFA4]"
+            style={{
+              fontSize: "clamp(18px, 2vw, 22px)",
+              lineHeight: "1.8",
+            }}
+          >
+            <span className="float-left font-display text-[72px] text-bronze leading-[56px] mr-[16px] mt-[8px]">
+              A
+            </span>
+            n independent research publication dedicated to philosophy, science, history, technology, and the forces that shape civilizations. We explore the deep architectures of thought that remain timeless.
+          </p>
+        </motion.div>
 
         {/* CTA buttons */}
         <motion.div
           variants={item}
-          className="flex flex-col sm:flex-row items-center justify-center gap-[16px] md:gap-[20px] mb-[56px] lg:mb-[72px] w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center justify-center gap-[16px] md:gap-[20px] w-full sm:w-auto"
         >
-          <a href="/archive" className="w-full sm:w-auto text-center font-nav text-[13px] md:text-[14px] uppercase tracking-[0.15em] px-[28px] py-[14px] border border-[#EDE8DF] text-[#EDE8DF] hover:bg-bronze hover:border-bronze hover:text-white transition-all duration-[250ms]">
+          <a href="/archive" className="w-full sm:w-auto text-center font-nav text-[13px] md:text-[14px] uppercase tracking-[0.15em] px-[32px] py-[16px] border border-[#EDE8DF] text-[#EDE8DF] hover:bg-bronze hover:border-bronze hover:text-white transition-all duration-[250ms]">
             Begin Reading
           </a>
-          <a href="/about" className="w-full sm:w-auto text-center font-nav text-[13px] md:text-[14px] uppercase tracking-[0.15em] px-[28px] py-[14px] border border-[#3D3630] text-[#B8AFA4] hover:border-bronze hover:text-bronze transition-all duration-[250ms]">
+          <a href="/about" className="w-full sm:w-auto text-center font-nav text-[13px] md:text-[14px] uppercase tracking-[0.15em] px-[32px] py-[16px] border border-[#3D3630] text-[#B8AFA4] hover:border-bronze hover:text-bronze transition-all duration-[250ms]">
             Read the Manifesto
           </a>
-        </motion.div>
-
-        {/* Editorial Divider */}
-        <motion.div variants={item} className="flex items-center justify-center gap-[16px] mb-[24px]">
-          <span className="w-[32px] md:w-[48px] h-[0.5px] bg-[#B8AFA4]" />
-          <span className="text-bronze text-[12px] md:text-[14px]">✦</span>
-          <span className="w-[32px] md:w-[48px] h-[0.5px] bg-[#B8AFA4]" />
-        </motion.div>
-
-        {/* Publication Line */}
-        <motion.div
-          variants={item}
-          className="font-meta text-[11px] md:text-[12px] text-[#8A7B6E] tracking-[0.15em] md:tracking-widest"
-        >
-          Volume I • Independent Publication • Est. 2026
         </motion.div>
 
       </motion.div>
@@ -156,7 +150,7 @@ export function Hero() {
         variants={item}
         initial="hidden"
         animate="show"
-        className="absolute bottom-[40px] md:bottom-[80px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[12px]"
+        className="absolute bottom-[40px] md:bottom-[60px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[12px]"
       >
         <span className="font-nav text-[10px] uppercase tracking-[0.2em] text-[#8A7B6E]">
           Scroll
