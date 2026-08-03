@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer className="bg-background border-t border-outline-variant">
       {/* Main footer */}
-      <div className="max-w-[1440px] mx-auto px-[64px] py-[80px]">
+      <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] py-[80px]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[48px] items-start">
           
           {/* Brand */}
@@ -87,10 +87,10 @@ export function Footer() {
 
       {/* Colophon line — Stitch spec: "Printed in Digital Vellum" */}
       <div className="border-t border-outline-variant">
-        <div className="max-w-[1440px] mx-auto px-[64px] py-[24px] flex flex-col sm:flex-row items-center justify-between gap-[16px]">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] py-[24px] flex flex-col sm:flex-row items-center justify-between gap-[16px]">
           <div className="flex items-center gap-[24px]">
             {FOOTER_LINKS.map((link, i) => (
-              <span key={link.href} className="flex items-center gap-[24px]">
+              <span key={`${link.href}-${i}`} className="flex items-center gap-[20px]">
                 <Link
                   href={link.href}
                   className="font-meta text-[10px] uppercase tracking-[0.12em] text-outline hover:text-bronze transition-colors duration-[180ms]"
@@ -98,7 +98,7 @@ export function Footer() {
                   {link.label}
                 </Link>
                 {i < FOOTER_LINKS.length - 1 && (
-                  <span className="text-outline-variant text-[8px]">◆</span>
+                  <span className="text-outline text-[10px]">·</span>
                 )}
               </span>
             ))}

@@ -1,48 +1,32 @@
 // The Observatory — Monoverse Homepage
-// Faithful implementation of Stitch Design: The Monoverse System
-// 
-// Design spec: 
+// Design spec:
 // - Ivory #FCF9F3 background, never pure white
-// - EB Garamond for display headings (84px, 400 weight, -0.02em tracking)
-// - Source Serif 4 for body (18px, 32px line-height)
-// - Libre Franklin for labels, meta, nav (uppercase, 0.15em tracking)
+// - EB Garamond for display headings
+// - Source Serif 4 for body
+// - Libre Franklin for labels, meta, nav
 // - 0px border-radius everywhere
 // - Bronze #B68A4A for accents
-// - Paper grain at 8% opacity
-// - Astronomical construction lines at 5-8% opacity
-// - Cards = journal pages with 1px ghost charcoal border
-// - Category labels = (Philosophy) format with parentheses
 
 import { ArticleCard } from "./components/ArticleCard";
 import { Newsletter } from "./components/Newsletter";
 import { SectionReveal } from "./components/SectionReveal";
-import { HeroScrollEffect } from "./components/HeroScrollEffect";
-import { ComplexBackground } from "./components/ComplexBackground";
 import { Hero } from "./components/Hero";
 import { allArticles } from "contentlayer/generated";
-import Image from "next/image";
 
-// Stitch: Categories with parenthetical taxonomy display
 const CATEGORIES = [
-  { name: "Philosophy",   href: "/category/philosophy",   description: "On existence, ethics, and the nature of reality." },
-  { name: "Science",      href: "/category/science",      description: "From quantum mechanics to the edge of the cosmos." },
-  { name: "History",      href: "/category/history",      description: "The past as a lens to read the present." },
-  { name: "Technology",   href: "/category/technology",   description: "On tools, systems, and what they make of us." },
-  { name: "Health",       href: "/category/health",       description: "The body as a system, not a collection of symptoms." },
+  { name: "Philosophy",        href: "/category/philosophy",         description: "On existence, ethics, and the nature of reality." },
+  { name: "Science",           href: "/category/science",            description: "From quantum mechanics to the edge of the cosmos." },
+  { name: "History",           href: "/category/history",            description: "The past as a lens to read the present." },
+  { name: "Technology",        href: "/category/technology",         description: "On tools, systems, and what they make of us." },
+  { name: "Health",            href: "/category/health",             description: "The body as a system, not a collection of symptoms." },
   { name: "Pop Culture & Cinema", href: "/category/pop-culture-&-cinema", description: "Analyzing the modern mythologies of screen and society." },
 ];
 
-// Stitch: Ornamental diamond divider
-function OrnamentDivider({ label }: { label?: string }) {
+// Clean editorial section label — no ornamental flanking lines
+function SectionLabel({ label }: { label: string }) {
   return (
-    <div className="ornament-divider my-0 w-full">
-      {label ? (
-        <span className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-text-secondary px-[16px] whitespace-nowrap">
-          {label}
-        </span>
-      ) : (
-        <span className="text-bronze text-[14px] px-[16px]">◆</span>
-      )}
+    <div className="mb-[40px] md:mb-[56px]">
+      <span className="section-label">{label}</span>
     </div>
   );
 }
@@ -53,29 +37,30 @@ export default function Home() {
   );
   const featuredArticle = sortedArticles[0];
   const latestArticles  = sortedArticles.slice(1, 5);
-  const moreArticles    = sortedArticles.slice(5, 7);
 
   return (
     <div className="bg-background">
 
       {/* ═══════════════════════════════════════════════════════
-          1. HERO — The Observatory
-          EB Garamond display, Ivory base, paper grain + astro SVG
+          1. HERO
           ══════════════════════════════════════════════════════ */}
       <Hero />
 
       {/* ═══════════════════════════════════════════════════════
-          2. EDITOR'S NOTE
-          Max 760px, Source Serif 4 body, centered
+          2. EDITOR'S NOTE — Left-aligned, not centered
           ══════════════════════════════════════════════════════ */}
       <SectionReveal>
         <section className="border-t border-outline-variant py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-            <div className="max-w-[680px] mx-auto">
-              <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[32px] text-center">
-                Editor&apos;s Note
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-[48px] lg:gap-[80px] items-start">
+              {/* Left: Label + signature */}
+              <div className="lg:pt-[6px]">
+                <span className="section-label block mb-[32px]">Editor&apos;s Note</span>
+                <p className="font-signature text-[36px] text-foreground mb-[4px]">— Pratyush Mohanty</p>
+                <p className="font-meta text-[10px] uppercase tracking-[0.2em] text-text-secondary">Founder & Editor</p>
               </div>
-              <div className="space-y-[24px] text-center">
+              {/* Right: Body copy */}
+              <div className="space-y-[24px]">
                 <p className="font-body text-[20px] leading-[1.75] text-foreground">
                   We live in an age overflowing with information yet increasingly starved of understanding.
                   Every day, we consume thousands of opinions, headlines, and fragments of knowledge,
@@ -95,10 +80,6 @@ export default function Home() {
                   that endure long after the page is closed.
                 </p>
               </div>
-              <div className="mt-[48px] text-center">
-                <p className="font-signature text-[40px] text-foreground mb-[4px]">— Pratyush Mohanty</p>
-                <p className="font-meta text-[11px] uppercase tracking-[0.2em] text-text-secondary">Founder & Editor</p>
-              </div>
             </div>
           </div>
         </section>
@@ -106,15 +87,12 @@ export default function Home() {
 
       {/* ═══════════════════════════════════════════════════════
           3. FEATURED ESSAY
-          Full-width with large image, ornament divider header
           ══════════════════════════════════════════════════════ */}
       {featuredArticle && (
         <SectionReveal delay={80}>
           <section className="bg-surface-low border-y border-outline-variant py-[48px] md:py-[80px]">
             <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-              <div className="flex items-center justify-center mb-[56px]">
-                <OrnamentDivider label="Featured Essay" />
-              </div>
+              <SectionLabel label="Featured Essay" />
               <ArticleCard
                 {...featuredArticle}
                 readTime={featuredArticle.readingTime.text}
@@ -126,15 +104,13 @@ export default function Home() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          4. LATEST ESSAYS — 2-column journal grid
+          4. LATEST ESSAYS — 2-column grid, spaced cards
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-            <div className="flex items-center mb-[56px]">
-              <OrnamentDivider label="Latest Essays" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-outline-variant border border-outline-variant">
+            <SectionLabel label="Latest Essays" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant">
               {latestArticles.map((article) => (
                 <ArticleCard
                   key={article.slug}
@@ -144,7 +120,7 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="mt-[40px] flex justify-center">
+            <div className="mt-[40px] flex justify-start">
               <a href="/archive" className="btn-ghost">
                 View the Full Archive
               </a>
@@ -154,41 +130,37 @@ export default function Home() {
       </SectionReveal>
 
       {/* ═══════════════════════════════════════════════════════
-          5. PULL QUOTE — Large EB Garamond italic
-          Centered, max 760px, bronze rule above/below
+          5. PULL QUOTE — no diamond ornaments, just clean rule
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
         <section className="bg-surface-low border-y border-outline-variant py-[64px] md:py-[120px]">
-          <div className="max-w-[760px] mx-auto px-[24px] md:px-[64px] text-center">
-            <div className="text-bronze text-[18px] mb-[32px]">◆</div>
+          <div className="max-w-[760px] mx-auto px-[24px] md:px-[64px]">
+            <div className="w-[40px] h-px bg-bronze mb-[40px]" />
             <blockquote
-              className="font-quote italic font-normal text-foreground leading-[1.4] mb-[32px]"
+              className="font-quote italic font-normal text-foreground leading-[1.4] mb-[40px]"
               style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.01em" }}
             >
               &ldquo;The observatory is not a room, but a perspective — a lens
               through which we view the permanence of ideas.&rdquo;
             </blockquote>
-            <div className="text-bronze text-[18px]">◆</div>
+            <div className="w-[40px] h-px bg-outline-variant" />
           </div>
         </section>
       </SectionReveal>
 
       {/* ═══════════════════════════════════════════════════════
           6. TOPIC EXPLORER — Taxonomy grid
-          Labels in parentheses per Stitch spec
           ══════════════════════════════════════════════════════ */}
       <SectionReveal delay={80}>
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-            <div className="flex items-center mb-[56px]">
-              <OrnamentDivider label="Explore by Subject" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-outline-variant border border-outline-variant">
+            <SectionLabel label="Explore by Subject" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-outline-variant border border-outline-variant">
               {CATEGORIES.map((cat) => (
                 <a
                   key={cat.name}
                   href={cat.href}
-                  className="group bg-background p-[24px] md:p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group bg-background p-[32px] md:p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{cat.name}</span>
                   <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[180ms]">
@@ -209,14 +181,12 @@ export default function Home() {
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[80px] items-start">
               <div>
-                <div className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze mb-[24px]">
-                  About Monoverse
-                </div>
+                <span className="section-label block mb-[24px]">About Monoverse</span>
                 <h2 className="font-display font-normal text-foreground mb-[24px]"
                   style={{ fontSize: "clamp(36px, 3vw, 48px)", lineHeight: "1.15", letterSpacing: "-0.015em" }}>
                   Understanding Reality
                 </h2>
-                <div className="w-[40px] h-[0.5px] bg-bronze mb-[24px]" />
+                <div className="w-[40px] h-px bg-bronze mb-[24px]" />
                 <p className="font-body text-[18px] leading-[1.75] text-foreground font-medium">
                   Through research, literature, philosophy, history, technology, and the study of civilizations.
                 </p>
@@ -253,10 +223,8 @@ export default function Home() {
       <SectionReveal delay={80}>
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-            <div className="flex items-center mb-[56px]">
-              <OrnamentDivider label="Start Here" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-outline-variant border border-outline-variant mb-[40px]">
+            <SectionLabel label="Start Here" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-outline-variant border border-outline-variant">
               {[
                 {
                   label: "Read First",
@@ -283,14 +251,14 @@ export default function Home() {
                 <a
                   key={card.title}
                   href={card.href}
-                  className="group bg-background p-[24px] md:p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group bg-background p-[32px] md:p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{card.label}</span>
                   <h3 className="font-display text-[28px] font-normal leading-[1.25] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[16px]">
                     {card.title}
                   </h3>
                   <p className="font-body text-[16px] leading-[1.7] text-text-secondary flex-1">{card.desc}</p>
-                  <div className="font-meta text-[11px] uppercase tracking-[0.12em] text-outline mt-[24px] pt-[16px] border-t border-outline-variant">
+                  <div className="font-meta text-[10px] uppercase tracking-[0.15em] text-outline mt-[24px] pt-[16px] border-t border-outline-variant">
                     {card.time}
                   </div>
                 </a>

@@ -266,44 +266,46 @@
     color: var(--bronze-accent);
   }
 
-  /* ─── ORNAMENTAL DIVIDER ─────────────────────────────────── */
-  .ornament-divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: var(--bronze-accent);
-  }
-  .ornament-divider::before,
-  .ornament-divider::after {
-    content: '';
-    flex: 1;
-    height: 0.5px;
-    background-color: var(--outline-variant);
-  }
-
-  /* ─── TAXONOMY TAG — (Philosophy) style ──────────────────── */
-  .taxonomy-tag {
+  /* ─── SECTION LABEL — Clean editorial header ───────────── */
+  .section-label {
+    display: block;
     font-family: var(--font-label);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--bronze-accent);
   }
-  .taxonomy-tag::before { content: '('; }
-  .taxonomy-tag::after  { content: ')'; }
+
+  /* ─── ORNAMENTAL DIVIDER — kept minimal ──────────────────── */
+  .ornament-divider {
+    display: block;
+    height: 0.5px;
+    background-color: var(--outline-variant);
+    width: 100%;
+  }
+
+  /* ─── TAXONOMY TAG — clean uppercase label ──────────────── */
+  .taxonomy-tag {
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bronze-accent);
+  }
 
   /* ─── CARD — Journal Page (Stitch) ───────────────────────── */
   .journal-card {
     background-color: var(--surface-container-lowest);
-    border: 1px solid rgba(28, 28, 24, 0.1);
-    transition: border-color 250ms ease;
+    border: 1px solid var(--outline-variant);
+    transition: border-color 300ms ease;
   }
   .dark .journal-card {
-    border-color: rgba(237, 232, 223, 0.08);
+    border-color: var(--outline-variant);
   }
   .journal-card:hover {
-    border-color: var(--outline-variant);
+    border-color: var(--bronze-accent);
   }
 
   /* ─── PAPER GRAIN BACKGROUND ─────────────────────────────── */
