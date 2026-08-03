@@ -52,9 +52,9 @@ export function Hero() {
       opacity: [0, 1],
       scale: [0.8, 1],
       translateY: [30, 0],
-      duration: 1200,
+      duration: 800,
       // Stagger them from the center out, or just by index
-      delay: anime.stagger(5, { start: 0 }),
+      delay: anime.stagger(2, { start: 0 }),
       easing: "easeOutElastic(1, .6)",
     }, "-=2500")
     // 3. Assemble the Monoverse typography letter by letter (path by path)
@@ -63,10 +63,10 @@ export function Hero() {
       opacity: [0, 1],
       scale: [0.9, 1],
       translateY: [-20, 0],
-      duration: 1500,
-      delay: anime.stagger(40, { direction: 'normal' }),
+      duration: 1000,
+      delay: anime.stagger(20, { direction: 'normal' }),
       easing: "easeOutElastic(1, .5)", 
-    }, "-=1000");
+    }, "-=1500");
 
     return () => {
       anime.remove([treePaths, textPaths, glowRef.current]);
