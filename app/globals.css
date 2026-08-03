@@ -306,6 +306,7 @@ body {
     border-radius: 16px;
     box-shadow: var(--shadow-float);
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
     transform-style: preserve-3d;
   }
 

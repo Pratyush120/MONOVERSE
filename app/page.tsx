@@ -36,18 +36,50 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // 1. Hero Parallax: Fade and move down slightly as user scrolls past
+    gsap.to(".hero-parallax", {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "800px top",
+        scrub: 1.5,
+      },
+      y: 200,
+      opacity: 0,
+      scale: 0.95,
+      ease: "power2.inOut",
+    });
+
+    // 2. Cinematic Parallax for Background Panels (Floating effect)
+    const glassPanels = gsap.utils.toArray<HTMLElement>(".glass-panel");
+    glassPanels.forEach((panel) => {
+      gsap.fromTo(
+        panel,
+        { y: 50 },
+        {
+          y: -20,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 2,
+          },
+        }
+      );
+    });
+
     // Fade-up and stagger reveal for all standard sections
     const sections = gsap.utils.toArray<HTMLElement>(".gsap-reveal-section");
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0, y: 60, rotateX: 5 },
+        { opacity: 0, y: 80, rotateX: 5 },
         {
           opacity: 1,
           y: 0,
           rotateX: 0,
-          duration: 1.2,
-          ease: "power3.out",
+          duration: 1.5,
+          ease: "expo.out",
           scrollTrigger: {
             trigger: section,
             start: "top 85%",
@@ -63,12 +95,12 @@ export default function Home() {
       const cards = grid.children;
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 40, scale: 0.95 },
+        { opacity: 0, y: 60, scale: 0.9 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
+          duration: 1.2,
           stagger: 0.15,
           ease: "power3.out",
           scrollTrigger: {
@@ -79,21 +111,6 @@ export default function Home() {
         }
       );
     });
-
-    // Isometric Scroll Parallax for Taxonomy Grid
-    const isoGrid = document.querySelector(".iso-grid");
-    if (isoGrid) {
-      gsap.to(isoGrid, {
-        y: -100,
-        ease: "none",
-        scrollTrigger: {
-          trigger: isoGrid,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.5,
-        }
-      });
-    }
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
@@ -110,7 +127,9 @@ export default function Home() {
     <div ref={containerRef} className="bg-transparent overflow-hidden pb-[120px]">
 
       {/* 1. HERO */}
-      <Hero />
+      <div className="hero-parallax will-change-transform">
+        <Hero />
+      </div>
 
       {/* 2. EDITOR'S NOTE */}
       <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
