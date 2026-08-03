@@ -4,9 +4,9 @@
 
 export function Newsletter() {
   return (
-    <section className="bg-surface-low border-t border-outline-variant py-[64px] md:py-[120px]">
+    <section className="py-[64px] md:py-[120px] relative z-10">
       <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-[48px] lg:gap-[80px] items-center">
+        <div className="glass-panel p-[32px] md:p-[80px] grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-[48px] lg:gap-[80px] items-center">
 
           {/* Left: Copy */}
           <div>
@@ -38,7 +38,7 @@ export function Newsletter() {
                   type="email"
                   placeholder="you@example.com"
                   aria-label="Email address"
-                  className="flex-1 bg-transparent border-0 border-b border-outline py-[12px] px-[4px] font-body text-[16px] text-foreground placeholder:text-outline focus:outline-none focus:border-bronze transition-colors duration-[180ms]"
+                  className="flex-1 bg-transparent border-0 border-b border-outline py-[12px] px-[4px] font-body text-[16px] text-foreground placeholder:text-outline-variant focus:outline-none focus:border-bronze-accent transition-colors duration-[180ms]"
                 />
                 <button
                   type="submit"

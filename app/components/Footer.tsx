@@ -54,7 +54,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-meta text-[12px] uppercase tracking-[0.1em] text-text-secondary hover:text-bronze transition-colors duration-[180ms]"
+                  className="font-meta text-[12px] uppercase tracking-[0.1em] text-text-secondary hover:text-bronze-accent transition-colors duration-[180ms]"
                 >
                   {link.label}
                 </Link>
@@ -93,7 +93,7 @@ export function Footer() {
               <span key={`${link.href}-${i}`} className="flex items-center gap-[20px]">
                 <Link
                   href={link.href}
-                  className="font-meta text-[10px] uppercase tracking-[0.12em] text-outline hover:text-bronze transition-colors duration-[180ms]"
+                  className="font-meta text-[10px] uppercase tracking-[0.12em] text-outline hover:text-bronze-accent transition-colors duration-[180ms]"
                 >
                   {link.label}
                 </Link>

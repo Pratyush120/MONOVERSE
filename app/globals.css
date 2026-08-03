@@ -108,6 +108,63 @@
   --ring: #B68A4A;
   --radius: 0px; /* Stitch: strictly orthogonal */
 }
+:root {
+  /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
+  --font-display: var(--font-eb-garamond), "Times New Roman", serif;
+  --font-body: var(--font-source-serif), "Georgia", serif;
+  --font-label: var(--font-libre-franklin), "Helvetica Neue", sans-serif;
+
+  /* ─── ANTIGRAVITY COLOR PALETTE (DARK COSMIC) ──────────────── */
+  /* Deep void background */
+  --background: #05050A; 
+  /* Floating surfaces */
+  --surface-low: rgba(20, 20, 30, 0.4);
+  --surface-container-lowest: rgba(15, 15, 25, 0.2);
+  
+  /* Text */
+  --foreground: #F8F9FA; 
+  --text-secondary: rgba(248, 249, 250, 0.65);
+  
+  /* Borders and Glass */
+  --outline: rgba(255, 255, 255, 0.15);
+  --outline-variant: rgba(255, 255, 255, 0.05);
+  --glass-border-light: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.2);
+  
+  /* Accents */
+  --bronze-accent: #D4AF37; 
+  --bronze-muted: rgba(212, 175, 55, 0.15);
+
+  /* ─── SPATIAL SHADOWS ──────────────────────────────────────── */
+  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03) inset;
+  --shadow-float-high: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.05) inset;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Kept same as root, forcing dark mode for antigravity aesthetic */
+    --background: #05050A;
+    --surface-low: rgba(20, 20, 30, 0.4);
+    --surface-container-lowest: rgba(15, 15, 25, 0.2);
+    --foreground: #F8F9FA;
+    --text-secondary: rgba(248, 249, 250, 0.65);
+    --outline: rgba(255, 255, 255, 0.15);
+    --outline-variant: rgba(255, 255, 255, 0.05);
+    --bronze-accent: #D4AF37;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+  background-image: radial-gradient(circle at 50% 0%, rgba(20, 20, 35, 1) 0%, rgba(5, 5, 10, 1) 70%);
+  background-attachment: fixed;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 32px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* ─── DARK MODE ─────────────────────────────────────────────── */
 .dark {
@@ -275,6 +332,29 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--bronze-accent);
+  }
+
+  /* ─── GLASSMORPHISM PANELS ─────────────────────────────────── */
+  .glass-panel {
+    background: var(--surface-low);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border-light);
+    border-radius: 16px;
+    box-shadow: var(--shadow-float);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-style: preserve-3d;
+  }
+
+  .glass-panel:hover {
+    background: rgba(30, 30, 45, 0.5);
+    border-color: var(--glass-border-strong);
+    box-shadow: var(--shadow-float-high);
+  }
+
+  .glass-panel-inner {
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   /* ─── ORNAMENTAL DIVIDER — kept minimal ──────────────────── */

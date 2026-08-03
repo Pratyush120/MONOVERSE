@@ -49,8 +49,8 @@ export function Header() {
           : "opacity-100 translate-y-0"
       } ${
         scrolled && !isHiddenOnHome
-          ? "bg-surface/95 backdrop-blur-sm h-[64px] border-b border-outline-variant shadow-[0_1px_0_var(--outline-variant)]"
-          : "bg-background h-[80px] border-b border-outline-variant"
+          ? "bg-surface-low/95 backdrop-blur-md h-[64px] border-b border-glass-border-light shadow-float"
+          : "bg-transparent h-[80px] border-b border-transparent"
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] h-full flex items-center justify-between">
