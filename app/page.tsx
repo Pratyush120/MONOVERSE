@@ -110,7 +110,7 @@ export default function Home() {
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <SectionLabel label="Latest Essays" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
               {latestArticles.map((article) => (
                 <ArticleCard
                   key={article.slug}
@@ -155,15 +155,15 @@ export default function Home() {
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <SectionLabel label="Explore by Subject" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-outline-variant border border-outline-variant">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px] md:gap-[64px]">
               {CATEGORIES.map((cat) => (
                 <a
                   key={cat.name}
                   href={cat.href}
-                  className="group bg-background p-[32px] md:p-[40px] hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group flex flex-col border-t border-outline-variant pt-[24px]"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{cat.name}</span>
-                  <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[180ms]">
+                  <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[200ms]">
                     {cat.description}
                   </p>
                 </a>
@@ -224,7 +224,7 @@ export default function Home() {
         <section className="py-[64px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <SectionLabel label="Start Here" />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-outline-variant border border-outline-variant">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px] md:gap-[64px]">
               {[
                 {
                   label: "Read First",
@@ -251,10 +251,10 @@ export default function Home() {
                 <a
                   key={card.title}
                   href={card.href}
-                  className="group bg-background p-[32px] md:p-[40px] flex flex-col hover:bg-surface-low transition-colors duration-[250ms]"
+                  className="group flex flex-col pt-[24px] border-t border-outline-variant"
                 >
                   <span className="taxonomy-tag block mb-[16px]">{card.label}</span>
-                  <h3 className="font-display text-[28px] font-normal leading-[1.25] text-foreground group-hover:text-bronze transition-colors duration-[180ms] mb-[16px]">
+                  <h3 className="font-display text-[28px] font-normal leading-[1.25] text-foreground group-hover:text-bronze transition-colors duration-[200ms] mb-[16px]">
                     {card.title}
                   </h3>
                   <p className="font-body text-[16px] leading-[1.7] text-text-secondary flex-1">{card.desc}</p>

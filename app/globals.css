@@ -295,18 +295,7 @@
     color: var(--bronze-accent);
   }
 
-  /* ─── CARD — Journal Page (Stitch) ───────────────────────── */
-  .journal-card {
-    background-color: var(--surface-container-lowest);
-    border: 1px solid var(--outline-variant);
-    transition: border-color 300ms ease;
-  }
-  .dark .journal-card {
-    border-color: var(--outline-variant);
-  }
-  .journal-card:hover {
-    border-color: var(--bronze-accent);
-  }
+
 
   /* ─── PAPER GRAIN BACKGROUND ─────────────────────────────── */
   .paper-grain {
