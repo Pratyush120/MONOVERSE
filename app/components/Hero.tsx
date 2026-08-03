@@ -43,30 +43,29 @@ export function Hero() {
       targets: glowRef.current,
       opacity: [0, 0.5],
       scale: [0.5, 1],
-      duration: 3000,
-      easing: "easeOutCubic",
+      duration: 2000,
+      easing: "easeOutExpo",
     })
-    // 2. Assemble the tree piece by piece! (Staggering hundreds of paths)
+    // 2. Assemble the tree piece by piece! (Extremely fast start, slow 1.5s tail)
     .add({
       targets: treePaths,
       opacity: [0, 1],
       scale: [0.8, 1],
       translateY: [30, 0],
-      duration: 800,
-      // Stagger them from the center out, or just by index
-      delay: anime.stagger(2, { start: 0 }),
-      easing: "easeOutElastic(1, .6)",
-    }, "-=2500")
-    // 3. Assemble the Monoverse typography letter by letter (path by path)
+      duration: 1800,
+      delay: anime.stagger(1, { start: 0 }),
+      easing: "easeOutExpo",
+    }, "-=1900") // Start almost immediately with the glow
+    // 3. Assemble the Monoverse typography
     .add({
       targets: textPaths,
       opacity: [0, 1],
       scale: [0.9, 1],
       translateY: [-20, 0],
-      duration: 1000,
-      delay: anime.stagger(20, { direction: 'normal' }),
-      easing: "easeOutElastic(1, .5)", 
-    }, "-=1500");
+      duration: 1800,
+      delay: anime.stagger(5, { direction: 'normal' }),
+      easing: "easeOutExpo", 
+    }, "-=1600");
 
     return () => {
       anime.remove([treePaths, textPaths, glowRef.current]);
