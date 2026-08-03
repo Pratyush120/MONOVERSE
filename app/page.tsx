@@ -184,8 +184,8 @@ export default function Home() {
           <div className="gsap-reveal-section text-center mb-[80px]">
             <SectionLabel label="Explore by Subject" />
           </div>
-          {/* Isometric Transform Container */}
-          <div className="iso-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] transform-gpu rotate-x-[60deg] rotate-z-[-45deg] scale-[0.8] origin-center shadow-float-high">
+          {/* Topic Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
             {CATEGORIES.map((cat) => (
               <a
                 key={cat.name}

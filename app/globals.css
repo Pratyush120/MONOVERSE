@@ -66,99 +66,57 @@
   --animate-fade-in: fade-in 1000ms ease-out forwards;
 }
 
-/* ─── LIGHT MODE (Stitch Default — Ivory Base) ──────────────── */
+/* ─── LIGHT MODE (Pastel Editorial) ──────────────── */
 :root {
-  --background: #FCF9F3;
-  --surface: #FCF9F3;
-  --surface-dim: #DCDAD4;
+  --background: #F8F6F2; /* Paper White */
+  --surface: #F8F6F2;
+  --surface-dim: #EAE6DF;
   --surface-container-lowest: #FFFFFF;
-  --surface-container-low: #F6F3ED;
-  --surface-container: #F0EEE8;
+  --surface-container-low: #F0EBE3;
+  --surface-container: #E6E1D8;
   --surface-container-high: #EBE8E2;
   --surface-container-highest: #E5E2DC;
 
-  --foreground: #1C1C18;
-  --on-surface: #1C1C18;
-  --on-surface-variant: #4F4539;
+  --foreground: #111111; /* Ink Black */
+  --on-surface: #111111;
+  --on-surface-variant: #666666; /* Archive Gray */
 
-  --outline: #817567;
+  --outline: #C49A3A; /* Ancient Gold */
   --outline-variant: #D3C4B4;
 
-  --bronze-accent: #B68A4A;
-  --charcoal: #111111;
-  --observatory-navy: #17243A;
-  --manuscript-lavender: #8F7CCF;
+  --bronze-accent: #C49A3A; /* Ancient Gold */
+  --charcoal: #111111; /* Ink Black */
+  --observatory-navy: #22352B; /* Deep Forest */
+  --manuscript-lavender: #9D4E3A; /* Burnt Sienna */
 
   /* Shadcn compatibility */
   --card: #FFFFFF;
-  --card-foreground: #1C1C18;
+  --card-foreground: #111111;
   --popover: #FFFFFF;
-  --popover-foreground: #1C1C18;
-  --primary: #7C571C;
+  --popover-foreground: #111111;
+  --primary: #9D4E3A;
   --primary-foreground: #FFFFFF;
   --secondary: #F0EEE8;
-  --secondary-foreground: #1C1C18;
+  --secondary-foreground: #111111;
   --muted: #F0EEE8;
-  --muted-foreground: #4F4539;
-  --accent: #B68A4A;
+  --muted-foreground: #666666;
+  --accent: #C49A3A;
   --accent-foreground: #FFFFFF;
   --destructive: #BA1A1A;
   --border: #D3C4B4;
   --input: #D3C4B4;
-  --ring: #B68A4A;
-  --radius: 0px; /* Stitch: strictly orthogonal */
-}
-:root {
-  /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
-  --font-display: var(--font-eb-garamond), "Times New Roman", serif;
-  --font-body: var(--font-source-serif), "Georgia", serif;
-  --font-label: var(--font-libre-franklin), "Helvetica Neue", sans-serif;
+  --ring: #C49A3A;
+  --radius: 0px; 
 
-  /* ─── ANTIGRAVITY COLOR PALETTE (DARK COSMIC) ──────────────── */
-  /* Deep void background */
-  --background: #05050A; 
-  /* Floating surfaces */
-  --surface-low: rgba(20, 20, 30, 0.4);
-  --surface-container-lowest: rgba(15, 15, 25, 0.2);
-  
-  /* Text */
-  --foreground: #F8F9FA; 
-  --text-secondary: rgba(248, 249, 250, 0.65);
-  
-  /* Borders and Glass */
-  --outline: rgba(255, 255, 255, 0.15);
-  --outline-variant: rgba(255, 255, 255, 0.05);
-  --glass-border-light: rgba(255, 255, 255, 0.1);
-  --glass-border-strong: rgba(255, 255, 255, 0.2);
-  
-  /* Accents */
-  --bronze-accent: #D4AF37; 
-  --bronze-muted: rgba(212, 175, 55, 0.15);
-
-  /* ─── SPATIAL SHADOWS ──────────────────────────────────────── */
-  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03) inset;
-  --shadow-float-high: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.05) inset;
+  /* ─── SPATIAL SHADOWS (Softened for light theme) ──────────────── */
+  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.05), 0 0 20px rgba(255, 255, 255, 0.5) inset;
+  --shadow-float-high: 0 30px 60px -15px rgba(0, 0, 0, 0.08), 0 0 30px rgba(255, 255, 255, 0.5) inset;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Kept same as root, forcing dark mode for antigravity aesthetic */
-    --background: #05050A;
-    --surface-low: rgba(20, 20, 30, 0.4);
-    --surface-container-lowest: rgba(15, 15, 25, 0.2);
-    --foreground: #F8F9FA;
-    --text-secondary: rgba(248, 249, 250, 0.65);
-    --outline: rgba(255, 255, 255, 0.15);
-    --outline-variant: rgba(255, 255, 255, 0.05);
-    --bronze-accent: #D4AF37;
-  }
-}
-
+/* ─── DARK MODE ─────────────────────────────────────────────── */
 body {
   color: var(--foreground);
   background-color: var(--background);
-  background-image: radial-gradient(circle at 50% 0%, rgba(20, 20, 35, 1) 0%, rgba(5, 5, 10, 1) 70%);
-  background-attachment: fixed;
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 32px;
@@ -166,45 +124,47 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── DARK MODE ─────────────────────────────────────────────── */
 .dark {
-  --background: #0D0D0B;
-  --surface: #131311;
-  --surface-dim: #1A1A17;
-  --surface-container-lowest: #0A0A08;
-  --surface-container-low: #1A1A17;
-  --surface-container: #201E1B;
-  --surface-container-high: #282520;
-  --surface-container-highest: #312E29;
+  --background: #111111; /* Ink Black */
+  --surface: #111111;
+  --surface-dim: #1A1A1A;
+  --surface-container-lowest: #0A0A0A;
+  --surface-container-low: #1A1A1A;
+  --surface-container: #222222;
+  --surface-container-high: #2A2A2A;
+  --surface-container-highest: #333333;
 
-  --foreground: #EDE8DF;
-  --on-surface: #EDE8DF;
-  --on-surface-variant: #B8AFA4;
+  --foreground: #F8F6F2; /* Paper White */
+  --on-surface: #F8F6F2;
+  --on-surface-variant: #666666; /* Archive Gray */
 
-  --outline: #8A7B6E;
-  --outline-variant: #3D3630;
+  --outline: #666666; /* Archive Gray */
+  --outline-variant: #333333;
 
-  --bronze-accent: #C9A06A;
-  --charcoal: #EDE8DF;
-  --observatory-navy: #4A6B96;
-  --manuscript-lavender: #B8A5E8;
+  --bronze-accent: #C49A3A; /* Ancient Gold */
+  --charcoal: #F8F6F2; /* Paper White */
+  --observatory-navy: #22352B; /* Deep Forest */
+  --manuscript-lavender: #9D4E3A; /* Burnt Sienna */
 
-  --card: #1A1A17;
-  --card-foreground: #EDE8DF;
-  --popover: #131311;
-  --popover-foreground: #EDE8DF;
-  --primary: #C9A06A;
-  --primary-foreground: #0D0D0B;
-  --secondary: #201E1B;
-  --secondary-foreground: #EDE8DF;
-  --muted: #201E1B;
-  --muted-foreground: #B8AFA4;
-  --accent: #C9A06A;
-  --accent-foreground: #0D0D0B;
-  --destructive: #CF6679;
-  --border: #3D3630;
-  --input: #3D3630;
-  --ring: #C9A06A;
+  --card: #1A1A1A;
+  --card-foreground: #F8F6F2;
+  --popover: #111111;
+  --popover-foreground: #F8F6F2;
+  --primary: #9D4E3A;
+  --primary-foreground: #F8F6F2;
+  --secondary: #222222;
+  --secondary-foreground: #F8F6F2;
+  --muted: #222222;
+  --muted-foreground: #666666;
+  --accent: #C49A3A;
+  --accent-foreground: #111111;
+  --destructive: #BA1A1A;
+  --border: #333333;
+  --input: #333333;
+  --ring: #C49A3A;
+  
+  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03) inset;
+  --shadow-float-high: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.05) inset;
 }
 
 @layer base {
