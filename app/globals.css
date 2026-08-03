@@ -117,6 +117,8 @@
 body {
   color: var(--foreground);
   background-color: var(--background);
+  background-image: var(--bg-image);
+  background-attachment: fixed;
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 32px;
@@ -125,29 +127,30 @@ body {
 }
 
 .dark {
-  --background: #111111; /* Ink Black */
-  --surface: #111111;
+  --background: #05050A; 
+  --bg-image: radial-gradient(circle at 50% 0%, rgba(20, 20, 35, 1) 0%, rgba(5, 5, 10, 1) 70%);
+  --surface: #131311;
   --surface-dim: #1A1A1A;
   --surface-container-lowest: #0A0A0A;
-  --surface-container-low: #1A1A1A;
+  --surface-container-low: rgba(20, 20, 30, 0.4);
   --surface-container: #222222;
   --surface-container-high: #2A2A2A;
   --surface-container-highest: #333333;
 
-  --foreground: #F8F6F2; /* Paper White */
-  --on-surface: #F8F6F2;
-  --on-surface-variant: #666666; /* Archive Gray */
+  --foreground: #F8F9FA;
+  --on-surface: #F8F9FA;
+  --on-surface-variant: rgba(248, 249, 250, 0.65);
 
-  --outline: #666666; /* Archive Gray */
-  --outline-variant: #333333;
+  --outline: rgba(255, 255, 255, 0.15);
+  --outline-variant: rgba(255, 255, 255, 0.05);
 
-  --bronze-accent: #C49A3A; /* Ancient Gold */
-  --charcoal: #F8F6F2; /* Paper White */
-  --observatory-navy: #22352B; /* Deep Forest */
-  --manuscript-lavender: #9D4E3A; /* Burnt Sienna */
+  --bronze-accent: #D4AF37;
+  --charcoal: #F8F6F2;
+  --observatory-navy: #4A6B96;
+  --manuscript-lavender: #B8A5E8;
 
   --card: #1A1A1A;
-  --card-foreground: #F8F6F2;
+  --card-foreground: #F8F9FA;
   --popover: #111111;
   --popover-foreground: #F8F6F2;
   --primary: #9D4E3A;
