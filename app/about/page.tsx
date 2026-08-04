@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -12,51 +13,49 @@ export default function AboutPage() {
       
       {/* 
         SECTION 01: EDITORIAL HERO 
-        Massive typography. Asymmetrical. Whitespace is the hero. 
+        60/40 Grid Split. Tight composition. Vertical rule.
       */}
-      <section className="min-h-[90vh] flex flex-col justify-center relative pt-[120px] pb-[80px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto">
-        
-        {/* Subtle Section Label */}
-        <div className="absolute top-[120px] left-[24px] md:left-[64px]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">01. Identity</span>
-        </div>
+      <section className="pt-[160px] pb-[80px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light">
+        <div className="flex flex-col md:flex-row items-end gap-[40px] md:gap-0">
+          
+          {/* 60% Left: Headline */}
+          <div className="w-full md:w-[60%] md:pr-[64px]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block mb-[40px]">01. Identity</span>
+            <h1 className="font-display text-[56px] md:text-[80px] lg:text-[100px] text-foreground leading-[0.95] tracking-[-0.02em]">
+              The pursuit of deeper understanding.
+            </h1>
+          </div>
 
-        {/* Massive Offset Headline */}
-        <div className="mt-[80px] md:mt-[40px] md:w-[85%] lg:w-[75%] md:ml-auto">
-          <h1 className="font-display text-[56px] md:text-[96px] lg:text-[120px] text-foreground leading-[1] tracking-[-0.02em] mb-[40px]">
-            The pursuit of<br className="hidden md:block" /> deeper understanding.
-          </h1>
+          {/* 40% Right: Intro */}
+          <div className="w-full md:w-[40%] md:pl-[64px] md:border-l border-glass-border-light pt-[24px] md:pt-0">
+            <p className="font-body text-[18px] md:text-[20px] text-text-secondary leading-[1.6]">
+              We live in an age overflowing with information yet increasingly starved of understanding. Monoverse exists to bridge those connections through careful inquiry.
+            </p>
+          </div>
+          
         </div>
-
-        {/* Offset Intro */}
-        <div className="md:w-[40%] mt-[24px] md:mt-[80px]">
-          <p className="font-body text-[18px] md:text-[20px] text-text-secondary leading-[1.7]">
-            We live in an age overflowing with information yet increasingly starved of understanding. Monoverse exists to bridge those connections through careful inquiry.
-          </p>
-        </div>
-
-        {/* Thin Architectural Line */}
-        <div className="absolute bottom-0 left-[24px] right-[24px] md:left-[64px] md:right-[64px] h-px bg-glass-border-light" />
       </section>
-
 
       {/* 
         SECTION 02: MISSION
-        Magazine spread. Large pull quote. Drop cap. 
+        True two-column lockup. Oversized quotation mark.
       */}
-      <section className="py-[120px] md:py-[200px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto relative">
-        <div className="flex flex-col md:flex-row gap-[80px] md:gap-[120px] items-start">
+      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto">
+        <div className="flex flex-col md:flex-row gap-[80px] md:gap-[120px] items-center">
           
-          {/* Large Pull Quote */}
-          <div className="md:w-1/2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze-accent block mb-[40px]">02. Mission</span>
-            <h2 className="font-display text-[40px] md:text-[56px] text-foreground leading-[1.1] italic">
-              "Every day, thousands of articles explain what happened. Few ask why it happened."
+          {/* Left: Pull Quote with oversized mark */}
+          <div className="w-full md:w-[55%] relative">
+            <span className="absolute -top-[60px] -left-[20px] md:-top-[80px] md:-left-[40px] font-display text-[160px] md:text-[240px] text-bronze-accent/20 leading-none select-none">
+              &ldquo;
+            </span>
+            <h2 className="font-display text-[40px] md:text-[56px] text-foreground leading-[1.05] italic relative z-10">
+              Every day, thousands of articles explain what happened. Few ask why it happened.
             </h2>
           </div>
 
-          {/* Narrow Text Column with Drop Cap */}
-          <div className="md:w-[40%] md:pt-[120px]">
+          {/* Right: Mission Statement with Drop Cap */}
+          <div className="w-full md:w-[45%]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze-accent block mb-[32px] border-b border-glass-border-light pb-[16px]">02. Mission</span>
             <p className="font-body text-[18px] text-text-secondary leading-[1.8] first-letter:font-display first-letter:text-[72px] first-letter:text-foreground first-letter:float-left first-letter:leading-[0.8] first-letter:mr-[16px] first-letter:mt-[8px]">
               This is an independent research publication dedicated to exploring the ideas that shape our world. Not through ideology or sensationalism, but through first-principles thinking. A technological breakthrough is also a story about economics. A political conflict is inseparable from history. Our goal is to uncover those invisible threads.
             </p>
@@ -65,158 +64,164 @@ export default function AboutPage() {
         </div>
       </section>
 
-
       {/* 
         SECTION 03: EDITORIAL PRINCIPLES
-        Asymmetrical rhythm. Thin dividers. No stacked cards.
+        Staggered layout. Alternating widths. Subtle horizontal rules.
       */}
-      <section className="py-[120px] md:py-[200px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto relative border-t border-glass-border-light">
-        <div className="mb-[120px]">
+      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-t border-glass-border-light">
+        <div className="mb-[80px]">
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block">03. Philosophy</span>
         </div>
 
-        <div className="flex flex-col space-y-[120px] md:space-y-[160px]">
+        <div className="flex flex-col space-y-[40px] md:space-y-[64px]">
           
-          {/* Principle 1: Left Aligned, Narrow */}
-          <div className="md:w-1/3 border-t border-bronze-accent/30 pt-[24px]">
-            <span className="font-mono text-[12px] text-bronze-accent block mb-[16px]">I.</span>
-            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[24px]">Depth over Speed</h3>
-            <p className="font-body text-[16px] text-text-secondary leading-[1.8]">
+          {/* Principle 1 */}
+          <div className="w-full border-t border-bronze-accent pt-[24px] flex flex-col md:flex-row md:items-start gap-[24px] md:gap-[120px]">
+            <h3 className="font-display text-[32px] md:text-[48px] text-foreground w-full md:w-1/2 leading-[1.1]">Depth over Speed</h3>
+            <p className="font-body text-[16px] md:text-[18px] text-text-secondary leading-[1.6] w-full md:w-1/2 md:pt-[12px]">
               We do not race to publish takes on the news of the day. We publish pieces that contextualize the present through the deep past, designed to remain valuable years from now.
             </p>
           </div>
 
-          {/* Principle 2: Right Aligned, Medium */}
-          <div className="md:w-[45%] md:ml-auto border-t border-glass-border-light pt-[24px]">
-            <span className="font-mono text-[12px] text-text-secondary block mb-[16px]">II.</span>
-            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[24px]">Evidence over Opinion</h3>
-            <p className="font-body text-[16px] text-text-secondary leading-[1.8]">
+          {/* Principle 2 */}
+          <div className="w-full md:w-[80%] md:ml-auto border-t border-glass-border-light pt-[24px] flex flex-col md:flex-row md:items-start gap-[24px] md:gap-[80px]">
+            <h3 className="font-display text-[32px] md:text-[40px] text-foreground w-full md:w-[45%] leading-[1.1]">Evidence over Opinion</h3>
+            <p className="font-body text-[16px] text-text-secondary leading-[1.6] w-full md:w-[55%] md:pt-[8px]">
               Arguments must be grounded in rigorous research and historical precedent rather than mere sentiment. We cultivate understanding, not outrage.
             </p>
           </div>
 
-          {/* Principle 3: Offset Left, Wide */}
-          <div className="md:w-[60%] md:ml-[10%] border-t border-glass-border-light pt-[24px]">
-            <span className="font-mono text-[12px] text-text-secondary block mb-[16px]">III.</span>
-            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[24px]">Curiosity over Certainty</h3>
-            <p className="font-body text-[18px] text-text-secondary leading-[1.8]">
+          {/* Principle 3 */}
+          <div className="w-full md:w-[90%] border-t border-glass-border-light pt-[24px] flex flex-col md:flex-row md:items-start gap-[24px] md:gap-[100px]">
+            <h3 className="font-display text-[32px] md:text-[40px] text-foreground w-full md:w-[50%] leading-[1.1]">Curiosity over Certainty</h3>
+            <p className="font-body text-[16px] text-text-secondary leading-[1.6] w-full md:w-[50%] md:pt-[8px]">
               The objective is not to tell you what to think. It is to help you learn how to think. The best writing opens new avenues of inquiry rather than closing them with absolute declarations.
             </p>
           </div>
 
-          {/* Principle 4: Right Aligned, Narrow */}
-          <div className="md:w-1/3 md:ml-auto border-t border-glass-border-light pt-[24px]">
-            <span className="font-mono text-[12px] text-text-secondary block mb-[16px]">IV.</span>
-            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[24px]">Dialogue over Noise</h3>
-            <p className="font-body text-[16px] text-text-secondary leading-[1.8]">
+          {/* Principle 4 */}
+          <div className="w-full md:w-[70%] md:ml-[15%] border-t border-glass-border-light pt-[24px] flex flex-col md:flex-row md:items-start gap-[24px] md:gap-[60px]">
+            <h3 className="font-display text-[32px] md:text-[40px] text-foreground w-full md:w-[50%] leading-[1.1]">Dialogue over Noise</h3>
+            <p className="font-body text-[16px] text-text-secondary leading-[1.6] w-full md:w-[50%] md:pt-[8px]">
               We welcome contrarian ideas and critiques of existing structures, provided they are argued constructively and elegantly.
             </p>
           </div>
 
-          {/* Principle 5: Left Aligned, Medium */}
-          <div className="md:w-[45%] border-t border-glass-border-light pt-[24px]">
-            <span className="font-mono text-[12px] text-text-secondary block mb-[16px]">V.</span>
-            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[24px]">Quality over Quantity</h3>
-            <p className="font-body text-[16px] text-text-secondary leading-[1.8]">
+          {/* Principle 5 */}
+          <div className="w-full md:w-[60%] md:ml-auto border-t border-glass-border-light pt-[24px]">
+            <h3 className="font-display text-[32px] md:text-[40px] text-foreground mb-[16px] leading-[1.1]">Quality over Quantity</h3>
+            <p className="font-body text-[16px] text-text-secondary leading-[1.6]">
               We publish less, ensuring every piece that enters the archive is of lasting value. Knowledge should not be consumed—it should be explored.
             </p>
           </div>
 
-          {/* Principle 6: Centered, Heroic */}
-          <div className="md:w-2/3 mx-auto text-center border-t border-bronze-accent/30 pt-[40px]">
-            <span className="font-mono text-[12px] text-bronze-accent block mb-[24px]">VI.</span>
-            <h3 className="font-display text-[40px] md:text-[56px] text-foreground mb-[32px]">Ideas over Virality</h3>
-            <p className="font-body text-[20px] text-text-secondary leading-[1.8]">
-              Better questions create better thinking. And better thinking shapes better civilizations.
-            </p>
-          </div>
-
         </div>
       </section>
-
 
       {/* 
         SECTION 04: EDITORIAL DESKS
-        Massive whitespace. Minimal text. 
+        Alternate Image/Text alignment. Editorial entries.
       */}
-      <section className="py-[160px] md:py-[240px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto relative border-t border-glass-border-light">
-        <div className="flex flex-col md:flex-row justify-between items-start mb-[160px]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-[40px] md:mb-0">04. Desks</span>
-          <p className="font-body text-[18px] text-text-secondary md:w-1/3">
-            Monoverse is organized into distinct editorial domains, drawing from philosophy, history, science, cinema, and systems thinking.
-          </p>
+      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-t border-glass-border-light">
+        <div className="mb-[80px]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block">04. Desks</span>
         </div>
 
-        <div className="space-y-[40px] md:space-y-[80px]">
+        <div className="space-y-[80px] md:space-y-[120px]">
           
-          <div className="group">
-            <h3 className="font-display text-[48px] md:text-[80px] text-foreground mb-[16px] group-hover:text-bronze-accent transition-colors duration-500">
-              Essays
-            </h3>
-            <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-glass-border-light pb-[40px] md:pb-[80px] gap-[24px]">
-              <p className="font-body text-[16px] md:text-[18px] text-text-secondary md:w-1/2">
-                Deep explorations of philosophy, history, science, and technology.
+          {/* Desk 1: Text Left, Image Right */}
+          <div className="flex flex-col-reverse md:flex-row items-center gap-[40px] md:gap-[80px] border-b border-glass-border-light pb-[80px]">
+            <div className="w-full md:w-1/2">
+              <span className="font-mono text-[11px] text-bronze-accent block mb-[16px]">Domain I</span>
+              <h3 className="font-display text-[48px] md:text-[64px] text-foreground mb-[24px] leading-[1]">Essays & Research</h3>
+              <p className="font-body text-[18px] text-text-secondary mb-[32px] leading-[1.6]">
+                Deep explorations of philosophy, history, science, and technology. Uncovering the invisible threads that connect distinct disciplines.
               </p>
-              <Link href="/explore" className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
-                Read the Archive ↗
+              <Link href="/explore" className="font-label text-[12px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
+                Explore Essays →
+              </Link>
+            </div>
+            <div className="w-full md:w-1/2 relative h-[300px] md:h-[500px] grayscale hover:grayscale-0 transition-all duration-700">
+              <Image 
+                src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&q=80&w=1200" 
+                alt="Library archive"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Desk 2: Image Left, Text Right */}
+          <div className="flex flex-col md:flex-row items-center gap-[40px] md:gap-[80px] border-b border-glass-border-light pb-[80px]">
+            <div className="w-full md:w-[45%] relative h-[300px] md:h-[600px] md:-ml-[64px] grayscale hover:grayscale-0 transition-all duration-700">
+              <Image 
+                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=80&w=1200" 
+                alt="Cinema projector"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="w-full md:w-[55%] md:pl-[40px]">
+              <span className="font-mono text-[11px] text-bronze-accent block mb-[16px]">Domain II</span>
+              <h3 className="font-display text-[48px] md:text-[64px] text-foreground mb-[24px] leading-[1]">Cinema</h3>
+              <p className="font-body text-[18px] text-text-secondary mb-[32px] leading-[1.6]">
+                Treating film as a cultural, historical, and technological phenomenon. Reviews, festival coverage, and industry analysis.
+              </p>
+              <Link href="/cinema" className="font-label text-[12px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
+                Read Cinema →
               </Link>
             </div>
           </div>
 
-          <div className="group">
-            <h3 className="font-display text-[48px] md:text-[80px] text-foreground mb-[16px] group-hover:text-bronze-accent transition-colors duration-500">
-              Cinema
-            </h3>
-            <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-glass-border-light pb-[40px] md:pb-[80px] gap-[24px]">
-              <p className="font-body text-[16px] md:text-[18px] text-text-secondary md:w-1/2">
-                Treating film as a cultural, historical, and technological phenomenon.
+          {/* Desk 3: Text Left, Image Right */}
+          <div className="flex flex-col-reverse md:flex-row items-center gap-[40px] md:gap-[80px]">
+            <div className="w-full md:w-1/2">
+              <span className="font-mono text-[11px] text-bronze-accent block mb-[16px]">Domain III</span>
+              <h3 className="font-display text-[48px] md:text-[64px] text-foreground mb-[24px] leading-[1]">Community</h3>
+              <p className="font-body text-[18px] text-text-secondary mb-[32px] leading-[1.6]">
+                Focused observations and emerging ideas from thoughtful readers. A curated space for intellectual dialogue.
               </p>
-              <Link href="/cinema" className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
-                Explore Cinema ↗
+              <Link href="/community" className="font-label text-[12px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
+                View Community →
               </Link>
             </div>
-          </div>
-
-          <div className="group">
-            <h3 className="font-display text-[48px] md:text-[80px] text-foreground mb-[16px] group-hover:text-bronze-accent transition-colors duration-500">
-              Community
-            </h3>
-            <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-glass-border-light pb-[40px] md:pb-[80px] gap-[24px]">
-              <p className="font-body text-[16px] md:text-[18px] text-text-secondary md:w-1/2">
-                Focused observations and emerging ideas from thoughtful readers.
-              </p>
-              <Link href="/community" className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground hover:text-bronze-accent transition-colors">
-                View Community ↗
-              </Link>
+            <div className="w-full md:w-1/2 relative h-[300px] md:h-[400px] md:-mr-[64px] grayscale hover:grayscale-0 transition-all duration-700">
+              <Image 
+                src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=1200" 
+                alt="Community gathering"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
 
         </div>
       </section>
 
-
       {/* 
         SECTION 05: CLOSING STATEMENT
-        Cinematic ending. High negative space.
+        Framed cinematic ending.
       */}
-      <section className="min-h-[80vh] flex flex-col items-center justify-center py-[120px] px-[24px] md:px-[64px] text-center border-t border-glass-border-light">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-[64px]">05. Conclusion</span>
-        
-        <h2 className="font-display text-[40px] md:text-[64px] lg:text-[80px] text-foreground leading-[1.1] max-w-[1000px] mb-[40px]">
-          The universe becomes more coherent when we learn to see the invisible threads connecting everything.
-        </h2>
-        
-        <p className="font-body text-[18px] text-text-secondary mb-[80px]">
-          Join us in cultivating understanding.
-        </p>
+      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-t border-b border-glass-border-light my-[80px] bg-glass-overlay">
+        <div className="flex flex-col items-center text-center max-w-[800px] mx-auto">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary mb-[40px]">05. Conclusion</span>
+          
+          <h2 className="font-display text-[32px] md:text-[56px] text-foreground leading-[1.1] mb-[24px]">
+            The universe becomes more coherent when we learn to see the invisible threads.
+          </h2>
+          
+          <p className="font-body text-[16px] md:text-[18px] text-text-secondary mb-[48px]">
+            Join us in cultivating understanding.
+          </p>
 
-        <div className="flex flex-col sm:flex-row gap-[24px] items-center">
-          <Link href="/explore" className="btn-primary text-[14px] py-[16px] px-[48px]">
-            Explore Monoverse
-          </Link>
-          <Link href="/write" className="font-label text-[12px] font-[700] uppercase tracking-[0.2em] text-bronze-accent hover:text-foreground transition-colors px-[24px] py-[16px]">
-            Write for Us
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-[24px] items-center">
+            <Link href="/explore" className="btn-primary text-[12px] py-[16px] px-[40px]">
+              Explore Monoverse
+            </Link>
+            <Link href="/write" className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze-accent hover:text-foreground transition-colors px-[24px] py-[16px] border border-bronze-accent/30 hover:border-bronze-accent">
+              Write for Us
+            </Link>
+          </div>
         </div>
       </section>
 
