@@ -10,7 +10,7 @@ export default async function Home() {
     title: article.title,
     description: article.summary,
     author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
-    image: article.coverImage?.url,
+    image: article.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
     date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
     readingTime: article.readingTime ? `${article.readingTime} min read` : "10 min read",
     domain: article.desk?.name || "Essays",
