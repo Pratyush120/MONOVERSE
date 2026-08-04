@@ -1,4 +1,4 @@
-const allCinemaPeople: any[] = [];
+import { getCinemaPeople } from "@/lib/actions/cinema";
 import { PeopleCard } from "../../components/PeopleCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   description: "Directors, actors, writers, and the architects of cinema.",
 };
 
-export default function PeoplePage() {
+export default async function PeoplePage() {
+  const allCinemaPeople = await getCinemaPeople(50);
+  
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
       <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] text-center">

@@ -1,4 +1,4 @@
-const allCinemaArticles: any[] = [];
+import { getCinemaContentByType } from "@/lib/actions/cinema";
 import { ReviewCard } from "../../components/ReviewCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description: "Editorial reviews for movies, series, documentaries, and anime.",
 };
 
-export default function ReviewsPage() {
-  const reviews = allCinemaArticles.filter((a) => a.editorialType === "Review");
+export default async function ReviewsPage() {
+  const reviews = await getCinemaContentByType("review", 50);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
