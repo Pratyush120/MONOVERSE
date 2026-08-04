@@ -3,7 +3,7 @@ import type { SVGProps } from "react";
 
 const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => (
 <svg width="412" height="766" viewBox="0 0 412 766" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-<style dangerouslySetInnerHTML={{ __html: `
+<style>{`
   .tree {
     animation: treeIn 2.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
     opacity: 0;
@@ -25,8 +25,31 @@ const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => (
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-`}} />
+`}</style>
 
+<style>{`
+  .tree {
+    animation: treeIn 2.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    opacity: 0;
+    transform-origin: bottom center;
+    transform-box: fill-box;
+  }
+  .monoverse {
+    animation: monoIn 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
+    transform-origin: center center;
+    transform-box: fill-box;
+  }
+  @keyframes treeIn {
+    from { opacity: 0; transform: scale(0.97) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes monoIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+`}</style>
 
 <g clipPath="url(#clip0_723_2150)">
 <g className="tree">

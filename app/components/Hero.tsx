@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import anime from "animejs";
 import SvgHero from "./HeroSVG";
-import SvgHeroMobile from "./HeroMobileSVG";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -204,11 +203,8 @@ export function Hero() {
         className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center will-change-transform"
         style={{ transformOrigin: "center bottom", transformStyle: "preserve-3d" }}
       >
-        <div className="hidden md:block w-full h-full max-w-[1600px] mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
+        <div className="w-full h-full max-w-[1600px] mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain">
           <SvgHero />
-        </div>
-        <div className="block md:hidden w-full h-full mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
-          <SvgHeroMobile />
         </div>
       </div>
 

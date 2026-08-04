@@ -16,6 +16,7 @@ const NAV_LINKS = [
   { label: "Home",        href: "/" },
   { label: "Explore",     href: "/explore" },
   { label: "Essays",      href: "/essays" },
+  { label: "Cinema",      href: "/cinema" },
   { label: "Collections", href: "/collections" },
   { label: "Community",   href: "/community" },
   { label: "About",       href: "/about" },

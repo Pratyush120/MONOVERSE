@@ -3,6 +3,7 @@
 import { EssayCard } from "./components/EssayCard";
 import { Newsletter } from "./components/Newsletter";
 import { Hero } from "./components/Hero";
+import { SectionLabel } from "./components/SectionLabel";
 import { allEssays } from "contentlayer/generated";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -17,14 +18,6 @@ const DOMAINS = [
   { name: "Health",            href: "/explore/health",             description: "The body as a system, not a collection of symptoms." },
   { name: "Literature",        href: "/explore/literature",         description: "Analyzing the modern mythologies of text and society." },
 ];
-
-function SectionLabel({ label }: { label: string }) {
-  return (
-    <div className="mb-[40px] md:mb-[56px] text-center md:text-left">
-      <span className="section-label">{label}</span>
-    </div>
-  );
-}
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
