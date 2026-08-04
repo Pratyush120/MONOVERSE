@@ -49,8 +49,15 @@ const authorData = {
   quote: "Reality is never one-dimensional. The deeper you look, the more everything connects."
 };
 
-export default function AuthorPage({ params }: { params: { slug: string } }) {
-  const authorName = params.slug === "pratyush-mohanty" ? authorData.name : params.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+export async function generateStaticParams() {
+  return [
+    { slug: 'pratyush-mohanty' },
+  ];
+}
+
+export default async function AuthorPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const authorName = resolvedParams.slug === "pratyush-mohanty" ? authorData.name : resolvedParams.slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   
   return (
     <div className="bg-transparent overflow-hidden selection:bg-bronze-accent/20 pb-[120px]">
