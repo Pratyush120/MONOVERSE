@@ -35,7 +35,7 @@ export function EssayCard({
   if (variant === "compact") {
     return (
       <Link
-        href={`/article/${slug}`}
+        href={slug.startsWith('/') ? slug : `/essay/${slug}`}
         className="glass-panel relative overflow-hidden group flex gap-[24px] p-[16px] items-center mb-[16px] hover:scale-[1.02] hover:shadow-2xl transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
       >
         <div className="absolute top-0 left-0 w-full h-[2px] bg-bronze-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] origin-left z-20" />
@@ -66,7 +66,7 @@ export function EssayCard({
   if (variant === "featured") {
     return (
       <Link
-        href={`/article/${slug}`}
+        href={slug.startsWith('/') ? slug : `/essay/${slug}`}
         className="glass-panel relative overflow-hidden group flex flex-col md:flex-row p-[16px] md:p-[24px] gap-[24px] items-center hover:scale-[1.02] hover:shadow-2xl transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
       >
         <div className="absolute top-0 left-0 w-full h-[2px] bg-bronze-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] origin-left z-20" />
@@ -98,7 +98,7 @@ export function EssayCard({
   // Default variant — vertical card
   return (
     <Link
-      href={`/article/${slug}`}
+      href={slug.startsWith('/') ? slug : `/essay/${slug}`}
       className="glass-panel relative overflow-hidden group flex flex-col h-full p-[16px] hover:scale-[1.02] hover:shadow-2xl transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
     >
       <div className="absolute top-0 left-0 w-full h-[2px] bg-bronze-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] origin-left z-20" />

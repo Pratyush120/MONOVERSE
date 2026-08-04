@@ -14,10 +14,10 @@ export function ShareButtons({ title, slug, showLabel = false }: ShareButtonsPro
       if (navigator.share) {
         await navigator.share({
           title,
-          url: `/article/${slug}`,
+          url: `/essay/${slug}`,
         });
       } else {
-        await navigator.clipboard.writeText(`${window.location.origin}/article/${slug}`);
+        await navigator.clipboard.writeText(`${window.location.origin}/essay/${slug}`);
         alert("Link copied to clipboard!");
       }
     } catch (err) {
