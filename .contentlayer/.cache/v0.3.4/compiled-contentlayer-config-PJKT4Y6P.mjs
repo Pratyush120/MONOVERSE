@@ -1,8 +1,8 @@
+// contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import readingTime from "reading-time";
 import { slug } from "github-slugger";
-
-export const Essay = defineDocumentType(() => ({
+var Essay = defineDocumentType(() => ({
   name: "Essay",
   filePathPattern: `essays/**/*.mdx`,
   contentType: "mdx",
@@ -12,23 +12,26 @@ export const Essay = defineDocumentType(() => ({
     author: { type: "string", required: true },
     authorRole: { type: "string", required: true },
     date: { type: "date", required: true },
-    domain: { type: "string", required: true }, // Replaces category
-    editorialType: { type: "string", required: true, default: "Essay" }, // Featured, Editor's Pick, Long Read, etc.
-    series: { type: "string" }, // Optional series name
+    domain: { type: "string", required: true },
+    // Replaces category
+    editorialType: { type: "string", required: true, default: "Essay" },
+    // Featured, Editor's Pick, Long Read, etc.
+    series: { type: "string" },
+    // Optional series name
     disciplines: { type: "list", of: { type: "string" }, required: true },
     featured: { type: "boolean", default: false },
     image: { type: "string", required: true },
     pullQuote: { type: "string" },
-    draft: { type: "boolean", default: false },
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("essays/", ""),
+      resolve: (doc) => doc._raw.flattenedPath.replace("essays/", "")
     },
     readingTime: {
       type: "json",
-      resolve: (doc) => readingTime(doc.body.raw),
+      resolve: (doc) => readingTime(doc.body.raw)
     },
     toc: {
       type: "json",
@@ -40,12 +43,11 @@ export const Essay = defineDocumentType(() => ({
           return { level: flag, text: content, slug: slug(content ?? "") };
         });
         return headings;
-      },
-    },
-  },
+      }
+    }
+  }
 }));
-
-export const Collection = defineDocumentType(() => ({
+var Collection = defineDocumentType(() => ({
   name: "Collection",
   filePathPattern: `collections/**/*.mdx`,
   contentType: "mdx",
@@ -54,19 +56,19 @@ export const Collection = defineDocumentType(() => ({
     description: { type: "string", required: true },
     whyItExists: { type: "string", required: true },
     whatToLearn: { type: "list", of: { type: "string" }, required: true },
-    recommendedOrder: { type: "list", of: { type: "string" }, required: true }, // List of essay slugs
+    recommendedOrder: { type: "list", of: { type: "string" }, required: true },
+    // List of essay slugs
     image: { type: "string", required: true },
-    draft: { type: "boolean", default: false },
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("collections/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("collections/", "")
+    }
+  }
 }));
-
-export const Author = defineDocumentType(() => ({
+var Author = defineDocumentType(() => ({
   name: "Author",
   filePathPattern: `authors/**/*.mdx`,
   contentType: "mdx",
@@ -74,22 +76,29 @@ export const Author = defineDocumentType(() => ({
     name: { type: "string", required: true },
     bio: { type: "string", required: true },
     expertise: { type: "list", of: { type: "string" }, required: true },
-    socialLinks: { type: "json" }, // e.g. { twitter: "...", website: "..." }
-    avatar: { type: "string", required: true },
+    socialLinks: { type: "json" },
+    // e.g. { twitter: "...", website: "..." }
+    avatar: { type: "string", required: true }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("authors/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("authors/", "")
+    }
+  }
 }));
-
-export default makeSource({
+var contentlayer_config_default = makeSource({
   contentDirPath: "content",
   documentTypes: [Essay, Collection, Author],
   mdx: {
     remarkPlugins: [],
-    rehypePlugins: [],
-  },
+    rehypePlugins: []
+  }
 });
+export {
+  Author,
+  Collection,
+  Essay,
+  contentlayer_config_default as default
+};
+//# sourceMappingURL=compiled-contentlayer-config-PJKT4Y6P.mjs.map

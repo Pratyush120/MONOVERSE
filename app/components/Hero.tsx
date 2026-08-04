@@ -8,6 +8,7 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const svgContainerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!svgContainerRef.current) return;
@@ -30,34 +31,99 @@ export function Hero() {
     // 1. Bloom the radial glow first to set the atmosphere
     tl.add({
       targets: glowRef.current,
-      opacity: [0, 0.5],
-      scale: [0.5, 1],
-      duration: 2000,
-      easing: "easeOutExpo",
+      opacity: [0, 0.4],
+      scale: [0.8, 1],
+      duration: 3000,
+      easing: "easeOutCubic",
     })
     // 2. Assemble the tree piece by piece! (Extremely fast start, slow 1.5s tail)
     .add({
       targets: treePaths,
       opacity: [0, 1],
-      scale: [0.8, 1],
-      translateY: [30, 0],
-      duration: 1800,
-      delay: anime.stagger(1, { start: 0 }),
-      easing: "easeOutExpo",
-    }, "-=1900") // Start almost immediately with the glow
-    // 3. Assemble the Monoverse typography
+      scale: [0.95, 1],
+      translateY: [20, 0],
+      duration: 3000,
+      delay: anime.stagger(1.5, { start: 0 }),
+      easing: "easeOutCubic",
+    }, "-=2500") // Start almost immediately with the glow
+    // 3. Assemble the Monoverse typography (gradual 5-7 second reveal per manifesto)
     .add({
       targets: textPaths,
       opacity: [0, 1],
-      scale: [0.9, 1],
-      translateY: [-20, 0],
-      duration: 1800,
-      delay: anime.stagger(5, { direction: 'normal' }),
-      easing: "easeOutExpo", 
-    }, "-=1600");
+      scale: [0.98, 1],
+      translateY: [-10, 0],
+      duration: 5000,
+      delay: anime.stagger(15, { direction: 'normal' }),
+      easing: "easeOutCubic", 
+    }, "-=2000");
 
     return () => {
       anime.remove([treePaths, textPaths, glowRef.current]);
+    };
+  }, []);
+
+  // Ambient dust particles
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let particles: {x: number, y: number, radius: number, vx: number, vy: number, alpha: number}[] = [];
+    const numParticles = 40; // Very sparse dust
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Init particles
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        vx: (Math.random() - 0.5) * 0.15, // Tiny drifting dust
+        vy: (Math.random() - 0.5) * 0.15 - 0.05, // Drifting upwards slightly
+        alpha: Math.random() * 0.3 + 0.1
+      });
+    }
+
+    let animationFrameId: number;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(196, 154, 58, 1)"; // Bronze accent
+
+      particles.forEach(p => {
+        if (!prefersReducedMotion) {
+          p.x += p.vx;
+          p.y += p.vy;
+          
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+        }
+
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -100,8 +166,22 @@ export function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative overflow-hidden min-h-[100vh] flex flex-col items-center justify-center bg-transparent perspective-[1000px]"
+      className="relative w-full h-[100svh] flex flex-col justify-center items-center overflow-hidden"
     >
+      {/* Cinematic Vignette */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-30" 
+        style={{
+          background: "radial-gradient(circle at center, transparent 30%, rgba(var(--background), 0.8) 100%)",
+        }}
+      />
+
+      {/* Ambient Dust Particles */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 pointer-events-none z-0 opacity-60"
+      />
+
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div
           className="absolute inset-0 paper-grain opacity-[0.03]"

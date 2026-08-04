@@ -1,6 +1,6 @@
-import { allArticles } from "contentlayer/generated";
-import { ArticleCard } from "../components/ArticleCard";
-import { SectionReveal } from "../components/SectionReveal";
+import { allEssays } from "contentlayer/generated";
+import { EssayCard } from "../components/EssayCard";
+import { Section } from "../components/Section";
 
 // Stitch Design: The Archive Index
 // Clean ivory surface, giant EB Garamond header, 2-column journal card layout
@@ -12,13 +12,13 @@ export const metadata = {
 };
 
 export default function ArchivePage() {
-  const sortedArticles = allArticles.sort(
+  const sortedArticles = allEssays.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   return (
     <div className="bg-background min-h-screen">
-      <SectionReveal>
+      <Section>
         <header className="max-w-[1440px] mx-auto px-[64px] py-[120px] border-b border-outline-variant">
           <div className="max-w-[800px]">
             <div className="flex items-center gap-[16px] mb-[32px]">
@@ -39,9 +39,9 @@ export default function ArchivePage() {
             </p>
           </div>
         </header>
-      </SectionReveal>
+      </Section>
 
-      <SectionReveal delay={80}>
+      <Section>
         <section className="py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[64px]">
             {/* Top metadata bar */}
@@ -56,17 +56,23 @@ export default function ArchivePage() {
             {/* Stitch 2-column journal grid with 1px border map */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-outline-variant border border-outline-variant">
               {sortedArticles.map((article) => (
-                <ArticleCard
+                <EssayCard
                   key={article.slug}
-                  {...article}
+                  slug={article.slug}
+                  title={article.title}
+                  description={article.description}
+                  category={article.domain}
+                  author={article.author}
                   readTime={article.readingTime.text}
-                  variant="default"
+                  date={article.date}
+                  image={article.image}
+                  variant="compact"
                 />
               ))}
             </div>
           </div>
         </section>
-      </SectionReveal>
+      </Section>
     </div>
   );
 }

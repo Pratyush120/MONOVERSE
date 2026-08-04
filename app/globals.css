@@ -60,10 +60,12 @@
   /* Shape — 0px radius everywhere per Stitch spec */
   --radius-none: 0px;
 
-  /* Motion — Stitch: weighted, purposeful, no bounce */
-  --animate-fade-slow: fade-in 800ms ease-out forwards;
-  --animate-fade-up: fade-up 800ms ease-out forwards;
-  --animate-fade-in: fade-in 1000ms ease-out forwards;
+  /* Motion — Cinematic Bezier Curves */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 400ms;
+  --duration-normal: 800ms;
+  --duration-slow: 1200ms;
 }
 
 /* ─── LIGHT MODE (Pastel Editorial) ──────────────── */
@@ -214,22 +216,14 @@ body {
 
   /* ─── NAVIGATION LINK ────────────────────────────────────── */
   .nav-link {
-    position: relative;
-    font-family: var(--font-nav);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--on-surface-variant);
-    transition: color 250ms ease;
+    @apply font-nav text-[13px] tracking-[0.08em] uppercase text-text-secondary hover:text-foreground transition-colors duration-[300ms] py-2 relative;
   }
-  .nav-link:hover {
-    color: var(--on-surface);
-  }
-  /* Stitch: single thin underline on hover */
+  
   .nav-link::after {
     content: '';
     position: absolute;
+    bottom: 0;
+    left: 50%;
     width: 0;
     height: 0.5px;
     bottom: -4px;
@@ -390,6 +384,53 @@ body {
   0%   { transform: translate(0px, 0px) scale(1); }
   50%  { transform: translate(3px, -1px) scale(1.002); }
   100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* ─── TYPOGRAPHIC READING EXPERIENCE ────────────────────────────── */
+@layer utilities {
+  .drop-cap {
+    float: left;
+    font-size: 3.8em;
+    line-height: 0.8;
+    margin-right: 0.15em;
+    margin-top: 0.1em;
+    font-family: var(--font-display);
+    color: var(--bronze-accent);
+  }
+
+  .elegant-blockquote {
+    border-left: 1px solid var(--bronze-accent);
+    padding-left: 2rem;
+    font-style: italic;
+    font-family: var(--font-body);
+    font-size: 1.15em;
+    line-height: 1.9;
+    margin: 3rem 0;
+    color: var(--text-secondary);
+    position: relative;
+  }
+
+  .elegant-blockquote::before {
+    content: '"';
+    position: absolute;
+    left: -0.5rem;
+    top: -1rem;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: var(--outline-variant);
+    opacity: 0.3;
+  }
+
+  /* Automatically apply drop cap to the first paragraph of an article */
+  .article-content > p:first-of-type::first-letter {
+    float: left;
+    font-size: 3.8em;
+    line-height: 0.8;
+    margin-right: 0.15em;
+    margin-top: 0.1em;
+    font-family: var(--font-display);
+    color: var(--bronze-accent);
+  }
 }
 
 /* ─── REDUCED MOTION ─────────────────────────────────────────── */

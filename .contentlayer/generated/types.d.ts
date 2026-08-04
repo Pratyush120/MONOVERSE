@@ -8,17 +8,51 @@ export { isType } from 'contentlayer/client'
 export type { Markdown, MDX, ImageFieldData, IsoDateTimeString }
 
 /** Document types */
-export type Article = {
+export type Author = {
   /** File path relative to `contentDirPath` */
   _id: string
   _raw: Local.RawDocumentData
-  type: 'Article'
+  type: 'Author'
+  name: string
+  bio: string
+  expertise: string[]
+  socialLinks?: any | undefined
+  avatar: string
+  /** MDX file body */
+  body: MDX
+  slug: string
+}
+
+export type Collection = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Collection'
+  title: string
+  description: string
+  whyItExists: string
+  whatToLearn: string[]
+  recommendedOrder: string[]
+  image: string
+  draft: boolean
+  /** MDX file body */
+  body: MDX
+  slug: string
+}
+
+export type Essay = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Essay'
   title: string
   description: string
   author: string
   authorRole: string
   date: IsoDateTimeString
-  category: string
+  domain: string
+  editorialType: string
+  series?: string | undefined
   disciplines: string[]
   featured: boolean
   image: string
@@ -39,15 +73,17 @@ export type Article = {
 export type AllTypes = DocumentTypes | NestedTypes
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames
 
-export type DocumentTypes = Article
-export type DocumentTypeNames = 'Article'
+export type DocumentTypes = Author | Collection | Essay
+export type DocumentTypeNames = 'Author' | 'Collection' | 'Essay'
 
 export type NestedTypes = never
 export type NestedTypeNames = never
 
 export type DataExports = {
   allDocuments: DocumentTypes[]
-  allArticles: Article[]
+  allEssays: Essay[]
+  allCollections: Collection[]
+  allAuthors: Author[]
 }
 
 
@@ -67,7 +103,9 @@ declare global {
 }
 
 export type DocumentTypeMap = {
-  Article: Article
+  Author: Author
+  Collection: Collection
+  Essay: Essay
 }
 
 export type NestedTypeMap = {

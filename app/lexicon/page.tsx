@@ -1,4 +1,4 @@
-import { SectionReveal } from "../components/SectionReveal";
+import { Section } from "../components/Section";
 
 export const metadata = {
   title: "The Lexicon",
@@ -15,7 +15,7 @@ const TERMS = [
 export default function LexiconPage() {
   return (
     <div className="bg-background min-h-screen">
-      <SectionReveal>
+      <Section>
         <header className="max-w-[1440px] mx-auto px-[64px] py-[120px] border-b border-outline-variant">
           <div className="max-w-[800px]">
             <div className="flex items-center gap-[16px] mb-[32px]">
@@ -35,9 +35,9 @@ export default function LexiconPage() {
             </p>
           </div>
         </header>
-      </SectionReveal>
+      </Section>
 
-      <SectionReveal delay={80}>
+      <Section>
         <section className="py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[64px]">
             <div className="max-w-[800px]">
@@ -62,7 +62,7 @@ export default function LexiconPage() {
             </div>
           </div>
         </section>
-      </SectionReveal>
+      </Section>
     </div>
   );
 }

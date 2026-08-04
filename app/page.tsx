@@ -1,25 +1,21 @@
 "use client";
 
-// The Observatory — Monoverse Homepage
-// Design spec: Antigravity UI & Motion Design
-// - Deep background with glassmorphic cards
-// - Spatial 3D layouts, GSAP ScrollTrigger
-
-import { ArticleCard } from "./components/ArticleCard";
+import { EssayCard } from "./components/EssayCard";
 import { Newsletter } from "./components/Newsletter";
 import { Hero } from "./components/Hero";
-import { allArticles } from "contentlayer/generated";
+import { allEssays } from "contentlayer/generated";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
-const CATEGORIES = [
-  { name: "Philosophy",        href: "/category/philosophy",         description: "On existence, ethics, and the nature of reality." },
-  { name: "Science",           href: "/category/science",            description: "From quantum mechanics to the edge of the cosmos." },
-  { name: "History",           href: "/category/history",            description: "The past as a lens to read the present." },
-  { name: "Technology",        href: "/category/technology",         description: "On tools, systems, and what they make of us." },
-  { name: "Health",            href: "/category/health",             description: "The body as a system, not a collection of symptoms." },
-  { name: "Pop Culture & Cinema", href: "/category/pop-culture-&-cinema", description: "Analyzing the modern mythologies of screen and society." },
+const DOMAINS = [
+  { name: "Philosophy",        href: "/explore/philosophy",         description: "On existence, ethics, and the nature of reality." },
+  { name: "Science",           href: "/explore/science",            description: "From quantum mechanics to the edge of the cosmos." },
+  { name: "History",           href: "/explore/history",            description: "The past as a lens to read the present." },
+  { name: "Technology",        href: "/explore/technology",         description: "On tools, systems, and what they make of us." },
+  { name: "Health",            href: "/explore/health",             description: "The body as a system, not a collection of symptoms." },
+  { name: "Literature",        href: "/explore/literature",         description: "Analyzing the modern mythologies of text and society." },
 ];
 
 function SectionLabel({ label }: { label: string }) {
@@ -50,36 +46,36 @@ export default function Home() {
       ease: "power2.inOut",
     });
 
-    // 2. Cinematic Parallax for Background Panels (Floating effect)
+    // 2. Cinematic Parallax for Background Panels (Subtle Floating effect)
     const glassPanels = gsap.utils.toArray<HTMLElement>(".glass-panel");
     glassPanels.forEach((panel) => {
       gsap.fromTo(
         panel,
-        { y: 50 },
+        { y: 30 },
         {
-          y: -20,
+          y: -10,
           scrollTrigger: {
             trigger: panel,
             start: "top bottom",
             end: "bottom top",
-            scrub: 2,
+            scrub: 1.2,
           },
         }
       );
     });
 
-    // Fade-up and stagger reveal for all standard sections
+    // Fade-up and stagger reveal for all standard sections — Cinematic timing
     const sections = gsap.utils.toArray<HTMLElement>(".gsap-reveal-section");
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0, y: 80, rotateX: 5 },
+        { opacity: 0, y: 40, filter: "blur(8px)" },
         {
           opacity: 1,
           y: 0,
-          rotateX: 0,
-          duration: 1.5,
-          ease: "expo.out",
+          filter: "blur(0px)",
+          duration: 1.8,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: section,
             start: "top 85%",
@@ -89,20 +85,20 @@ export default function Home() {
       );
     });
 
-    // Staggered entrances for card grids
+    // Staggered entrances for card grids — Rhythm and restraint
     const grids = gsap.utils.toArray<HTMLElement>(".gsap-stagger-grid");
     grids.forEach((grid) => {
       const cards = grid.children;
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 60, scale: 0.9 },
+        { opacity: 0, y: 30, filter: "blur(4px)" },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 1.2,
-          stagger: 0.15,
+          filter: "blur(0px)",
+          duration: 1.5,
           ease: "power3.out",
+          stagger: 0.2,
           scrollTrigger: {
             trigger: grid,
             start: "top 80%",
@@ -117,11 +113,17 @@ export default function Home() {
     };
   }, []);
 
-  const sortedArticles = allArticles.sort(
+  const sortedEssays = allEssays.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
-  const featuredArticle = sortedArticles[0];
-  const latestArticles  = sortedArticles.slice(1, 5);
+  
+  const featuredEssays = sortedEssays.filter(e => e.editorialType === "Featured");
+  const editorsPicks = sortedEssays.filter(e => e.editorialType === "Editor's Pick");
+  const communityEssays = sortedEssays.filter(e => e.editorialType === "Community");
+  
+  // Fallbacks if data not yet migrated perfectly
+  const heroEssay = featuredEssays.length > 0 ? featuredEssays[0] : sortedEssays[0];
+  const picksList = editorsPicks.length > 0 ? editorsPicks.slice(0, 4) : sortedEssays.slice(1, 5);
 
   return (
     <div ref={containerRef} className="bg-transparent overflow-hidden pb-[120px]">
@@ -131,12 +133,12 @@ export default function Home() {
         <Hero />
       </div>
 
-      {/* 2. EDITOR'S NOTE */}
+      {/* 2. MANIFESTO */}
       <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
         <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
           <div className="glass-panel p-[32px] md:p-[64px] grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-[48px] lg:gap-[80px] items-start">
             <div className="lg:pt-[6px]">
-              <span className="section-label block mb-[32px]">Editor&apos;s Note</span>
+              <span className="section-label block mb-[32px]">Manifesto</span>
               <p className="font-signature text-[36px] text-foreground mb-[4px]">— Pratyush Mohanty</p>
               <p className="font-meta text-[10px] uppercase tracking-[0.2em] text-text-secondary">Founder & Editor</p>
             </div>
@@ -159,74 +161,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. FEATURED ESSAY */}
-      {featuredArticle && (
-        <section className="gsap-reveal-section py-[48px] md:py-[80px] relative z-10">
-          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-            <SectionLabel label="Featured Essay" />
-            <ArticleCard
-              {...featuredArticle}
-              readTime={featuredArticle.readingTime.text}
-              variant="featured"
-            />
-          </div>
-        </section>
-      )}
-
-      {/* 4. LATEST ESSAYS */}
-      <section className="py-[64px] md:py-[120px] relative z-10">
-        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-          <div className="gsap-reveal-section">
-            <SectionLabel label="Latest Essays" />
-          </div>
-          <div className="gsap-stagger-grid grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
-            {latestArticles.map((article) => (
-              <ArticleCard
-                key={article.slug}
-                {...article}
-                readTime={article.readingTime.text}
-                variant="default"
-              />
-            ))}
-          </div>
-          <div className="gsap-reveal-section mt-[80px] flex justify-center">
-            <a href="/archive" className="glass-panel px-[32px] py-[16px] font-label text-[12px] uppercase tracking-[0.2em] hover:text-bronze-accent transition-colors">
-              View the Full Archive
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. TOPIC EXPLORER — ISOMETRIC 3D GRID */}
-      <section className="py-[64px] md:py-[160px] relative z-0 perspective-[2000px]">
-        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-          <div className="gsap-reveal-section text-center mb-[80px]">
-            <SectionLabel label="Explore by Subject" />
-          </div>
-          {/* Topic Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
-            {CATEGORIES.map((cat) => (
-              <a
-                key={cat.name}
-                href={cat.href}
-                className="glass-panel group flex flex-col p-[32px] md:p-[48px] hover:translate-y-[-10px] hover:shadow-float-high transition-transform duration-500 ease-out"
-              >
-                <span className="taxonomy-tag block mb-[16px]">{cat.name}</span>
-                <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[200ms]">
-                  {cat.description}
-                </p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. ABOUT MONOVERSE */}
+      {/* 3. WHY MONOVERSE EXISTS */}
       <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
         <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
           <div className="glass-panel p-[32px] md:p-[80px] grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[80px] items-start">
             <div>
-              <span className="section-label block mb-[24px]">About Monoverse</span>
+              <span className="section-label block mb-[24px]">Why Monoverse Exists</span>
               <h2 className="font-display font-normal text-foreground mb-[24px]"
                 style={{ fontSize: "clamp(36px, 3vw, 48px)", lineHeight: "1.15", letterSpacing: "-0.015em" }}>
                 Understanding Reality
@@ -244,19 +184,150 @@ export default function Home() {
                 philosophy, economics, science, and the long arc of civilization.
               </p>
               <div className="pt-[16px]">
-                <a href="/about" className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze-accent flex items-center gap-[10px] hover:text-foreground transition-colors">
-                  Read our full philosophy
+                <Link href="/about" className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze-accent flex items-center gap-[10px] hover:text-foreground transition-colors">
+                  Read our full editorial philosophy
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M2.33 7H11.67M7 2.33L11.67 7L7 11.67" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 7. NEWSLETTER */}
+      {/* 4. EXPLORE KNOWLEDGE (DOMAINS) */}
+      <section className="py-[64px] md:py-[160px] relative z-0 perspective-[2000px]">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+          <div className="gsap-reveal-section text-center mb-[80px]">
+            <SectionLabel label="Explore Knowledge" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
+            {DOMAINS.map((domain) => (
+              <Link
+                key={domain.name}
+                href={domain.href}
+                className="glass-panel group flex flex-col p-[32px] md:p-[48px] hover:translate-y-[-10px] hover:shadow-float-high transition-transform duration-500 ease-out"
+              >
+                <span className="taxonomy-tag block mb-[16px]">{domain.name}</span>
+                <p className="font-body text-[16px] leading-[1.65] text-text-secondary group-hover:text-foreground transition-colors duration-[200ms]">
+                  {domain.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. FEATURED ESSAYS */}
+      {heroEssay && (
+        <section className="gsap-reveal-section py-[48px] md:py-[80px] relative z-10">
+          <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+            <SectionLabel label="Featured Essay" />
+            <EssayCard
+              slug={heroEssay.slug}
+              title={heroEssay.title}
+              description={heroEssay.description}
+              author={heroEssay.author}
+              image={heroEssay.image}
+              date={heroEssay.date}
+              readTime={heroEssay.readingTime.text}
+              category={heroEssay.domain}
+              variant="featured"
+            />
+          </div>
+        </section>
+      )}
+
+      {/* 6. EDITOR'S PICKS */}
+      <section className="py-[64px] md:py-[120px] relative z-10">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+          <div className="gsap-reveal-section">
+            <SectionLabel label="Editor's Picks" />
+          </div>
+          <div className="gsap-stagger-grid grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
+            {picksList.map((essay) => (
+              <EssayCard
+                key={essay.slug}
+                slug={essay.slug}
+                title={essay.title}
+                description={essay.description}
+                author={essay.author}
+                image={essay.image}
+                date={essay.date}
+                readTime={essay.readingTime.text}
+                category={essay.domain}
+              />
+            ))}
+          </div>
+          <div className="gsap-reveal-section mt-[80px] flex justify-center">
+            <Link href="/essays" className="glass-panel px-[32px] py-[16px] font-label text-[12px] uppercase tracking-[0.2em] hover:text-bronze-accent transition-colors">
+              View All Essays
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. COLLECTIONS */}
+      <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+          <div className="glass-panel p-[48px] md:p-[80px] flex flex-col items-center text-center">
+            <SectionLabel label="Curated Collections" />
+            <h2 className="font-display font-normal text-foreground mb-[24px]" style={{ fontSize: "clamp(36px, 3vw, 48px)", lineHeight: "1.15" }}>
+              Journeys in Thought
+            </h2>
+            <p className="font-body text-[18px] leading-[1.75] text-text-secondary max-w-[600px] mb-[40px]">
+              Explore deep dives into specific themes, meticulously curated to guide you from foundational concepts to advanced insights.
+            </p>
+            <Link href="/collections" className="btn-primary text-[12px] py-[12px] px-[32px]">
+              Browse Collections
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. COMMUNITY ESSAYS */}
+      <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-[56px]">
+            <SectionLabel label="From the Community" />
+            <Link href="/community" className="font-label text-[11px] font-[700] uppercase tracking-[0.2em] text-bronze-accent hover:text-foreground transition-colors mb-[40px] md:mb-0">
+              View All Community Essays
+            </Link>
+          </div>
+          {communityEssays.length > 0 ? (
+            <div className="gsap-stagger-grid grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
+              {/* map community essays here */}
+            </div>
+          ) : (
+            <div className="glass-panel p-[32px] text-center text-text-secondary font-body">
+              The community archive is currently being cultivated. Check back soon.
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 9. WRITE FOR MONOVERSE */}
+      <section className="gsap-reveal-section py-[64px] md:py-[120px] relative z-10">
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+          <div className="glass-panel p-[48px] md:p-[80px] flex flex-col md:flex-row justify-between items-center border border-bronze-accent/20">
+            <div className="max-w-[600px] mb-[40px] md:mb-0">
+              <SectionLabel label="Contribute" />
+              <h2 className="font-display font-normal text-foreground mb-[24px]" style={{ fontSize: "clamp(32px, 3vw, 40px)", lineHeight: "1.15" }}>
+                Write for the Archive
+              </h2>
+              <p className="font-body text-[18px] leading-[1.75] text-text-secondary">
+                We are always seeking rigorous, thoughtful essays that explore the deeper mechanics of reality. Become a contributor and share your perspective.
+              </p>
+            </div>
+            <Link href="/write" className="btn-primary text-[12px] py-[12px] px-[32px] flex-shrink-0">
+              Submission Guidelines
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. NEWSLETTER */}
       <section className="gsap-reveal-section relative z-10">
         <Newsletter />
       </section>

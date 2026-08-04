@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { PullQuote } from "./PullQuote";
 import { RevealImage } from "./RevealImage";
-import { RevealQuote } from "./RevealQuote";
+import { Quote } from "./Quote";
 import { slug } from "github-slugger";
 
 const generateId = (children: any) => {
@@ -21,7 +21,7 @@ const RevealedImage = (props: any) => (
 
 // Stitch: Pull quotes use EB Garamond italic, 32px
 const RevealedPullQuote = (props: any) => (
-  <RevealQuote>
+  <Quote>
     <p className="font-quote text-[32px] md:text-[40px] italic leading-[1.3] text-foreground font-normal text-center">
       &ldquo;{props.text}&rdquo;
     </p>
@@ -30,7 +30,7 @@ const RevealedPullQuote = (props: any) => (
         — {props.source}
       </cite>
     )}
-  </RevealQuote>
+  </Quote>
 );
 
 export const mdxComponents = {
@@ -54,12 +54,12 @@ export const mdxComponents = {
   ),
   // Stitch: Small bronze square bullets
   li: ({ className, children, ...props }: any) => (
-    <li className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary relative pl-[32px] before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-[6px] before:h-[6px] before:bg-bronze before:rounded-none" {...props}>
+    <li className="font-body text-[18px] md:text-[20px] leading-[1.8] text-text-secondary relative pl-[32px] before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-[6px] before:h-[6px] before:bg-bronze-accent before:rounded-none" {...props}>
       {children}
     </li>
   ),
   // Stitch: Quotations have thin left border, EB Garamond italic
   blockquote: ({ className, ...props }: any) => (
-    <blockquote className="border-l border-bronze pl-[32px] py-[8px] my-[48px] italic font-quote text-[28px] text-foreground leading-[1.5]" {...props} />
+    <blockquote className="elegant-blockquote" {...props} />
   ),
 };

@@ -46,16 +46,24 @@ export function TableOfContents({ toc }: TableOfContentsProps) {
           return (
             <li 
               key={item.slug} 
-              className={`transition-all duration-300 ${
-                item.level === 3 ? "ml-4" : ""
+              className={`transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                item.level === 3 ? "ml-[16px]" : ""
               }`}
             >
               <a 
                 href={`#${item.slug}`}
-                className={`block pl-4 py-1 text-[14px] font-body leading-[1.4] transition-colors border-l-[1px] -ml-[1px] ${
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById(item.slug);
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }}
+                className={`block pl-[16px] py-[4px] text-[14px] font-body leading-[1.4] transition-colors duration-[400ms] ease-out border-l-[1px] -ml-[1px] ${
                   isActive 
-                    ? "text-foreground border-bronze font-medium" 
-                    : "text-text-secondary border-transparent hover:text-foreground hover:border-text-secondary"
+                    ? "text-foreground border-bronze-accent font-medium" 
+                    : "text-text-secondary border-transparent hover:text-foreground hover:border-outline-variant"
                 }`}
               >
                 {item.text}

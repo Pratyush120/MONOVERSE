@@ -13,11 +13,15 @@ import { usePathname } from "next/navigation";
 // On scroll: bg becomes surface-low, height reduces, thin bottom border appears
 
 const NAV_LINKS = [
-  { label: "Archive",    href: "/archive" },
-  { label: "Philosophy", href: "/category/philosophy" },
-  { label: "Science",    href: "/category/science" },
-  { label: "History",    href: "/category/history" },
-  { label: "The Marginalia", href: "/about" },
+  { label: "Home",        href: "/" },
+  { label: "Explore",     href: "/explore" },
+  { label: "Essays",      href: "/essays" },
+  { label: "Collections", href: "/collections" },
+  { label: "Community",   href: "/community" },
+  { label: "About",       href: "/about" },
+  { label: "Search",      href: "/search" },
+  { label: "Write",       href: "/write" },
+  { label: "Profile",     href: "/profile" },
 ];
 
 export function Header() {
@@ -69,15 +73,19 @@ export function Header() {
 
         {/* Desktop Navigation — Libre Franklin, uppercase, 13px, 0.08em tracking */}
         <nav className="hidden md:flex items-center gap-[32px]" aria-label="Main navigation">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="nav-link"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            // Determine if the current path matches the link
+            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${isActive ? 'text-foreground after:w-full after:left-0' : ''}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right Controls */}
