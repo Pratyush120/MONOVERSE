@@ -2,5 +2,9 @@
 
 import cinema__articles__duneTwoReviewMdx from './cinema__articles__dune-two-review.mdx.json' assert { type: 'json' }
 import cinema__articles__fremenReligionMdx from './cinema__articles__fremen-religion.mdx.json' assert { type: 'json' }
+import cinema__articles__furiosaReviewMdx from './cinema__articles__furiosa-review.mdx.json' assert { type: 'json' }
+import cinema__articles__nosferatuCommunityPredictionMdx from './cinema__articles__nosferatu-community-prediction.mdx.json' assert { type: 'json' }
+import cinema__articles__oppenheimerFeatureMdx from './cinema__articles__oppenheimer-feature.mdx.json' assert { type: 'json' }
+import cinema__articles__shogunReviewMdx from './cinema__articles__shogun-review.mdx.json' assert { type: 'json' }
 
-export const allCinemaArticles = [cinema__articles__duneTwoReviewMdx, cinema__articles__fremenReligionMdx]
+export const allCinemaArticles = [cinema__articles__duneTwoReviewMdx, cinema__articles__fremenReligionMdx, cinema__articles__furiosaReviewMdx, cinema__articles__nosferatuCommunityPredictionMdx, cinema__articles__oppenheimerFeatureMdx, cinema__articles__shogunReviewMdx]
