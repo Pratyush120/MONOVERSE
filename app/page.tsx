@@ -11,7 +11,7 @@ export default async function Home() {
     description: article.summary,
     author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
     image: article.coverImage?.url,
-    date: article.publishedAt || article.createdAt,
+    date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
     readingTime: article.readingTime ? `${article.readingTime} min read` : "10 min read",
     domain: article.desk?.name || "Essays",
     editorialType: article.desk?.name === "Essays" ? "Featured" : "Editor's Pick"
