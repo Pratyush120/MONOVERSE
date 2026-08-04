@@ -14,8 +14,8 @@ interface MovieCardProps {
 
 export function MovieCard({ title, poster, releaseStatus, genres, platform, communityReviewCount = 0, discussionCount = 0, href }: MovieCardProps) {
   return (
-    <Link href={href} className="glass-panel overflow-hidden group block hover:shadow-float-high hover:-translate-y-[4px] transition-all duration-500 ease-out">
-      <div className="w-full aspect-[2/3] overflow-hidden relative">
+    <Link href={href} className="glass-panel overflow-hidden group flex flex-col h-full hover:shadow-float-high hover:-translate-y-[4px] transition-all duration-500 ease-out">
+      <div className="w-full aspect-[2/3] overflow-hidden relative flex-shrink-0">
         <div className="w-full h-full group-hover:scale-105 transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
           <ImageReveal src={poster} alt={title} width={400} height={600} />
         </div>
@@ -23,12 +23,12 @@ export function MovieCard({ title, poster, releaseStatus, genres, platform, comm
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-bronze-accent">{releaseStatus}</span>
         </div>
       </div>
-      <div className="p-[24px]">
+      <div className="p-[24px] flex flex-col flex-1">
         <h3 className="font-display text-[24px] leading-[1.2] text-foreground mb-[8px] group-hover:text-bronze transition-colors">{title}</h3>
-        <p className="font-body text-[14px] text-text-secondary mb-[16px]">
+        <p className="font-body text-[14px] text-text-secondary mb-[16px] flex-1">
           {genres.join(" · ")}
         </p>
-        <div className="flex items-center gap-[16px] font-meta text-[11px] uppercase tracking-[0.15em] text-foreground border-t border-outline-variant pt-[16px]">
+        <div className="flex items-center gap-[16px] font-meta text-[11px] uppercase tracking-[0.15em] text-foreground border-t border-outline-variant pt-[16px] mt-auto">
           <span>{platform}</span>
           {communityReviewCount > 0 && (
             <>
