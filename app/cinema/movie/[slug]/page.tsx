@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { allMovies, allCinemaArticles } from "contentlayer/generated";
+const allMovies: any[] = [], allCinemaArticles: any[] = [];
 import { SectionLabel } from "../../../components/SectionLabel";
 import { EssayCard } from "../../../components/EssayCard";
 import { ReviewCard } from "../../../components/ReviewCard";

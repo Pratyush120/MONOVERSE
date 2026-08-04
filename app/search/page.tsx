@@ -1,4 +1,4 @@
-import { allEssays, allMovies, allCinemaArticles, allCinemaPeople, allCinemaLists } from "contentlayer/generated";
+const allEssays: any[] = [], allMovies: any[] = [], allCinemaArticles: any[] = [], allCinemaPeople: any[] = [], allCinemaLists: any[] = [];
 import { SearchClient } from "../components/SearchClient";
 
 export default function SearchPage() {

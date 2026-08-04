@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { withContentlayer } from "next-contentlayer";
+
 
 const securityHeaders = [
   {
@@ -45,4 +45,4 @@ const nextConfig: NextConfig = {
   turbopack: {},
 };
 
-export default withContentlayer(nextConfig);
+export default nextConfig;

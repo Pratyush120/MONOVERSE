@@ -1,4 +1,4 @@
-import { allEssays } from "contentlayer/generated";
+const allEssays: any[] = [];
 import { EssayCard } from "../components/EssayCard";
 import { Section } from "../components/Section";
 

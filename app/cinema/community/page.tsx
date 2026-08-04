@@ -1,4 +1,4 @@
-import { allCinemaArticles } from "contentlayer/generated";
+const allCinemaArticles: any[] = [];
 import { CommunityCard } from "../../components/CommunityCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { SubmissionSection } from "../../components/SubmissionSection";

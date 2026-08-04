@@ -1,4 +1,4 @@
-import { allCinemaPeople } from "contentlayer/generated";
+const allCinemaPeople: any[] = [];
 import { PeopleCard } from "../../components/PeopleCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";

@@ -1,0 +1,397 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ---------------------------------------------------------
+// CENTRALIZED ASSET MANAGEMENT
+// ---------------------------------------------------------
+model Media {
+  id          String   @id @default(cuid())
+  url         String
+  altText     String?
+  caption     String?
+  mimeType    String?
+  width       Int?
+  height      Int?
+  
+  contentCovers Content[]
+  entityImages  Entity[]
+  personImages  Person[]
+  
+  createdAt   DateTime @default(now())
+}
+
+// ---------------------------------------------------------
+// USER & PROFILE
+// ---------------------------------------------------------
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          String    @default("READER") // SystemRole Enum mapped as string
+
+  profile       Profile?
+  collections   Collection[] 
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  discussions   DiscussionPost[]
+}
+
+model Profile {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  bio           String?   
+  interests     UserInterest[]
+  bookmarks     Bookmark[]
+  
+  @@index([userId])
+}
+
+model Interest {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  slug          String    @unique
+  users         UserInterest[]
+}
+
+model UserInterest {
+  profileId     String
+  interestId    String
+  profile       Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  interest      Interest  @relation(fields: [interestId], references: [id], onDelete: Cascade)
+  
+  @@id([profileId, interestId])
+  @@index([profileId])
+  @@index([interestId])
+}
+
+// ---------------------------------------------------------
+// EDITORIAL TAXONOMY
+// ---------------------------------------------------------
+model Desk {
+  id            String    @id @default(cuid())
+  name          String    @unique 
+  slug          String    @unique
+  description   String?   
+  
+  content       Content[]
+  categories    Category[]
+}
+
+model ContentType {
+  id            String    @id @default(cuid())
+  name          String    @unique 
+  slug          String    @unique
+  
+  content       Content[]
+}
+
+model Category {
+  id            String    @id @default(cuid())
+  name          String    
+  slug          String    @unique
+  deskId        String?
+  desk          Desk?     @relation(fields: [deskId], references: [id])
+  
+  content       Content[]
+  
+  @@index([deskId])
+}
+
+model Tag {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  slug          String    @unique
+  content       ContentTag[]
+}
+
+// ---------------------------------------------------------
+// UNIVERSAL ENTITIES
+// ---------------------------------------------------------
+model Entity {
+  id              String      @id @default(cuid())
+  entityType      String      // EntityType Enum
+  slug            String      @unique
+  title           String
+  description     String?     
+  
+  imageId         String?
+  image           Media?      @relation(fields: [imageId], references: [id])
+  
+  movieDetails    MovieDetail?
+  bookDetails     BookDetail?
+  
+  people          EntityPerson[]
+  referencedBy    ContentEntityReference[]
+  collectionItems CollectionItem[]
+  discussions     Discussion[]
+  
+  @@index([entityType])
+  @@index([imageId])
+}
+
+model MovieDetail {
+  id            String         @id @default(cuid())
+  entityId      String         @unique
+  entity        Entity         @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  
+  releaseDate   DateTime?
+  status        String?        // ReleaseStatus Enum
+  studio        String?
+  trailerUrl    String?
+}
+
+model BookDetail {
+  id            String         @id @default(cuid())
+  entityId      String         @unique
+  entity        Entity         @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  
+  isbn          String?
+  publisher     String?
+  publicationDate DateTime?
+}
+
+// ---------------------------------------------------------
+// PEOPLE
+// ---------------------------------------------------------
+model Person {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String    @unique
+  bio           String?   
+  
+  portraitId    String?
+  portrait      Media?    @relation(fields: [portraitId], references: [id])
+  
+  userId        String?   @unique
+  
+  authoredContent ContentAuthor[]
+  entityRoles     EntityPerson[]
+  
+  @@index([portraitId])
+}
+
+model EntityPerson {
+  entityId      String
+  personId      String
+  role          String      // ContributorRole Enum
+  
+  entity        Entity    @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  person        Person    @relation(fields: [personId], references: [id], onDelete: Cascade)
+  
+  @@id([entityId, personId, role])
+  @@index([entityId])
+  @@index([personId])
+}
+
+// ---------------------------------------------------------
+// CONTENT & WORKFLOW
+// ---------------------------------------------------------
+model Content {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  summary         String?       
+  body            String        
+  
+  coverImageId    String?
+  coverImage      Media?        @relation(fields: [coverImageId], references: [id])
+  
+  status          String        @default("DRAFT") // ContentStatus Enum
+  
+  deskId          String
+  desk            Desk          @relation(fields: [deskId], references: [id])
+  
+  typeId          String
+  type            ContentType   @relation(fields: [typeId], references: [id])
+  
+  categoryId      String?
+  category        Category?     @relation(fields: [categoryId], references: [id])
+  
+  seoTitle        String?
+  seoDescription  String?
+  readingTime     Int?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  publishedAt     DateTime?
+  scheduledFor    DateTime?
+
+  authors         ContentAuthor[]
+  tags            ContentTag[]
+  entityReferences ContentEntityReference[]
+  bookmarks       Bookmark[]
+  collectionItems CollectionItem[]
+  versions        ContentVersion[]
+  discussions     Discussion[]
+  
+  @@index([status])
+  @@index([deskId])
+  @@index([typeId])
+  @@index([categoryId])
+  @@index([coverImageId])
+}
+
+model ContentVersion {
+  id          String   @id @default(cuid())
+  contentId   String
+  content     Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  bodySnapshot String  
+  versionNum  Int
+  createdAt   DateTime @default(now())
+  
+  @@index([contentId])
+}
+
+model ContentAuthor {
+  contentId     String
+  personId      String
+  role          String @default("AUTHOR") // ContributorRole Enum
+  
+  content       Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  person        Person  @relation(fields: [personId], references: [id], onDelete: Cascade)
+  
+  @@id([contentId, personId, role])
+  @@index([contentId])
+  @@index([personId])
+}
+
+model ContentTag {
+  contentId     String
+  tagId         String
+  content       Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  tag           Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@id([contentId, tagId])
+  @@index([contentId])
+  @@index([tagId])
+}
+
+model ContentEntityReference {
+  contentId     String
+  entityId      String
+  
+  content       Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  entity        Entity  @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  
+  @@id([contentId, entityId])
+  @@index([contentId])
+  @@index([entityId])
+}
+
+// ---------------------------------------------------------
+// DYNAMIC COLLECTIONS
+// ---------------------------------------------------------
+model Collection {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?  
+  
+  creatorId   String
+  creator     User     @relation(fields: [creatorId], references: [id])
+  
+  items       CollectionItem[]
+  
+  @@index([creatorId])
+}
+
+model CollectionItem {
+  id           String             @id @default(cuid())
+  collectionId String
+  collection   Collection         @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  
+  itemType     String             // CollectionItemType Enum
+  contentId    String?
+  content      Content?           @relation(fields: [contentId], references: [id])
+  entityId     String?
+  entity       Entity?            @relation(fields: [entityId], references: [id])
+  
+  order        Int                @default(0)
+  
+  @@index([collectionId])
+  @@index([contentId])
+  @@index([entityId])
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  contentId String
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  
+  @@unique([profileId, contentId])
+  @@index([profileId])
+  @@index([contentId])
+}
+
+// ---------------------------------------------------------
+// INFRASTRUCTURE
+// ---------------------------------------------------------
+model Discussion {
+  id          String   @id @default(cuid())
+  title       String?  
+  
+  contentId   String?
+  content     Content? @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  
+  entityId    String?
+  entity      Entity?  @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  
+  posts       DiscussionPost[]
+  
+  @@index([contentId])
+  @@index([entityId])
+}
+
+model DiscussionPost {
+  id            String     @id @default(cuid())
+  discussionId  String
+  discussion    Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  authorId      String
+  author        User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  body          String     
+  createdAt     DateTime   @default(now())
+  
+  @@index([discussionId])
+  @@index([authorId])
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action      String      // AuditAction Enum
+  entityName  String      
+  entityId    String
+  details     String?     
+  createdAt   DateTime    @default(now())
+  
+  @@index([userId])
+  @@index([entityName, entityId])
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String           // NotificationType Enum
+  message     String
+  read        Boolean          @default(false)
+  linkUrl     String?
+  createdAt   DateTime         @default(now())
+  
+  @@index([userId])
+}

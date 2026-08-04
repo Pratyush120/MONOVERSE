@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { allEssays } from "contentlayer/generated";
+import { getArticleBySlug, getAllArticleSlugs } from "@/lib/actions/content";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "../../components/MDXComponents";
 import { ReadingProgress } from "../../components/ReadingProgress";
@@ -14,30 +14,35 @@ import { Section } from "../../components/Section";
 import Image from "next/image";
 
 export async function generateStaticParams() {
-  return allEssays.map((article) => ({
+  const articles = await getAllArticleSlugs();
+  return articles.map((article) => ({
     slug: article.slug,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const article = allEssays.find((a) => a.slug === resolvedParams.slug);
+  const article = await getArticleBySlug(resolvedParams.slug);
   if (!article) return {};
 
   return {
-    title: article.title,
-    description: article.description,
+    title: article.seoTitle || article.title,
+    description: article.seoDescription || article.summary,
   };
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const article = allEssays.find((a) => a.slug === resolvedParams.slug);
+  const article = await getArticleBySlug(resolvedParams.slug);
 
   if (!article) notFound();
 
-  // Stitch Design: Drop cap logic wrapper
-  // We'll apply the .drop-cap class to the markdown container
+  // Mapping DB structure to UI structure
+  const authorName = article.authors[0]?.person.name || "Unknown Author";
+  const coverImage = article.coverImage?.url || "";
+  const readingTimeText = article.readingTime ? `${article.readingTime} min read` : "10 min read";
+  const publishedDate = article.publishedAt || article.createdAt;
+  const disciplines = article.tags.map(t => t.tag.name);
   
   return (
     <div className="bg-background">
@@ -48,13 +53,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             "@context": "https://schema.org",
             "@type": "Article",
             headline: article.title,
-            description: article.description,
-            image: article.image ? `https://monoverse.com${article.image}` : undefined,
-            datePublished: new Date(article.date).toISOString(),
+            description: article.summary,
+            image: coverImage ? `https://monoverse.com${coverImage}` : undefined,
+            datePublished: publishedDate.toISOString(),
             author: [
               {
                 "@type": "Person",
-                name: article.author,
+                name: authorName,
               },
             ],
             publisher: {
@@ -70,7 +75,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       />
       <ReadingProgress 
         title={article.title} 
-        readingTime={article.readingTime.text} 
+        readingTime={readingTimeText} 
       />
       
       {/* ═══════════════════════════════════════════════════════
@@ -83,7 +88,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="mb-[32px] flex items-center justify-center gap-[16px]">
             <span className="text-bronze text-[14px]">◆</span>
             <span className="font-meta text-[11px] uppercase tracking-[0.2em] text-bronze font-semibold">
-              Vol. I — Issue 1
+              Vol. I — {article.desk?.name || 'Issue 1'}
             </span>
             <span className="text-bronze text-[14px]">◆</span>
           </div>
@@ -94,18 +99,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </h1>
           
           <p className="font-body text-[20px] md:text-[24px] text-text-secondary leading-[1.6] mb-[48px] max-w-[760px] mx-auto text-balance">
-            {article.description}
+            {article.summary}
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-[24px]">
             <div className="flex items-center gap-[16px] font-meta text-[11px] uppercase tracking-[0.15em] text-outline">
-              <span className="text-foreground">{article.author}</span>
+              <span className="text-foreground">{authorName}</span>
               <span className="text-outline-variant text-[8px]">◆</span>
-              <time dateTime={article.date}>
-                {new Date(article.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              <time dateTime={publishedDate.toISOString()}>
+                {publishedDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
               </time>
               <span className="text-outline-variant text-[8px]">◆</span>
-              <span>{article.readingTime.text}</span>
+              <span>{readingTimeText}</span>
             </div>
           </div>
         </header>
@@ -114,11 +119,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             HERO IMAGE
             0px radius (orthogonal), full width of container
             ══════════════════════════════════════════════════════ */}
-        <div className="max-w-[1440px] mx-auto px-[64px] mb-[120px]">
-          <RevealImage className="aspect-[21/9] relative w-full border border-outline-variant">
-            <Image src={article.image} alt={article.title} fill className="object-cover" priority />
-          </RevealImage>
-        </div>
+        {coverImage && (
+          <div className="max-w-[1440px] mx-auto px-[64px] mb-[120px]">
+            <RevealImage className="aspect-[21/9] relative w-full border border-outline-variant">
+              <Image src={coverImage} alt={article.title} fill className="object-cover" priority />
+            </RevealImage>
+          </div>
+        )}
         
         {/* ═══════════════════════════════════════════════════════
             CONTENT AREA
@@ -129,13 +136,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             
             {/* Left sidebar: Navigation / TOC */}
             <div className="hidden xl:block w-[280px] flex-shrink-0 sticky top-[120px]">
-              <TableOfContents toc={article.toc} />
+              {/* Dynamic TOC generation can be added back if needed, currently passing empty array or mock */}
+              <TableOfContents toc={[]} />
             </div>
 
             {/* Main Content */}
             <div className="max-w-[680px] w-full flex-shrink-0">
               <Section className="prose prose-lg dark:prose-invert prose-headings:font-display prose-a:text-bronze-accent mx-auto">
-                <MDXRemote source={article.body.raw} components={mdxComponents as any} />
+                <MDXRemote source={article.body} components={mdxComponents as any} />
               </Section>
               
               <Section>
@@ -151,11 +159,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     <h4 className="font-meta text-[11px] uppercase tracking-[0.2em] text-outline mb-[24px] font-semibold">
                       Connecting Disciplines
                     </h4>
-                    <TopicTags disciplines={article.disciplines} />
+                    <TopicTags disciplines={disciplines} />
                   </div>
                   
                   <div className="my-[64px]">
-                    <AuthorBio author={article.author} role={article.authorRole} expanded />
+                    <AuthorBio author={authorName} role={"Contributor"} expanded />
                   </div>
                 </footer>
               </Section>

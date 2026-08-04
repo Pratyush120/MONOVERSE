@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { allEssays } from "contentlayer/generated";
+const allEssays = [] as any[];
 import { EssayCard } from "../../components/EssayCard";
 import { CATEGORY_LAYOUTS } from "../../types";
 
