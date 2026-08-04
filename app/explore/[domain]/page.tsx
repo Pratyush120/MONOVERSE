@@ -22,35 +22,35 @@ export async function generateStaticParams() {
   const defaultCats = ['philosophy', 'science', 'history', 'technology', 'artificial-intelligence', 'ai', 'culture', 'economics', 'literature', 'civilizations', 'health'];
   const allSlugs = Array.from(new Set([...categories, ...defaultCats]));
   
-  return allSlugs.map((slug) => ({
-    slug,
+  return allSlugs.map((domain) => ({
+    domain,
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ domain: string }> }) {
   const resolvedParams = await params;
-  const slug = resolvedParams.slug;
-  const name = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const domainSlug = resolvedParams.domain;
+  const name = domainSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   return {
     title: `${name} | Monoverse`,
-    description: CATEGORY_DESCRIPTIONS[slug] || `Explore essays on ${name} in Monoverse.`,
+    description: CATEGORY_DESCRIPTIONS[domainSlug] || `Explore essays on ${name} in Monoverse.`,
   };
 };
 
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CategoryPage({ params }: { params: Promise<{ domain: string }> }) {
   const resolvedParams = await params;
-  const slug = resolvedParams.slug;
-  const name = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const domainSlug = resolvedParams.domain;
+  const name = domainSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   
   let displayTitle = name;
-  if (slug === 'ai') displayTitle = 'Artificial Intelligence';
-  if (slug === 'artificial-intelligence') displayTitle = 'Artificial Intelligence';
+  if (domainSlug === 'ai') displayTitle = 'Artificial Intelligence';
+  if (domainSlug === 'artificial-intelligence') displayTitle = 'Artificial Intelligence';
   
   const categoryArticles = allEssays
-    .filter((a) => a.domain.toLowerCase().replace(/\s+/g, '-') === slug || (slug === 'ai' && a.domain === 'Artificial Intelligence'))
+    .filter((a) => a.domain.toLowerCase().replace(/\s+/g, '-') === domainSlug || (domainSlug === 'ai' && a.domain === 'Artificial Intelligence'))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
-  const layout = CATEGORY_LAYOUTS[slug] || "standard";
+  const layout = CATEGORY_LAYOUTS[domainSlug] || "standard";
   
   return (
     <div className="max-w-7xl mx-auto px-6 py-24">
@@ -59,7 +59,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           {displayTitle}
         </h1>
         <p className="font-body text-xl md:text-2xl text-text-secondary leading-relaxed text-balance">
-          {CATEGORY_DESCRIPTIONS[slug] || `Essays and inquiries intersecting with ${displayTitle.toLowerCase()}.`}
+          {CATEGORY_DESCRIPTIONS[domainSlug] || `Essays and inquiries intersecting with ${displayTitle.toLowerCase()}.`}
         </p>
       </header>
       

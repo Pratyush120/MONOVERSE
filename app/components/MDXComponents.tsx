@@ -14,8 +14,8 @@ const generateId = (children: any) => {
 
 // Stitch: 0px border-radius, full width image
 const RevealedImage = (props: any) => (
-  <RevealImage className="my-[48px] w-full">
-    <Image {...props} className="w-full h-auto" />
+  <RevealImage className="my-[48px] w-full relative h-auto">
+    <img {...props} className="w-full h-auto" loading="lazy" />
   </RevealImage>
 );
 
