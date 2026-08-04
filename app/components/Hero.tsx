@@ -1,27 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import anime from "animejs";
+import SvgHero from "./HeroSVG";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const svgContainerRef = useRef<HTMLDivElement>(null);
-  
-  const [svgContent, setSvgContent] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/images/hero.svg')
-      .then(res => res.text())
-      .then(text => {
-        // Strip the hardcoded CSS so Anime.js can take full control
-        const stripped = text.replace(/<style>[\s\S]*?<\/style>/, '');
-        setSvgContent(stripped);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (!svgContent || !svgContainerRef.current) return;
+    if (!svgContainerRef.current) return;
 
     // Target every single path in the tree and the text for a spectacular build-up
     const treePaths = svgContainerRef.current.querySelectorAll('.tree path, .tree rect');
@@ -70,7 +59,7 @@ export function Hero() {
     return () => {
       anime.remove([treePaths, textPaths, glowRef.current]);
     };
-  }, [svgContent]);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || !glowRef.current || !svgContainerRef.current) return;
@@ -134,12 +123,9 @@ export function Hero() {
         className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center will-change-transform"
         style={{ transformOrigin: "center bottom", transformStyle: "preserve-3d" }}
       >
-        {svgContent ? (
-          <div 
-            className="w-full h-full max-w-[1600px] mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
-            dangerouslySetInnerHTML={{ __html: svgContent }} 
-          />
-        ) : null}
+        <div className="w-full h-full max-w-[1600px] mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain">
+          <SvgHero />
+        </div>
       </div>
 
       <div className="absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 z-20">
