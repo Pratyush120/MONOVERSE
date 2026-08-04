@@ -21,7 +21,7 @@ export function ImageReveal(props: ImageProps) {
           duration: 0.8,
           ease: [0.22, 1, 0.36, 1], // Premium cubic-bezier
         }}
-        className="w-full h-full"
+        className="w-full h-full relative"
       >
         <Image
           {...props}
@@ -29,7 +29,7 @@ export function ImageReveal(props: ImageProps) {
             setIsLoaded(true);
             if (props.onLoad) props.onLoad(e);
           }}
-          className={`object-cover ${props.className || ""}`}
+          className={`object-cover w-full h-full ${props.className || ""}`}
         />
       </motion.div>
     </div>

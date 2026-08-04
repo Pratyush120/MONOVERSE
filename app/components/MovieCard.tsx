@@ -16,8 +16,8 @@ export function MovieCard({ title, poster, releaseStatus, genres, platform, comm
   return (
     <Link href={href} className="glass-panel overflow-hidden group flex flex-col h-full hover:shadow-float-high hover:-translate-y-[4px] transition-all duration-500 ease-out">
       <div className="w-full aspect-[2/3] overflow-hidden relative flex-shrink-0">
-        <div className="w-full h-full group-hover:scale-105 transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
-          <ImageReveal src={poster} alt={title} width={400} height={600} />
+        <div className="w-full h-full relative group-hover:scale-105 transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
+          <ImageReveal src={poster} alt={title} fill />
         </div>
         <div className="absolute top-[16px] right-[16px] bg-background/90 backdrop-blur-md px-[12px] py-[4px] border border-bronze-accent/20">
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-bronze-accent">{releaseStatus}</span>
