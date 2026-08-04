@@ -200,10 +200,10 @@ export function Hero() {
 
       <div 
         ref={svgContainerRef}
-        className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center will-change-transform"
+        className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center"
         style={{ transformOrigin: "center bottom", transformStyle: "preserve-3d" }}
       >
-        <div className="w-full h-full max-w-[1600px] mx-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain">
+        <div className="absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
           <SvgHero />
         </div>
       </div>
