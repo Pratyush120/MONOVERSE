@@ -1,4 +1,4 @@
-const allCinemaLists: any[] = [];
+import { getCinemaLists } from "@/lib/actions/cinema";
 import { CollectionCard } from "../../components/CollectionCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   description: "Curated watch guides, rankings, and editorial picks.",
 };
 
-export default function ListsPage() {
+export default async function ListsPage() {
+  const lists = await getCinemaLists(20);
+
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
       <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] text-center">
@@ -18,11 +20,11 @@ export default function ListsPage() {
         </p>
       </section>
 
-      {allCinemaLists.length > 0 && (
+      {lists.length > 0 && (
         <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
           <SectionLabel label="All Lists" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
-            {allCinemaLists.map((list) => (
+            {lists.map((list) => (
               <CollectionCard
                 key={list.slug}
                 href={`/cinema/list/${list.slug}`}

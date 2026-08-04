@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-const allMovies: any[] = [], allCinemaArticles: any[] = [];
+import { getMovieBySlug, getCoverageForMovie, getAllMovies } from "@/lib/actions/cinema";
 import { SectionLabel } from "../../../components/SectionLabel";
 import { EssayCard } from "../../../components/EssayCard";
 import { ReviewCard } from "../../../components/ReviewCard";
@@ -13,14 +13,16 @@ interface MoviePageProps {
   params: { slug: string };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const allMovies = await getAllMovies();
   return allMovies.map((movie) => ({
     slug: movie.slug,
   }));
 }
 
-export function generateMetadata({ params }: MoviePageProps): Metadata {
-  const movie = allMovies.find((m) => m.slug === params.slug);
+export async function generateMetadata({ params }: MoviePageProps): Promise<Metadata> {
+  const p = await params;
+  const movie = await getMovieBySlug(p.slug);
   if (!movie) return { title: "Not Found" };
 
   return {
@@ -29,12 +31,13 @@ export function generateMetadata({ params }: MoviePageProps): Metadata {
   };
 }
 
-export default function MoviePage({ params }: MoviePageProps) {
-  const movie = allMovies.find((m) => m.slug === params.slug);
+export default async function MoviePage({ params }: MoviePageProps) {
+  const p = await params;
+  const movie = await getMovieBySlug(p.slug);
   if (!movie) notFound();
 
   // Related coverage
-  const coverage = allCinemaArticles.filter(a => a.movieRef === movie.slug);
+  const coverage = await getCoverageForMovie(p.slug);
   const reviews = coverage.filter(a => a.editorialType === "Review");
   const features = coverage.filter(a => a.editorialType === "Feature");
   const community = coverage.filter(a => a.editorialType === "Community");

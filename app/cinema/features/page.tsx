@@ -1,4 +1,4 @@
-const allCinemaArticles: any[] = [];
+import { getCinemaContentByType } from "@/lib/actions/cinema";
 import { EssayCard } from "../../components/EssayCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description: "Deep dives, editorial essays, and industry analysis.",
 };
 
-export default function FeaturesPage() {
-  const features = allCinemaArticles.filter((a) => a.editorialType === "Feature");
+export default async function FeaturesPage() {
+  const features = await getCinemaContentByType("feature", 20);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">

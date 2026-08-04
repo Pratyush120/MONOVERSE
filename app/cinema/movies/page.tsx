@@ -1,4 +1,4 @@
-const allMovies: any[] = [];
+import { getMoviesByStatus } from "@/lib/actions/cinema";
 import { MovieCard } from "../../components/MovieCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,9 +8,9 @@ export const metadata: Metadata = {
   description: "Browse all movies, now showing, streaming, and upcoming releases.",
 };
 
-export default function MoviesPage() {
-  const nowShowing = allMovies.filter((m) => m.status === "Now Showing");
-  const comingSoon = allMovies.filter((m) => m.status === "Coming Soon");
+export default async function MoviesPage() {
+  const nowShowing = await getMoviesByStatus("Now Showing", 20);
+  const comingSoon = await getMoviesByStatus("Coming Soon", 20);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
@@ -33,8 +33,6 @@ export default function MoviesPage() {
                 releaseStatus={movie.status}
                 genres={movie.genres}
                 platform={movie.platform || "Theaters"}
-                communityReviewCount={movie.communityReviewCount}
-                discussionCount={movie.discussionCount}
                 href={`/cinema/movie/${movie.slug}`}
               />
             ))}
@@ -53,7 +51,7 @@ export default function MoviesPage() {
                 poster={movie.poster}
                 releaseStatus={movie.status}
                 genres={movie.genres}
-                platform={movie.expectedPlatform || "Theaters"}
+                platform={movie.platform || "Theaters"}
                 href={`/cinema/movie/${movie.slug}`}
               />
             ))}

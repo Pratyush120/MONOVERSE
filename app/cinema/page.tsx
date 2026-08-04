@@ -1,5 +1,12 @@
 import { Metadata } from "next";
-const allMovies: any[] = [], allCinemaArticles: any[] = [], allCinemaLists: any[] = [], allCinemaPeople: any[] = [];
+import { 
+  getFeaturedCinemaContent, 
+  getLatestCinemaContent, 
+  getMoviesByStatus, 
+  getCinemaContentByType, 
+  getCinemaLists, 
+  getCinemaPeople 
+} from "@/lib/actions/cinema";
 import { EssayCard } from "../components/EssayCard";
 import { SectionLabel } from "../components/SectionLabel";
 import { MovieCard } from "../components/MovieCard";
@@ -17,16 +24,16 @@ export const metadata: Metadata = {
   description: "An independent editorial publication studying film as art, history, and philosophy.",
 };
 
-export default function CinemaPage() {
-  const featured = allCinemaArticles.find((a) => a.featured) || allCinemaArticles[0];
-  const latest = allCinemaArticles.slice(0, 4);
-  const nowShowing = allMovies.filter((m) => m.status === "Now Showing").slice(0, 4);
-  const comingSoon = allMovies.filter((m) => m.status === "Coming Soon").slice(0, 2);
-  const reviews = allCinemaArticles.filter((a) => a.editorialType === "Review").slice(0, 4);
-  const features = allCinemaArticles.filter((a) => a.editorialType === "Feature").slice(0, 4);
-  const lists = allCinemaLists.slice(0, 2);
-  const people = allCinemaPeople.slice(0, 2);
-  const community = allCinemaArticles.filter((a) => a.editorialType === "Community").slice(0, 4);
+export default async function CinemaPage() {
+  const featured = await getFeaturedCinemaContent();
+  const latest = await getLatestCinemaContent(4);
+  const nowShowing = await getMoviesByStatus("Now Showing", 4);
+  const comingSoon = await getMoviesByStatus("Coming Soon", 2);
+  const reviews = await getCinemaContentByType("review", 4);
+  const features = await getCinemaContentByType("feature", 4);
+  const lists = await getCinemaLists(2);
+  const people = await getCinemaPeople(2);
+  const community = await getCinemaContentByType("community", 4);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
@@ -112,7 +119,7 @@ export default function CinemaPage() {
                 key={movie.slug}
                 title={movie.title}
                 poster={movie.poster}
-                releaseDate={new Date(movie.releaseDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                releaseDate={movie.releaseDate ? new Date(movie.releaseDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "TBA"}
                 synopsis={movie.synopsis}
                 director={movie.director}
                 cast={movie.cast || []}

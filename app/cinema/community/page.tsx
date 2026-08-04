@@ -1,4 +1,4 @@
-const allCinemaArticles: any[] = [];
+import { getCinemaContentByType } from "@/lib/actions/cinema";
 import { CommunityCard } from "../../components/CommunityCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { SubmissionSection } from "../../components/SubmissionSection";
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "Peer-reviewed essays, predictions, and discussions from the Monoverse community.",
 };
 
-export default function CommunityPage() {
-  const community = allCinemaArticles.filter((a) => a.editorialType === "Community");
+export default async function CommunityPage() {
+  const community = await getCinemaContentByType("community", 20);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">

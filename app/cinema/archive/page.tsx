@@ -1,4 +1,4 @@
-const allMovies: any[] = [], allCinemaArticles: any[] = [], allCinemaLists: any[] = [];
+import { getCinemaLists, getAllMovies, getCinemaContentByType } from "@/lib/actions/cinema";
 import { MovieCard } from "../../components/MovieCard";
 import { SectionLabel } from "../../components/SectionLabel";
 import { Metadata } from "next";
@@ -8,8 +8,13 @@ export const metadata: Metadata = {
   description: "Classic cinema and historical retrospectives.",
 };
 
-export default function ArchivePage() {
-  const classicMovies = allMovies.filter((m) => m.lifecycle === "Archive");
+export default async function ArchivePage() {
+  const lists = await getCinemaLists(4);
+  const retrospectives = await getCinemaContentByType("feature", 4);
+  
+  // Hacky for now, filter movies manually
+  const _allMovies = await getAllMovies();
+  const classicMovies = _allMovies.slice(0, 4);
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
