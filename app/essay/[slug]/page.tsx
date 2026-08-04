@@ -13,6 +13,9 @@ import { RevealImage } from "../../components/RevealImage";
 import { Section } from "../../components/Section";
 import Image from "next/image";
 
+export const dynamicParams = true;
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export async function generateStaticParams() {
   const articles = await getAllArticleSlugs();
   return articles.map((article) => ({

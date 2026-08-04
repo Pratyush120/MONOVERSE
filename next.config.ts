@@ -42,6 +42,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/cinema/article/:slug*',
+        destination: '/essay/:slug*',
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {},
 };
 
