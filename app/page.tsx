@@ -254,8 +254,8 @@ export default function Home() {
             ))}
           </div>
           <div className="gsap-reveal-section mt-[80px] flex justify-center">
-            <Link href="/essays" className="glass-panel px-[32px] py-[16px] font-label text-[12px] uppercase tracking-[0.2em] hover:text-bronze-accent transition-colors">
-              View All Essays
+            <Link href="/explore" className="glass-panel px-[32px] py-[16px] font-label text-[12px] uppercase tracking-[0.2em] hover:text-bronze-accent transition-colors">
+              Explore the Archive
             </Link>
           </div>
         </div>
