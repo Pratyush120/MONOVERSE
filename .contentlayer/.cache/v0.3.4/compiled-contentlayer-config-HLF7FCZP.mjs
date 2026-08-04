@@ -129,11 +129,12 @@ var CinemaArticle = defineDocumentType(() => ({
     author: { type: "string", required: true },
     date: { type: "date", required: true },
     editorialType: { type: "string", required: true },
-    // "Review" | "Feature" | "News" | "Community"
-    image: { type: "string", required: true },
+    // Review, Feature, News, Community
+    format: { type: "string" },
+    // Movie, Series, Anime, Documentary, OTT
+    featured: { type: "boolean", default: false },
     movieRef: { type: "string" },
     // Optional slug of the movie it relates to
-    featured: { type: "boolean", default: false },
     draft: { type: "boolean", default: false }
   },
   computedFields: {
@@ -204,4 +205,4 @@ export {
   Movie,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-SXKEUM46.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-HLF7FCZP.mjs.map

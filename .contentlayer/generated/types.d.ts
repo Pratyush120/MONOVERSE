@@ -33,9 +33,10 @@ export type CinemaArticle = {
   author: string
   date: IsoDateTimeString
   editorialType: string
+  format?: string | undefined
   image: string
-  movieRef?: string | undefined
   featured: boolean
+  movieRef?: string | undefined
   draft: boolean
   /** MDX file body */
   body: MDX

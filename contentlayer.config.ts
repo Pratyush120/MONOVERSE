@@ -128,10 +128,11 @@ export const CinemaArticle = defineDocumentType(() => ({
     description: { type: "string", required: true },
     author: { type: "string", required: true },
     date: { type: "date", required: true },
-    editorialType: { type: "string", required: true }, // "Review" | "Feature" | "News" | "Community"
+    editorialType: { type: "string", required: true }, // Review, Feature, News, Community
+    format: { type: "string" }, // Movie, Series, Anime, Documentary, OTT
     image: { type: "string", required: true },
-    movieRef: { type: "string" }, // Optional slug of the movie it relates to
     featured: { type: "boolean", default: false },
+    movieRef: { type: "string" }, // Optional slug of the movie it relates to
     draft: { type: "boolean", default: false },
   },
   computedFields: {

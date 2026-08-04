@@ -180,7 +180,7 @@ export default function CinemaPage() {
                 key={list.slug}
                 title={list.title}
                 overview={list.description}
-                essayCount={list.movies.length}
+                itemCount={list.movies.length}
                 readTime="Various"
                 image={list.image}
                 href={`/cinema/list/${list.slug}`}

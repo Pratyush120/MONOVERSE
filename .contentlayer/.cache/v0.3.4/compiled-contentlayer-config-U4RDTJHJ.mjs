@@ -102,8 +102,14 @@ var Movie = defineDocumentType(() => ({
     trailerUrl: { type: "string" },
     cast: { type: "list", of: { type: "string" } },
     director: { type: "string", required: true },
+    studio: { type: "string" },
     platform: { type: "string" },
     // Theaters, Netflix, etc.
+    expectedPlatform: { type: "string" },
+    communityReviewCount: { type: "number", default: 0 },
+    discussionCount: { type: "number", default: 0 },
+    lifecycle: { type: "string", default: "Before Release" },
+    // Before Release, Release Week, After Release, Archive
     draft: { type: "boolean", default: false }
   },
   computedFields: {
@@ -123,11 +129,13 @@ var CinemaArticle = defineDocumentType(() => ({
     author: { type: "string", required: true },
     date: { type: "date", required: true },
     editorialType: { type: "string", required: true },
-    // "Review" | "Feature" | "News" | "Community"
+    // Review, Feature, News, Community
+    format: { type: "string" },
+    // Movie, Series, Anime, Documentary, OTT
     image: { type: "string", required: true },
+    featured: { type: "boolean", default: false },
     movieRef: { type: "string" },
     // Optional slug of the movie it relates to
-    featured: { type: "boolean", default: false },
     draft: { type: "boolean", default: false }
   },
   computedFields: {
@@ -198,4 +206,4 @@ export {
   Movie,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-MP4O5YJS.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-U4RDTJHJ.mjs.map
