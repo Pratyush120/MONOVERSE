@@ -1,103 +1,11 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-
-export async function getArticleBySlug(slug: string) {
-  try {
-    const article = await prisma.content.findUnique({
-      where: { slug },
-      include: {
-        authors: {
-          include: {
-            person: true
-          }
-        },
-        desk: true,
-        type: true,
-        coverImage: true,
-        tags: {
-          include: {
-            tag: true
-          }
-        }
-      }
-    });
-    
-    return article;
-  } catch (error) {
-    console.error("Error fetching article by slug:", error);
-    return null;
-  }
-}
-
-export async function getRecentArticles(limit = 10) {
-  try {
-    const articles = await prisma.content.findMany({
-      where: { status: 'PUBLISHED' },
-      orderBy: { publishedAt: 'desc' },
-      take: limit,
-      include: {
-        desk: true,
-        type: true,
-        coverImage: true,
-        authors: {
-          include: {
-            person: true
-          }
-        }
-      }
-    });
-    
-    return articles;
-  } catch (error) {
-    console.error("Error fetching recent articles:", error);
-    return [];
-  }
-}
-
-export async function getAllArticles() {
-  try {
-    const articles = await prisma.content.findMany({
-      where: { status: 'PUBLISHED' },
-      orderBy: { publishedAt: 'desc' },
-      include: {
-        desk: true,
-        type: true,
-        coverImage: true,
-        authors: {
-          include: {
-            person: true
-          }
-        }
-      }
-    });
-    
-    return articles;
-  } catch (error) {
-    console.error("Error fetching all articles:", error);
-    return [];
-  }
-}
-
-export async function getAllArticleSlugs() {
-  try {
-    const articles = await prisma.content.findMany({
-      where: { status: 'PUBLISHED' },
-      select: { slug: true }
-    });
-    return articles;
-  } catch (error) {
-    console.error("Error fetching all article slugs:", error);
-    return [];
-  }
-}
+import { getAllArticles } from '@/lib/mdx';
 
 export async function getSearchItems() {
   try {
-    const articles = await prisma.content.findMany({
-      where: { status: 'PUBLISHED' },
-      include: { desk: true }
-    });
+    const articles = await getAllArticles();
 
     const people = await prisma.person.findMany();
     const entities = await prisma.entity.findMany();
@@ -107,8 +15,8 @@ export async function getSearchItems() {
       ...articles.map(a => ({
         id: `article-${a.slug}`,
         title: a.title,
-        description: a.summary || "",
-        type: a.desk?.name || "Article",
+        description: a.description || "",
+        type: a.domain || "Article",
         url: `/essay/${a.slug}`
       })),
       ...people.map(p => ({
@@ -140,3 +48,4 @@ export async function getSearchItems() {
     return [];
   }
 }
+

@@ -1,21 +1,13 @@
-import { getRecentArticles } from "@/lib/actions/content";
+import { getRecentArticles } from "@/lib/mdx";
 import HomeClient from "./page.client";
+
+export const metadata = {
+  title: "Monoverse | Where Ideas Intersect",
+  description: "A digital sanctuary for philosophy, science, and the human condition.",
+};
 
 export default async function Home() {
   const articles = await getRecentArticles(10);
   
-  // Format articles for the client component which expects the old contentlayer structure
-  const formattedEssays = articles.map(article => ({
-    slug: article.slug,
-    title: article.title,
-    description: article.summary || "",
-    author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
-    image: article.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
-    date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-    readingTime: article.readingTime ? `${article.readingTime} min read` : "10 min read",
-    domain: article.desk?.name || "Essays",
-    editorialType: article.desk?.name === "Essays" ? "Featured" : "Editor's Pick"
-  }));
-
-  return <HomeClient allEssays={formattedEssays} />;
+  return <HomeClient allEssays={articles} />;
 }

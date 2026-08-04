@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getArticleBySlug, getAllArticleSlugs } from "@/lib/actions/content";
+import { getArticleBySlug, getAllArticleSlugs } from "@/lib/mdx";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "../../components/MDXComponents";
 import { ReadingProgress } from "../../components/ReadingProgress";
@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!article) return {};
 
   return {
-    title: article.seoTitle || article.title,
-    description: article.seoDescription || article.summary,
+    title: article.title,
+    description: article.description,
   };
 }
 
@@ -40,12 +40,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   if (!article) notFound();
 
-  // Mapping DB structure to UI structure
-  const authorName = article.authors[0]?.person.name || "Unknown Author";
-  const coverImage = article.coverImage?.url || "";
-  const readingTimeText = article.readingTime ? `${article.readingTime} min read` : "10 min read";
-  const publishedDate = article.publishedAt || article.createdAt;
-  const disciplines = article.tags.map(t => t.tag.name);
+  // Mapping MDX structure to UI structure
+  const authorName = article.author;
+  const coverImage = article.image;
+  const readingTimeText = article.readingTime;
+  const publishedDate = new Date(article.date);
+  const disciplines = article.disciplines || [article.domain];
   
   return (
     <div className="bg-background">
@@ -56,7 +56,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             "@context": "https://schema.org",
             "@type": "Article",
             headline: article.title,
-            description: article.summary,
+            description: article.description,
             image: coverImage ? `https://monoverse.com${coverImage}` : undefined,
             datePublished: publishedDate.toISOString(),
             author: [
@@ -91,7 +91,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="mb-[32px] flex items-center justify-center gap-[16px]">
             <span className="text-bronze text-[14px]">◆</span>
             <span className="font-meta text-[11px] uppercase tracking-[0.2em] text-bronze font-semibold">
-              Vol. I — {article.desk?.name || 'Issue 1'}
+              Vol. I — {article.domain || 'Issue 1'}
             </span>
             <span className="text-bronze text-[14px]">◆</span>
           </div>
@@ -102,7 +102,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </h1>
           
           <p className="font-body text-[20px] md:text-[24px] text-text-secondary leading-[1.6] mb-[48px] max-w-[760px] mx-auto text-balance">
-            {article.summary}
+            {article.description}
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-[24px]">

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getAllArticles } from "@/lib/actions/content";
+import { getAllArticles } from "@/lib/mdx";
 import { EssayCard } from "../../components/EssayCard";
 import { CATEGORY_LAYOUTS } from "../../types";
 
@@ -18,8 +18,8 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const rawArticles = await getAllArticles();
-  const categories = Array.from(new Set(rawArticles.map((a: any) => (a.desk?.name || 'Essays').toLowerCase().replace(/\s+/g, '-'))));
+  const allEssays = await getAllArticles();
+  const categories = Array.from(new Set(allEssays.map(a => a.domain.toLowerCase().replace(/\s+/g, '-'))));
   const defaultCats = ['philosophy', 'science', 'history', 'technology', 'artificial-intelligence', 'ai', 'culture', 'economics', 'literature', 'civilizations', 'health'];
   const allSlugs = Array.from(new Set([...categories, ...defaultCats]));
   
@@ -47,18 +47,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ domai
   if (domainSlug === 'ai') displayTitle = 'Artificial Intelligence';
   if (domainSlug === 'artificial-intelligence') displayTitle = 'Artificial Intelligence';
   
-  const rawArticles = await getAllArticles();
-  
-  const allEssays = rawArticles.map(article => ({
-    slug: article.slug,
-    title: article.title,
-    description: article.summary || "",
-    author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
-    image: article.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
-    date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-    readingTime: { text: article.readingTime ? `${article.readingTime} min read` : "10 min read" },
-    domain: article.desk?.name || "Essays",
-  }));
+  const allEssays = await getAllArticles();
   
   const categoryArticles = allEssays
     .filter((a) => a.domain.toLowerCase().replace(/\s+/g, '-') === domainSlug || (domainSlug === 'ai' && a.domain === 'Artificial Intelligence'))
@@ -97,7 +86,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ domai
                   description={article.description}
                   category={article.domain}
                   author={article.author}
-                  readTime={article.readingTime.text}
+                  readTime={article.readingTime}
                   date={article.date}
                   image={article.image}
                 variant={layout === "history" ? "compact" : (layout === "philosophy" && index === 0) ? "featured" : "default"} 

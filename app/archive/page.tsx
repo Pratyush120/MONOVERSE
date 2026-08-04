@@ -1,4 +1,4 @@
-import { getAllArticles } from "@/lib/actions/content";
+import { getAllArticles } from "@/lib/mdx";
 import { EssayCard } from "../components/EssayCard";
 import { Section } from "../components/Section";
 
@@ -12,18 +12,7 @@ export const metadata = {
 };
 
 export default async function ArchivePage() {
-  const rawArticles = await getAllArticles();
-  
-  const allEssays = rawArticles.map(article => ({
-    slug: article.slug,
-    title: article.title,
-    description: article.summary || "",
-    author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
-    image: article.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
-    date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-    readingTime: { text: article.readingTime ? `${article.readingTime} min read` : "10 min read" },
-    domain: article.desk?.name || "Essays",
-  }));
+  const allEssays = await getAllArticles();
 
   const sortedArticles = allEssays.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -76,7 +65,7 @@ export default async function ArchivePage() {
                   description={article.description}
                   category={article.domain}
                   author={article.author}
-                  readTime={article.readingTime.text}
+                  readTime={article.readingTime}
                   date={article.date}
                   image={article.image}
                   variant="compact"
