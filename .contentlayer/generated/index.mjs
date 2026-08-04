@@ -7,9 +7,13 @@ export { isType } from 'contentlayer/client'
 import allEssays from './Essay/_index.json' assert { type: 'json' }
 import allCollections from './Collection/_index.json' assert { type: 'json' }
 import allAuthors from './Author/_index.json' assert { type: 'json' }
+import allMovies from './Movie/_index.json' assert { type: 'json' }
+import allCinemaArticles from './CinemaArticle/_index.json' assert { type: 'json' }
+import allCinemaLists from './CinemaList/_index.json' assert { type: 'json' }
+import allCinemaPeople from './CinemaPerson/_index.json' assert { type: 'json' }
 
-export { allEssays, allCollections, allAuthors }
+export { allEssays, allCollections, allAuthors, allMovies, allCinemaArticles, allCinemaLists, allCinemaPeople }
 
-export const allDocuments = [...allEssays, ...allCollections, ...allAuthors]
+export const allDocuments = [...allEssays, ...allCollections, ...allAuthors, ...allMovies, ...allCinemaArticles, ...allCinemaLists, ...allCinemaPeople]
 
 

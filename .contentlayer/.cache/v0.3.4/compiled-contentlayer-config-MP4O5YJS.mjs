@@ -1,8 +1,8 @@
+// contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import readingTime from "reading-time";
 import { slug } from "github-slugger";
-
-export const Essay = defineDocumentType(() => ({
+var Essay = defineDocumentType(() => ({
   name: "Essay",
   filePathPattern: `essays/**/*.mdx`,
   contentType: "mdx",
@@ -12,23 +12,26 @@ export const Essay = defineDocumentType(() => ({
     author: { type: "string", required: true },
     authorRole: { type: "string", required: true },
     date: { type: "date", required: true },
-    domain: { type: "string", required: true }, // Replaces category
-    editorialType: { type: "string", required: true, default: "Essay" }, // Featured, Editor's Pick, Long Read, etc.
-    series: { type: "string" }, // Optional series name
+    domain: { type: "string", required: true },
+    // Replaces category
+    editorialType: { type: "string", required: true, default: "Essay" },
+    // Featured, Editor's Pick, Long Read, etc.
+    series: { type: "string" },
+    // Optional series name
     disciplines: { type: "list", of: { type: "string" }, required: true },
     featured: { type: "boolean", default: false },
     image: { type: "string", required: true },
     pullQuote: { type: "string" },
-    draft: { type: "boolean", default: false },
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("essays/", ""),
+      resolve: (doc) => doc._raw.flattenedPath.replace("essays/", "")
     },
     readingTime: {
       type: "json",
-      resolve: (doc) => readingTime(doc.body.raw),
+      resolve: (doc) => readingTime(doc.body.raw)
     },
     toc: {
       type: "json",
@@ -40,12 +43,11 @@ export const Essay = defineDocumentType(() => ({
           return { level: flag, text: content, slug: slug(content ?? "") };
         });
         return headings;
-      },
-    },
-  },
+      }
+    }
+  }
 }));
-
-export const Collection = defineDocumentType(() => ({
+var Collection = defineDocumentType(() => ({
   name: "Collection",
   filePathPattern: `collections/**/*.mdx`,
   contentType: "mdx",
@@ -54,19 +56,19 @@ export const Collection = defineDocumentType(() => ({
     description: { type: "string", required: true },
     whyItExists: { type: "string", required: true },
     whatToLearn: { type: "list", of: { type: "string" }, required: true },
-    recommendedOrder: { type: "list", of: { type: "string" }, required: true }, // List of essay slugs
+    recommendedOrder: { type: "list", of: { type: "string" }, required: true },
+    // List of essay slugs
     image: { type: "string", required: true },
-    draft: { type: "boolean", default: false },
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("collections/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("collections/", "")
+    }
+  }
 }));
-
-export const Author = defineDocumentType(() => ({
+var Author = defineDocumentType(() => ({
   name: "Author",
   filePathPattern: `authors/**/*.mdx`,
   contentType: "mdx",
@@ -74,22 +76,18 @@ export const Author = defineDocumentType(() => ({
     name: { type: "string", required: true },
     bio: { type: "string", required: true },
     expertise: { type: "list", of: { type: "string" }, required: true },
-    socialLinks: { type: "json" }, // e.g. { twitter: "...", website: "..." }
-    avatar: { type: "string", required: true },
+    socialLinks: { type: "json" },
+    // e.g. { twitter: "...", website: "..." }
+    avatar: { type: "string", required: true }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("authors/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("authors/", "")
+    }
+  }
 }));
-
-// ==========================================
-// CINEMA EDITORIAL PUBLICATION SCHEMAS
-// ==========================================
-
-export const Movie = defineDocumentType(() => ({
+var Movie = defineDocumentType(() => ({
   name: "Movie",
   filePathPattern: `cinema/movies/**/*.mdx`,
   contentType: "mdx",
@@ -97,24 +95,25 @@ export const Movie = defineDocumentType(() => ({
     title: { type: "string", required: true },
     poster: { type: "string", required: true },
     releaseDate: { type: "date", required: true },
-    status: { type: "string", required: true }, // "Now Showing" | "Coming Soon"
+    status: { type: "string", required: true },
+    // "Now Showing" | "Coming Soon"
     genres: { type: "list", of: { type: "string" }, required: true },
     synopsis: { type: "string", required: true },
     trailerUrl: { type: "string" },
     cast: { type: "list", of: { type: "string" } },
     director: { type: "string", required: true },
-    platform: { type: "string" }, // Theaters, Netflix, etc.
-    draft: { type: "boolean", default: false },
+    platform: { type: "string" },
+    // Theaters, Netflix, etc.
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/movies/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/movies/", "")
+    }
+  }
 }));
-
-export const CinemaArticle = defineDocumentType(() => ({
+var CinemaArticle = defineDocumentType(() => ({
   name: "CinemaArticle",
   filePathPattern: `cinema/articles/**/*.mdx`,
   contentType: "mdx",
@@ -123,25 +122,26 @@ export const CinemaArticle = defineDocumentType(() => ({
     description: { type: "string", required: true },
     author: { type: "string", required: true },
     date: { type: "date", required: true },
-    editorialType: { type: "string", required: true }, // "Review" | "Feature" | "News" | "Community"
+    editorialType: { type: "string", required: true },
+    // "Review" | "Feature" | "News" | "Community"
     image: { type: "string", required: true },
-    movieRef: { type: "string" }, // Optional slug of the movie it relates to
+    movieRef: { type: "string" },
+    // Optional slug of the movie it relates to
     featured: { type: "boolean", default: false },
-    draft: { type: "boolean", default: false },
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/articles/", ""),
+      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/articles/", "")
     },
     readingTime: {
       type: "json",
-      resolve: (doc) => readingTime(doc.body.raw),
-    },
-  },
+      resolve: (doc) => readingTime(doc.body.raw)
+    }
+  }
 }));
-
-export const CinemaList = defineDocumentType(() => ({
+var CinemaList = defineDocumentType(() => ({
   name: "CinemaList",
   filePathPattern: `cinema/lists/**/*.mdx`,
   contentType: "mdx",
@@ -149,18 +149,18 @@ export const CinemaList = defineDocumentType(() => ({
     title: { type: "string", required: true },
     description: { type: "string", required: true },
     image: { type: "string", required: true },
-    movies: { type: "list", of: { type: "string" }, required: true }, // List of Movie slugs
-    draft: { type: "boolean", default: false },
+    movies: { type: "list", of: { type: "string" }, required: true },
+    // List of Movie slugs
+    draft: { type: "boolean", default: false }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/lists/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/lists/", "")
+    }
+  }
 }));
-
-export const CinemaPerson = defineDocumentType(() => ({
+var CinemaPerson = defineDocumentType(() => ({
   name: "CinemaPerson",
   filePathPattern: `cinema/people/**/*.mdx`,
   contentType: "mdx",
@@ -168,23 +168,34 @@ export const CinemaPerson = defineDocumentType(() => ({
     name: { type: "string", required: true },
     portrait: { type: "string", required: true },
     bio: { type: "string", required: true },
-    role: { type: "string", required: true }, // Director, Actor, etc.
+    role: { type: "string", required: true },
+    // Director, Actor, etc.
     signatureStyle: { type: "string" },
-    keyWorks: { type: "list", of: { type: "string" } },
+    keyWorks: { type: "list", of: { type: "string" } }
   },
   computedFields: {
     slug: {
       type: "string",
-      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/people/", ""),
-    },
-  },
+      resolve: (doc) => doc._raw.flattenedPath.replace("cinema/people/", "")
+    }
+  }
 }));
-
-export default makeSource({
+var contentlayer_config_default = makeSource({
   contentDirPath: "content",
   documentTypes: [Essay, Collection, Author, Movie, CinemaArticle, CinemaList, CinemaPerson],
   mdx: {
     remarkPlugins: [],
-    rehypePlugins: [],
-  },
+    rehypePlugins: []
+  }
 });
+export {
+  Author,
+  CinemaArticle,
+  CinemaList,
+  CinemaPerson,
+  Collection,
+  Essay,
+  Movie,
+  contentlayer_config_default as default
+};
+//# sourceMappingURL=compiled-contentlayer-config-MP4O5YJS.mjs.map

@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { ImageReveal } from "./ImageReveal";
 
-interface DirectorCardProps {
+interface PersonCardProps {
   name: string;
   portrait: string;
   bio: string;
+  role: string;
   signatureStyle: string;
   keyWorks: string[];
   href: string;
 }
 
-export function DirectorCard({ name, portrait, bio, signatureStyle, keyWorks, href }: DirectorCardProps) {
+export function PersonCard({ name, portrait, bio, role, signatureStyle, keyWorks, href }: PersonCardProps) {
   return (
     <div className="glass-panel overflow-hidden group flex flex-col md:flex-row gap-[32px] p-[32px] md:p-[40px] items-center md:items-start transition-transform duration-500 ease-out hover:shadow-float-high hover:-translate-y-[4px]">
       <div className="w-[160px] h-[200px] md:w-[200px] md:h-[260px] flex-shrink-0 grayscale group-hover:grayscale-0 transition-all duration-[800ms]">
@@ -38,8 +39,8 @@ export function DirectorCard({ name, portrait, bio, signatureStyle, keyWorks, hr
           </div>
         </div>
 
-        <Link href={href} className="font-label text-[11px] uppercase tracking-[0.2em] text-bronze font-semibold hover:text-foreground transition-colors self-center md:self-start">
-          Read Director Study
+        <Link href={href} className="font-label text-[11px] uppercase tracking-[0.2em] text-bronze-accent font-semibold hover:text-foreground transition-colors self-center md:self-start">
+          Read Profile
         </Link>
       </div>
     </div>

@@ -23,6 +23,57 @@ export type Author = {
   slug: string
 }
 
+export type CinemaArticle = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'CinemaArticle'
+  title: string
+  description: string
+  author: string
+  date: IsoDateTimeString
+  editorialType: string
+  image: string
+  movieRef?: string | undefined
+  featured: boolean
+  draft: boolean
+  /** MDX file body */
+  body: MDX
+  slug: string
+  readingTime: json
+}
+
+export type CinemaList = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'CinemaList'
+  title: string
+  description: string
+  image: string
+  movies: string[]
+  draft: boolean
+  /** MDX file body */
+  body: MDX
+  slug: string
+}
+
+export type CinemaPerson = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'CinemaPerson'
+  name: string
+  portrait: string
+  bio: string
+  role: string
+  signatureStyle?: string | undefined
+  keyWorks?: string[] | undefined
+  /** MDX file body */
+  body: MDX
+  slug: string
+}
+
 export type Collection = {
   /** File path relative to `contentDirPath` */
   _id: string
@@ -63,6 +114,27 @@ export type Essay = {
   slug: string
   readingTime: json
   toc: json
+}
+
+export type Movie = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Movie'
+  title: string
+  poster: string
+  releaseDate: IsoDateTimeString
+  status: string
+  genres: string[]
+  synopsis: string
+  trailerUrl?: string | undefined
+  cast?: string[] | undefined
+  director: string
+  platform?: string | undefined
+  draft: boolean
+  /** MDX file body */
+  body: MDX
+  slug: string
 }  
 
 /** Nested types */
@@ -73,8 +145,8 @@ export type Essay = {
 export type AllTypes = DocumentTypes | NestedTypes
 export type AllTypeNames = DocumentTypeNames | NestedTypeNames
 
-export type DocumentTypes = Author | Collection | Essay
-export type DocumentTypeNames = 'Author' | 'Collection' | 'Essay'
+export type DocumentTypes = Author | CinemaArticle | CinemaList | CinemaPerson | Collection | Essay | Movie
+export type DocumentTypeNames = 'Author' | 'CinemaArticle' | 'CinemaList' | 'CinemaPerson' | 'Collection' | 'Essay' | 'Movie'
 
 export type NestedTypes = never
 export type NestedTypeNames = never
@@ -84,6 +156,10 @@ export type DataExports = {
   allEssays: Essay[]
   allCollections: Collection[]
   allAuthors: Author[]
+  allMovies: Movie[]
+  allCinemaArticles: CinemaArticle[]
+  allCinemaLists: CinemaList[]
+  allCinemaPeople: CinemaPerson[]
 }
 
 
@@ -104,8 +180,12 @@ declare global {
 
 export type DocumentTypeMap = {
   Author: Author
+  CinemaArticle: CinemaArticle
+  CinemaList: CinemaList
+  CinemaPerson: CinemaPerson
   Collection: Collection
   Essay: Essay
+  Movie: Movie
 }
 
 export type NestedTypeMap = {
