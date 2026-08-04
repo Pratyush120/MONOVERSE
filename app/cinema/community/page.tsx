@@ -28,7 +28,7 @@ export default async function CommunityPage() {
             {community.map((article) => (
               <CommunityCard
                 key={article.slug}
-                slug={`/cinema/article/${article.slug}`}
+                slug={`/essay/${article.slug}`}
                 title={article.title}
                 description={article.description}
                 author={article.author}

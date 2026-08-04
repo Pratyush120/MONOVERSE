@@ -27,7 +27,7 @@ export default async function ReviewsPage() {
             {reviews.map((review) => (
               <ReviewCard
                 key={review.slug}
-                slug={`/cinema/article/${review.slug}`}
+                slug={`/essay/${review.slug}`}
                 title={review.title}
                 description={review.description}
                 author={review.author}

@@ -27,7 +27,7 @@ export default async function FeaturesPage() {
             {features.map((feature) => (
               <EssayCard
                 key={feature.slug}
-                slug={`/cinema/article/${feature.slug}`}
+                slug={`/essay/${feature.slug}`}
                 title={feature.title}
                 description={feature.description}
                 author={feature.author}

@@ -141,7 +141,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
                 {reviews.map(review => (
                   <ReviewCard
                     key={review.slug}
-                    slug={`/cinema/article/${review.slug}`}
+                    slug={`/essay/${review.slug}`}
                     title={review.title}
                     description={review.description}
                     author={review.author}
@@ -162,7 +162,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
                   {community.map(comm => (
                     <CommunityCard
                       key={comm.slug}
-                      slug={`/cinema/article/${comm.slug}`}
+                      slug={`/essay/${comm.slug}`}
                       title={comm.title}
                       description={comm.description}
                       author={comm.author}
@@ -195,7 +195,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
                 {reviews.map(review => (
                   <ReviewCard
                     key={review.slug}
-                    slug={`/cinema/article/${review.slug}`}
+                    slug={`/essay/${review.slug}`}
                     title={review.title}
                     description={review.description}
                     author={review.author}
@@ -217,7 +217,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
                   {features.map(feature => (
                     <EssayCard
                       key={feature.slug}
-                      slug={`/cinema/article/${feature.slug}`}
+                      slug={`/essay/${feature.slug}`}
                       title={feature.title}
                       description={feature.description}
                       author={feature.author}
@@ -240,7 +240,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
                 {community.map(comm => (
                   <CommunityCard
                     key={comm.slug}
-                    slug={`/cinema/article/${comm.slug}`}
+                    slug={`/essay/${comm.slug}`}
                     title={comm.title}
                     description={comm.description}
                     author={comm.author}

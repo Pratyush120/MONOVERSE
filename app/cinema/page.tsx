@@ -52,7 +52,7 @@ export default async function CinemaPage() {
         <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
           <SectionLabel label="Featured Story" />
           <EssayCard
-            slug={`/cinema/article/${featured.slug}`}
+            slug={`/essay/${featured.slug}`}
             title={featured.title}
             description={featured.description}
             author={featured.author}
@@ -74,7 +74,7 @@ export default async function CinemaPage() {
               {latest.map((article) => (
                 <EssayCard
                   key={article.slug}
-                  slug={`/cinema/article/${article.slug}`}
+                  slug={`/essay/${article.slug}`}
                   title={article.title}
                   description={article.description}
                   author={article.author}
@@ -140,7 +140,7 @@ export default async function CinemaPage() {
                 {reviews.map((article) => (
                   <ReviewCard
                     key={article.slug}
-                    slug={`/cinema/article/${article.slug}`}
+                    slug={`/essay/${article.slug}`}
                     title={article.title}
                     description={article.description}
                     author={article.author}
@@ -161,7 +161,7 @@ export default async function CinemaPage() {
                 {features.map((article) => (
                   <EssayCard
                     key={article.slug}
-                    slug={`/cinema/article/${article.slug}`}
+                    slug={`/essay/${article.slug}`}
                     title={article.title}
                     description={article.description}
                     author={article.author}
@@ -227,7 +227,7 @@ export default async function CinemaPage() {
               {community.map((article) => (
                 <CommunityCard
                   key={article.slug}
-                  slug={`/cinema/article/${article.slug}`}
+                  slug={`/essay/${article.slug}`}
                   title={article.title}
                   description={article.description}
                   author={article.author}
