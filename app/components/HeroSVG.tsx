@@ -2,9 +2,10 @@ import * as React from "react";
 import type { SVGProps } from "react";
 const SvgHero = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width={1661}
-    height={982}
+    width="100%"
+    height="100%"
     viewBox="0 0 1661 982"
+    preserveAspectRatio="xMidYMid meet"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
