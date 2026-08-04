@@ -7,10 +7,12 @@ interface MovieCardProps {
   releaseStatus: string;
   genres: string[];
   platform: string;
+  communityReviewCount?: number;
+  discussionCount?: number;
   href: string;
 }
 
-export function MovieCard({ title, poster, releaseStatus, genres, platform, href }: MovieCardProps) {
+export function MovieCard({ title, poster, releaseStatus, genres, platform, communityReviewCount = 0, discussionCount = 0, href }: MovieCardProps) {
   return (
     <Link href={href} className="glass-panel overflow-hidden group block hover:shadow-float-high hover:-translate-y-[4px] transition-all duration-500 ease-out">
       <div className="w-full aspect-[2/3] overflow-hidden relative">
@@ -26,8 +28,20 @@ export function MovieCard({ title, poster, releaseStatus, genres, platform, href
         <p className="font-body text-[14px] text-text-secondary mb-[16px]">
           {genres.join(" · ")}
         </p>
-        <div className="font-meta text-[11px] uppercase tracking-[0.15em] text-foreground border-t border-outline-variant pt-[16px]">
-          {platform}
+        <div className="flex items-center gap-[16px] font-meta text-[11px] uppercase tracking-[0.15em] text-foreground border-t border-outline-variant pt-[16px]">
+          <span>{platform}</span>
+          {communityReviewCount > 0 && (
+            <>
+              <span className="w-[3px] h-[3px] rounded-full bg-outline-variant"></span>
+              <span className="text-text-secondary">{communityReviewCount} Reviews</span>
+            </>
+          )}
+          {discussionCount > 0 && (
+            <>
+              <span className="w-[3px] h-[3px] rounded-full bg-outline-variant"></span>
+              <span className="text-text-secondary">{discussionCount} Discussing</span>
+            </>
+          )}
         </div>
       </div>
     </Link>

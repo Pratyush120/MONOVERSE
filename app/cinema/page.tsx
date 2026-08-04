@@ -5,7 +5,9 @@ import { SectionLabel } from "../components/SectionLabel";
 import { MovieCard } from "../components/MovieCard";
 import { ComingSoonCard } from "../components/ComingSoonCard";
 import { CollectionCard } from "../components/CollectionCard";
-import { PersonCard } from "../components/PersonCard";
+import { PeopleCard } from "../components/PeopleCard";
+import { ReviewCard } from "../components/ReviewCard";
+import { CommunityCard } from "../components/CommunityCard";
 import { SubmissionSection } from "../components/SubmissionSection";
 import { Newsletter } from "../components/Newsletter";
 import Link from "next/link";
@@ -129,7 +131,7 @@ export default function CinemaPage() {
               <SectionLabel label="Reviews" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
                 {reviews.map((article) => (
-                  <EssayCard
+                  <ReviewCard
                     key={article.slug}
                     slug={`/cinema/article/${article.slug}`}
                     title={article.title}
@@ -138,7 +140,6 @@ export default function CinemaPage() {
                     image={article.image}
                     date={article.date}
                     readTime={article.readingTime.text}
-                    category="Review"
                     variant="compact"
                   />
                 ))}
@@ -195,7 +196,7 @@ export default function CinemaPage() {
           <SectionLabel label="People" />
           <div className="flex flex-col gap-[48px]">
             {people.map((person) => (
-              <PersonCard
+              <PeopleCard
                 key={person.slug}
                 name={person.name}
                 portrait={person.portrait}
@@ -217,7 +218,7 @@ export default function CinemaPage() {
             <SectionLabel label="Community" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px] md:gap-[64px]">
               {community.map((article) => (
-                <EssayCard
+                <CommunityCard
                   key={article.slug}
                   slug={`/cinema/article/${article.slug}`}
                   title={article.title}
@@ -226,7 +227,6 @@ export default function CinemaPage() {
                   image={article.image}
                   date={article.date}
                   readTime={article.readingTime.text}
-                  category="Community"
                 />
               ))}
             </div>

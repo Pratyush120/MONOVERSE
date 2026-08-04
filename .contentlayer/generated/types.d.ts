@@ -130,7 +130,12 @@ export type Movie = {
   trailerUrl?: string | undefined
   cast?: string[] | undefined
   director: string
+  studio?: string | undefined
   platform?: string | undefined
+  expectedPlatform?: string | undefined
+  communityReviewCount: number
+  discussionCount: number
+  lifecycle: string
   draft: boolean
   /** MDX file body */
   body: MDX

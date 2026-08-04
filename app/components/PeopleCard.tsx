@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ImageReveal } from "./ImageReveal";
 
-interface PersonCardProps {
+interface PeopleCardProps {
   name: string;
   portrait: string;
   bio: string;
@@ -11,7 +11,7 @@ interface PersonCardProps {
   href: string;
 }
 
-export function PersonCard({ name, portrait, bio, role, signatureStyle, keyWorks, href }: PersonCardProps) {
+export function PeopleCard({ name, portrait, bio, role, signatureStyle, keyWorks, href }: PeopleCardProps) {
   return (
     <div className="glass-panel overflow-hidden group flex flex-col md:flex-row gap-[32px] p-[32px] md:p-[40px] items-center md:items-start transition-transform duration-500 ease-out hover:shadow-float-high hover:-translate-y-[4px]">
       <div className="w-[160px] h-[200px] md:w-[200px] md:h-[260px] flex-shrink-0 grayscale group-hover:grayscale-0 transition-all duration-[800ms]">

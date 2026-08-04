@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { allMovies, allCinemaArticles } from "contentlayer/generated";
 import { SectionLabel } from "../../../components/SectionLabel";
 import { EssayCard } from "../../../components/EssayCard";
+import { ReviewCard } from "../../../components/ReviewCard";
+import { CommunityCard } from "../../../components/CommunityCard";
 import { ImageReveal } from "../../../components/ImageReveal";
 import { Newsletter } from "../../../components/Newsletter";
 import Link from "next/link";
@@ -37,10 +39,32 @@ export default function MoviePage({ params }: MoviePageProps) {
   const features = coverage.filter(a => a.editorialType === "Feature");
   const community = coverage.filter(a => a.editorialType === "Community");
 
-  const isComingSoon = movie.status === "Coming Soon";
+  const isBeforeRelease = movie.lifecycle === "Before Release";
+  const isReleaseWeek = movie.lifecycle === "Release Week";
+  const isAfterRelease = movie.lifecycle === "After Release";
+  const isArchive = movie.lifecycle === "Archive";
+
+  // SEO JSON-LD
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Movie",
+    "name": movie.title,
+    "image": movie.poster,
+    "description": movie.synopsis,
+    "director": {
+      "@type": "Person",
+      "name": movie.director
+    },
+    "datePublished": movie.releaseDate,
+    "genre": movie.genres
+  };
 
   return (
     <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
         {/* Movie Header block */}
         <div className="flex flex-col lg:flex-row gap-[48px] md:gap-[80px]">
@@ -90,7 +114,7 @@ export default function MoviePage({ params }: MoviePageProps) {
 
       {/* Dynamic Lifecycle Sections */}
       
-      {isComingSoon ? (
+      {isBeforeRelease && (
         <section className="bg-surface-low py-[80px] md:py-[120px]">
           <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
             <SectionLabel label="Predictions & Discussion" />
@@ -103,15 +127,16 @@ export default function MoviePage({ params }: MoviePageProps) {
             </div>
           </div>
         </section>
-      ) : (
+      )}
+
+      {isReleaseWeek && (
         <div className="flex flex-col gap-[120px]">
-          {/* REVIEWS */}
           {reviews.length > 0 && (
             <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-              <SectionLabel label="Editorial Reviews" />
+              <SectionLabel label="Release Week Reviews" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
                 {reviews.map(review => (
-                  <EssayCard
+                  <ReviewCard
                     key={review.slug}
                     slug={`/cinema/article/${review.slug}`}
                     title={review.title}
@@ -120,18 +145,71 @@ export default function MoviePage({ params }: MoviePageProps) {
                     image={review.image}
                     date={review.date}
                     readTime={review.readingTime.text}
-                    category="Review"
+                    variant="compact"
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+          {community.length > 0 && (
+            <section className="bg-surface-low py-[80px] md:py-[120px]">
+              <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+                <SectionLabel label="Spoiler-Free Community Reactions" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
+                  {community.map(comm => (
+                    <CommunityCard
+                      key={comm.slug}
+                      slug={`/cinema/article/${comm.slug}`}
+                      title={comm.title}
+                      description={comm.description}
+                      author={comm.author}
+                      image={comm.image}
+                      date={comm.date}
+                      readTime={comm.readingTime.text}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+      )}
+
+      {(isAfterRelease || isArchive) && (
+        <div className="flex flex-col gap-[120px]">
+          {isArchive && (
+            <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] text-center">
+              <span className="inline-block border border-bronze-accent/30 text-bronze-accent px-[16px] py-[8px] font-label text-[12px] uppercase tracking-[0.2em] rounded-full mb-[48px]">
+                Monoverse Cinema Archive
+              </span>
+            </section>
+          )}
+
+          {reviews.length > 0 && (
+            <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
+              <SectionLabel label="Editorial Reviews" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
+                {reviews.map(review => (
+                  <ReviewCard
+                    key={review.slug}
+                    slug={`/cinema/article/${review.slug}`}
+                    title={review.title}
+                    description={review.description}
+                    author={review.author}
+                    image={review.image}
+                    date={review.date}
+                    readTime={review.readingTime.text}
+                    variant="compact"
                   />
                 ))}
               </div>
             </section>
           )}
 
-          {/* EDITORIAL COVERAGE */}
           {features.length > 0 && (
             <section className="bg-surface-low py-[80px] md:py-[120px]">
               <div className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-                <SectionLabel label="Deep Dives & Analysis" />
+                <SectionLabel label={isArchive ? "Retrospective Analysis" : "Deep Dives & Analysis"} />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
                   {features.map(feature => (
                     <EssayCard
@@ -152,13 +230,12 @@ export default function MoviePage({ params }: MoviePageProps) {
             </section>
           )}
 
-          {/* COMMUNITY REVIEWS */}
           {community.length > 0 && (
             <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px]">
-              <SectionLabel label="Community Consensus" />
+              <SectionLabel label={isArchive ? "Legacy Discussion" : "Community Consensus"} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[48px]">
                 {community.map(comm => (
-                  <EssayCard
+                  <CommunityCard
                     key={comm.slug}
                     slug={`/cinema/article/${comm.slug}`}
                     title={comm.title}
@@ -167,8 +244,6 @@ export default function MoviePage({ params }: MoviePageProps) {
                     image={comm.image}
                     date={comm.date}
                     readTime={comm.readingTime.text}
-                    category="Community"
-                    variant="compact"
                   />
                 ))}
               </div>

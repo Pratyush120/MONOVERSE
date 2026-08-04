@@ -8,10 +8,13 @@ interface ComingSoonCardProps {
   synopsis: string;
   director: string;
   cast: string[];
+  studio?: string;
+  expectedPlatform?: string;
+  trailerUrl?: string;
   href: string;
 }
 
-export function ComingSoonCard({ title, poster, releaseDate, synopsis, director, cast, href }: ComingSoonCardProps) {
+export function ComingSoonCard({ title, poster, releaseDate, synopsis, director, cast, studio, expectedPlatform, trailerUrl, href }: ComingSoonCardProps) {
   return (
     <Link href={href} className="glass-panel overflow-hidden group flex flex-col md:flex-row gap-[24px] md:gap-[40px] items-start p-[24px] md:p-[32px] hover:shadow-float-high hover:-translate-y-[4px] transition-all duration-500 ease-out">
       <div className="w-[120px] md:w-[180px] flex-shrink-0 aspect-[2/3] overflow-hidden">
@@ -29,18 +32,24 @@ export function ComingSoonCard({ title, poster, releaseDate, synopsis, director,
           {synopsis}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-[24px] border-t border-outline-variant pt-[24px] mt-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[24px] border-t border-outline-variant pt-[24px] mt-auto">
           <div>
             <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Release Date</span>
             <span className="font-body text-[14px] text-foreground">{releaseDate}</span>
           </div>
           <div>
-            <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Director</span>
-            <span className="font-body text-[14px] text-foreground">{director}</span>
+            <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Studio</span>
+            <span className="font-body text-[14px] text-foreground">{studio || "TBA"}</span>
           </div>
           <div>
-            <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Cast</span>
-            <span className="font-body text-[14px] text-foreground line-clamp-1">{cast.join(", ")}</span>
+            <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Platform</span>
+            <span className="font-body text-[14px] text-foreground">{expectedPlatform || "Theaters"}</span>
+          </div>
+          <div>
+            <span className="font-meta text-[10px] uppercase tracking-[0.15em] text-bronze-accent block mb-[4px]">Expectation</span>
+            <div className="w-full bg-surface-high h-[4px] mt-[8px] rounded-full overflow-hidden">
+              <div className="bg-bronze-accent h-full w-[85%] rounded-full"></div>
+            </div>
           </div>
         </div>
       </div>
