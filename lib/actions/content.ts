@@ -55,6 +55,30 @@ export async function getRecentArticles(limit = 10) {
   }
 }
 
+export async function getAllArticles() {
+  try {
+    const articles = await prisma.content.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { publishedAt: 'desc' },
+      include: {
+        desk: true,
+        type: true,
+        coverImage: true,
+        authors: {
+          include: {
+            person: true
+          }
+        }
+      }
+    });
+    
+    return articles;
+  } catch (error) {
+    console.error("Error fetching all articles:", error);
+    return [];
+  }
+}
+
 export async function getAllArticleSlugs() {
   try {
     const articles = await prisma.content.findMany({

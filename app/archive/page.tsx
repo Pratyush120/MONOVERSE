@@ -1,4 +1,4 @@
-const allEssays: any[] = [];
+import { getAllArticles } from "@/lib/actions/content";
 import { EssayCard } from "../components/EssayCard";
 import { Section } from "../components/Section";
 
@@ -11,7 +11,20 @@ export const metadata = {
   description: "A complete index of Monoverse publications.",
 };
 
-export default function ArchivePage() {
+export default async function ArchivePage() {
+  const rawArticles = await getAllArticles();
+  
+  const allEssays = rawArticles.map(article => ({
+    slug: article.slug,
+    title: article.title,
+    description: article.summary,
+    author: article.authors && article.authors.length > 0 ? article.authors[0].person?.name : "Unknown",
+    image: article.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
+    date: (article.publishedAt || article.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    readingTime: { text: article.readingTime ? `${article.readingTime} min read` : "10 min read" },
+    domain: article.desk?.name || "Essays",
+  }));
+
   const sortedArticles = allEssays.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
