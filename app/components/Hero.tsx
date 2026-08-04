@@ -140,6 +140,9 @@ export function Hero() {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
       mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 
+      // Stop previous mousemove animations to prevent massive CPU/Memory leak
+      anime.remove([svgContainerRef.current, glowRef.current]);
+
       anime({
         targets: svgContainerRef.current,
         translateX: mouseX * 15,
