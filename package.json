@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node fix-crlf.js",
+    "prebuild": "node fix-crlf.js && npx prisma generate && npx tsx prisma/seed.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
