@@ -28,12 +28,12 @@ export function Hero() {
     if (!treePaths.length) return;
 
     // Reset initial states
-    anime.set(treePaths, { opacity: 0, scale: 0.8, translateY: 30 });
-    anime.set(textPaths, { opacity: 0, scale: 0.9, translateY: -20 });
+    anime.set(treePaths, { opacity: 0, scale: 0.8, translateY: 50 });
+    anime.set(textPaths, { opacity: 0, scale: 0.9, translateY: -30 });
     anime.set(glowRef.current, { opacity: 0, scale: 0.5 });
 
     const tl = anime.timeline({
-      easing: "easeOutExpo",
+      easing: "spring(1, 80, 10, 0)", // Premium spring easing
     });
 
     // 1. Bloom the radial glow first to set the atmosphere
@@ -42,28 +42,24 @@ export function Hero() {
       opacity: [0, 0.4],
       scale: [0.8, 1],
       duration: 3000,
-      easing: "easeOutCubic",
+      easing: "cubicBezier(0.19, 1, 0.22, 1)",
     })
-    // 2. Assemble the tree piece by piece! (Extremely fast start, slow 1.5s tail)
+    // 2. Assemble the tree piece by piece with a very dynamic stagger and spring bounce
     .add({
       targets: treePaths,
-      opacity: [0, 1],
-      scale: [0.95, 1],
-      translateY: [20, 0],
-      duration: 3000,
-      delay: anime.stagger(1.5, { start: 0 }),
-      easing: "easeOutCubic",
-    }, "-=2500") // Start almost immediately with the glow
-    // 3. Assemble the Monoverse typography (gradual 5-7 second reveal per manifesto)
+      opacity: { value: [0, 1], duration: 1500, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
+      scale: [0.8, 1],
+      translateY: [50, 0],
+      delay: anime.stagger(2, { start: 0, from: 'center' }), // Center stagger for organic feel
+    }, "-=2800") // Start overlapping with glow bloom
+    // 3. Assemble the Monoverse typography gracefully
     .add({
       targets: textPaths,
-      opacity: [0, 1],
-      scale: [0.98, 1],
-      translateY: [-10, 0],
-      duration: 5000,
-      delay: anime.stagger(15, { direction: 'normal' }),
-      easing: "easeOutCubic", 
-    }, "-=2000");
+      opacity: { value: [0, 1], duration: 2000, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
+      scale: [0.9, 1],
+      translateY: [-30, 0],
+      delay: anime.stagger(20, { direction: 'normal' }),
+    }, "-=2500");
 
     return () => {
       anime.remove([treePaths, textPaths, glowRef.current]);
