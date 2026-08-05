@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Providers } from "./components/Providers";
+import { FluidBackground } from "./components/FluidBackground";
 
 // Luxury Typography Overhaul
 // Mapping user requests to closest/exact Google Fonts
@@ -85,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="color-scheme" content="light dark" />
       </head>
       <body>
+        <FluidBackground />
         <Providers>
           <TooltipProvider>
             <div className="flex flex-col min-h-screen">
