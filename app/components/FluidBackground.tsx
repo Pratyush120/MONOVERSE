@@ -56,6 +56,12 @@ export function FluidBackground() {
     
     let animationFrameId: number;
     const physicsLoop = () => {
+      // Disable physics engine entirely on mobile screens (saves massive CPU/battery)
+      if (window.innerWidth < 768) {
+        animationFrameId = requestAnimationFrame(physicsLoop);
+        return;
+      }
+
       // A. Smooth Parallax for entire background container
       if (containerRef.current) {
         const targetParallaxX = (targetX / window.innerWidth - 0.5) * -60;
@@ -117,19 +123,20 @@ export function FluidBackground() {
         {/* ─── DARK MODE BLOBS (Punchy & Vibrant) ─── */}
         <div className="absolute inset-0 opacity-80 hidden dark:block">
           <div 
-            className="dark-fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] mix-blend-screen blur-[100px]" 
+            className="dark-fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] mix-blend-screen blur-[60px] md:blur-[100px]" 
             style={{ background: 'radial-gradient(circle at center, #00FF87 0%, transparent 70%)' }}
           />
           <div 
-            className="dark-fluid-blob absolute bottom-[10%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[60%_40%_30%_70%] mix-blend-screen blur-[120px]" 
+            className="dark-fluid-blob absolute bottom-[10%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[60%_40%_30%_70%] mix-blend-screen blur-[80px] md:blur-[120px]" 
             style={{ background: 'radial-gradient(circle at center, #00F0FF 0%, transparent 70%)' }}
           />
+          {/* Hide excessive blobs on mobile */}
           <div 
-            className="dark-fluid-blob absolute top-[40%] left-[30%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-[50%_50%_60%_40%] mix-blend-screen blur-[140px]" 
+            className="dark-fluid-blob hidden md:block absolute top-[40%] left-[30%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-[50%_50%_60%_40%] mix-blend-screen blur-[140px]" 
             style={{ background: 'radial-gradient(circle at center, #1A75FF 0%, transparent 70%)' }}
           />
           <div 
-            className="dark-fluid-blob absolute top-[-10%] right-[20%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-[70%_30%_50%_50%] mix-blend-screen blur-[100px]" 
+            className="dark-fluid-blob hidden md:block absolute top-[-10%] right-[20%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-[70%_30%_50%_50%] mix-blend-screen blur-[100px]" 
             style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }}
           />
         </div>
@@ -137,33 +144,34 @@ export function FluidBackground() {
         {/* ─── LIGHT MODE BLOBS (Punchier, but not blindingly neon) ─── */}
         <div className="absolute inset-0 opacity-80 block dark:hidden mix-blend-multiply">
           <div 
-            className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[100px]" 
+            className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[60px] md:blur-[100px]" 
             style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }}
           />
           <div 
-            className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[120px]" 
+            className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[80px] md:blur-[120px]" 
             style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }}
           />
+          {/* Hide excessive blobs on mobile */}
           <div 
-            className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
+            className="light-fluid-blob hidden md:block absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
             style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }}
           />
           <div 
-            className="light-fluid-blob absolute top-[60%] right-[30%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[70%_30%_50%_50%] blur-[120px]" 
+            className="light-fluid-blob hidden md:block absolute top-[60%] right-[30%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[70%_30%_50%_50%] blur-[120px]" 
             style={{ background: 'radial-gradient(circle at center, #2ED69E 0%, transparent 70%)' }}
           />
         </div>
       </div>
 
       {/* ─── INTERACTIVE FLUID TRAIL (Dark Mode) ─── */}
-      <div className="hidden dark:block">
+      <div className="hidden md:dark:block">
         <div ref={el => { interactiveRefs.current[0] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-screen blur-[80px] opacity-[0.9] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00FF87 0%, transparent 70%)' }} />
         <div ref={el => { interactiveRefs.current[1] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-screen blur-[120px] opacity-[0.6] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00F0FF 0%, transparent 70%)' }} />
         <div ref={el => { interactiveRefs.current[2] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-screen blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }} />
       </div>
 
       {/* ─── INTERACTIVE TRAILING BLOBS (Light Mode) ─── */}
-      <div className="block dark:hidden">
+      <div className="hidden md:block dark:hidden">
         <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.7] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }} />
         <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.5] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }} />
         <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }} />
@@ -192,8 +200,8 @@ export function FluidBackground() {
         }}
       />
       
-      {/* SVG Grain Overlay */}
-      <div className="absolute inset-0 opacity-[0.12] mix-blend-color-dodge dark:opacity-[0.15]"
+      {/* SVG Grain Overlay - Disabled on mobile to prevent extreme battery drain/lag */}
+      <div className="hidden md:block absolute inset-0 opacity-[0.12] mix-blend-color-dodge dark:opacity-[0.15]"
            style={{
              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
            }}
