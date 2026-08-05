@@ -404,11 +404,12 @@ body {
 @layer utilities {
   .drop-cap {
     float: left;
-    font-size: 3.8em;
+    font-size: 4.5em;
     line-height: 0.8;
-    margin-right: 0.15em;
-    margin-top: 0.1em;
-    font-family: var(--font-display);
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 3px;
+    font-family: var(--font-playfair);
     color: var(--bronze-accent);
   }
 

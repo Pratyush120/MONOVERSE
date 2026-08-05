@@ -6,8 +6,6 @@ import anime from "animejs";
 export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const interactiveRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const waterCutRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const darkBlobs = containerRef.current?.querySelectorAll(".dark-fluid-blob");
@@ -35,16 +33,9 @@ export function FluidBackground() {
     if (darkBlobs) animateBlobs(darkBlobs);
     if (lightBlobs) animateBlobs(lightBlobs);
 
-    // 2. Ultra-fluid Mouse tracking for liquid smear effect & Water Cut
+    // 2. Ultra-fluid Mouse tracking for liquid smear effect
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    
-    // For velocity and angle tracking (Water Cut effect)
-    let waterX = mouseX;
-    let waterY = mouseY;
-    let smoothedAngle = 0;
-    let smoothedSpeed = 0;
-    let time = 0; // For water-like drifting grid
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -70,26 +61,8 @@ export function FluidBackground() {
     // Speeds for the interactive trailing blobs to create a liquid effect
     const speeds = [0.15, 0.08, 0.04, 0.15, 0.08, 0.04];
     
-    // Morph the water cut shape organically so it's a "fluid element other than a blob"
-    if (waterCutRef.current) {
-      anime({
-        targets: waterCutRef.current,
-        borderRadius: [
-          '50% 50% 50% 50% / 50% 50% 50% 50%',
-          '60% 40% 30% 70% / 60% 30% 70% 40%',
-          '30% 70% 70% 30% / 50% 60% 30% 60%',
-          '50% 50% 50% 50% / 50% 50% 50% 50%',
-        ],
-        duration: 4000,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true
-      });
-    }
-
     let animationFrameId: number;
     const animateInteractiveBlobs = () => {
-      // 1. Update standard trailing blobs
       interactiveRefs.current.forEach((ref, index) => {
         if (!ref) return;
         
@@ -104,46 +77,6 @@ export function FluidBackground() {
         
         ref.style.transform = `translate(${cx}px, ${cy}px)`;
       });
-
-      // 2. Update Water Cut fluid dynamic lens (Snappier & more responsive)
-      const dx = mouseX - waterX;
-      const dy = mouseY - waterY;
-      waterX += dx * 0.35; // Much faster tracking for responsiveness
-      waterY += dy * 0.35;
-      
-      const speed = Math.sqrt(dx*dx + dy*dy);
-      smoothedSpeed += (speed - smoothedSpeed) * 0.2; // Faster speed smoothing
-      
-      if (speed > 0.5) { // Lower threshold for snappier angle updates
-        const targetAngle = Math.atan2(dy, dx);
-        
-        // Ensure shortest path for angle rotation
-        let angleDiff = targetAngle - smoothedAngle;
-        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-        
-        smoothedAngle += angleDiff * 0.3; // Faster angle snapping
-      }
-      
-      if (waterCutRef.current) {
-        // Stretch aggressively based on speed (fluid knife), squash deeply
-        const scaleX = 1 + Math.min(smoothedSpeed * 0.03, 2.5); // More stretch
-        const scaleY = Math.max(0.25, 1 - smoothedSpeed * 0.01); // More squash
-        const angleDeg = smoothedAngle * (180 / Math.PI);
-        
-        // Offset by half its new width/height (-75px)
-        waterCutRef.current.style.transform = `translate(${waterX}px, ${waterY}px) rotate(${angleDeg}deg) scale(${scaleX}, ${scaleY})`;
-      }
-      
-      // 3. Update Isometric Grid (Water-like movement & Parallax)
-      time += 0.5; // Slow ambient drift
-      if (gridRef.current) {
-        // Opposite parallax so it looks like it has depth
-        const gridX = (mouseX / window.innerWidth - 0.5) * -120;
-        const gridY = (mouseY / window.innerHeight - 0.5) * -120;
-        // Apply drifting + parallax
-        gridRef.current.style.backgroundPosition = `${gridX + time}px ${gridY + time}px, ${gridX + time}px ${gridY + time}px`;
-      }
       
       animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
     };
@@ -214,32 +147,21 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
       </div>
       
-      {/* ─── WATER CUT RIPPLE (Refracts the grid, creating the fluid knife effect) ─── */}
+      {/* ─── GEOMETRIC DOT GRID OVERLAY (Light Mode - Moving) ─── */}
       <div 
-        ref={waterCutRef}
-        className="absolute top-[-75px] left-[-75px] w-[150px] h-[150px] will-change-transform mix-blend-overlay dark:mix-blend-normal"
+        className="absolute inset-0 opacity-[0.25] mix-blend-multiply block dark:hidden animate-grid-fall"
         style={{
-          // Creates a glassy lens that distorts the grid underneath it
-          background: 'rgba(255, 255, 255, 0.04)',
-          backdropFilter: 'blur(8px) contrast(1.3) brightness(1.1)',
-          WebkitBackdropFilter: 'blur(8px) contrast(1.3) brightness(1.1)',
-          boxShadow: 'inset 0 0 20px rgba(255, 255, 255, 0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
         }}
       />
 
-      {/* ─── ISOMETRIC GEOMETRY (Floating & Moving) ─── */}
+      {/* ─── GEOMETRIC DOT GRID OVERLAY (Dark Mode - Static) ─── */}
       <div 
-        ref={gridRef}
-        className="absolute inset-0 opacity-[0.25] mix-blend-multiply dark:mix-blend-screen dark:opacity-[0.15] will-change-[background-position]"
+        className="absolute inset-0 opacity-[0.1] mix-blend-screen hidden dark:block"
         style={{
-          // Creates a stunning isometric diamond grid
-          backgroundImage: `
-            linear-gradient(30deg, currentColor 1px, transparent 1px),
-            linear-gradient(150deg, currentColor 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 138px', // Proportional for true isometric 30/150 deg
-          backgroundPosition: '0 0, 0 0',
+          backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
         }}
       />
       
