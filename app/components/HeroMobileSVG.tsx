@@ -12,67 +12,73 @@ const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => {
     if (!svg) return;
 
     // ── Collect animation targets ───────────────────────────────────────────
-    // The SVG has two semantic groups: .tree (forest/landscape) and .monoverse (wordmark)
-    const treePaths  = svg.querySelectorAll<SVGElement>('.tree path, .tree rect');
-    const textPaths  = svg.querySelectorAll<SVGElement>('.monoverse path');
+    const treePaths  = svg.querySelectorAll<SVGElement>('.tree path');
+    const treeGroups = svg.querySelectorAll<SVGElement>('.tree');
+    const monoverseGroup = svg.querySelector<SVGElement>('.monoverse');
 
-    if (!treePaths.length) return;
+    if (!treePaths.length || !monoverseGroup) return;
 
     // ── will-change hints for GPU compositing on mobile ─────────────────────
-    Array.from(treePaths).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'opacity, transform'; });
-    Array.from(textPaths).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'opacity, transform'; });
+    Array.from(treeGroups).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'transform'; });
+    Array.from(treePaths).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'opacity'; });
+    (monoverseGroup as unknown as HTMLElement).style.willChange = 'opacity, transform';
 
     // ── Hard reset: everything invisible before timeline fires ───────────────
-    anime.set(treePaths, { opacity: 0, translateY: 30, scale: 0.88, transformOrigin: 'center bottom', transformBox: 'fill-box' });
-    anime.set(textPaths, { opacity: 0, translateY: -18, scale: 0.94, transformOrigin: 'center center', transformBox: 'fill-box' });
+    // Groups handle the transform to avoid the illustration tearing/cracking apart
+    anime.set(treeGroups, { translateY: 30, scale: 0.95, transformOrigin: '50% 100%', transformBox: 'fill-box' });
+    anime.set(monoverseGroup, { opacity: 0, translateY: -20, scale: 0.94, transformOrigin: '50% 50%', transformBox: 'fill-box' });
+    // Paths handle the opacity stagger
+    anime.set(treePaths, { opacity: 0 });
 
     // ── Premium cinematic timeline ───────────────────────────────────────────
     const tl = anime.timeline({ autoplay: true });
 
-    // STAGE 1 — Forest / tree paths bloom outward from center
-    // Stagger from center gives an organic "breathing" emerge feel
+    // STAGE 1 — Forest bloom
+    // Transform the whole group smoothly
     tl.add({
+      targets: treeGroups,
+      translateY:  [30, 0],
+      scale:       [0.95, 1],
+      duration: 2500,
+      easing:      'spring(1, 72, 9, 0)', // natural spring
+    })
+    // Opacity stagger on individual paths for organic emergence
+    .add({
       targets: treePaths,
       opacity: [
-        { value: 0,    duration: 0 },
-        { value: 1,    duration: 900,  easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
+        { value: 0, duration: 0 },
+        { value: 1, duration: 900, easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
       ],
-      translateY:  [30, 0],
-      scale:       [0.88, 1],
-      easing:      'spring(1, 72, 9, 0)', // natural spring — slight overshoot
-      delay:        anime.stagger(1.8, { from: 'center' }),
-    })
+      delay: anime.stagger(1.5, { from: 'center' }),
+    }, '-=2500')
 
-    // STAGE 2 — Wordmark drifts in from above with a soft elastic settle
-    // Overlaps the tail of stage 1 for seamless choreography
+    // STAGE 2 — Wordmark drifts in as a cohesive unit
     .add({
-      targets:    textPaths,
+      targets:    monoverseGroup,
       opacity: [
         { value: 0,  duration: 0 },
-        { value: 1,  duration: 1200, easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
+        { value: 1,  duration: 1500, easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
       ],
-      translateY: [-18, 0],
+      translateY: [-20, 0],
       scale:      [0.94, 1],
-      easing:     'spring(1, 60, 12, 0)', // softer spring — the text is more refined
-      delay:       anime.stagger(22, { direction: 'normal' }),
-    }, '-=1800') // tightly overlapped with the tree stage
+      easing:     'spring(1, 60, 12, 0)', 
+    }, '-=1800')
 
-    // STAGE 3 — Subtle breathing loop: the entire tree group gently pulses
-    // This keeps the composition alive after the reveal completes
+    // STAGE 3 — Subtle breathing loop on the entire forest
     .add({
-      targets:   treePaths,
-      scale:     [1, 1.008, 1],
+      targets:   treeGroups,
+      scale:     [1, 1.01, 1],
       translateY: [0, -2, 0],
       duration:  4000,
       easing:    'easeInOutSine',
       loop:       true,
       direction: 'alternate',
-      delay:      anime.stagger(3, { from: 'center' }),
     }, '+=400');
 
     return () => {
       tl.pause();
-      anime.remove([...Array.from(treePaths), ...Array.from(textPaths)]);
+      const targets = [monoverseGroup, ...Array.from(treeGroups), ...Array.from(treePaths)];
+      anime.remove(targets);
     };
   }, []);
 
@@ -95,7 +101,6 @@ const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => {
 <g clipPath="url(#clip0_723_2150)">
 <g className="tree">
 
-<rect width="412" height="766" fill="white"/>
 <g clipPath="url(#clip1_723_2150)">
 <g className="tree">
 <path d="M-27 0H-11.6397H-11.4835H-9.17437H-7.44387H-6.01186H-2.17115H-1.88505H4.92072H7.12132H8.45717H23.145H25.176H27.4275H29.4556H30.7057H37.2934H38.7235H39.07H39.9692H49.2707H51.6647H52.2606H52.4741H56.4354H57.5045H58.6828H59.6798H60.41H63.1164H64.0268H89.0478H89.9402H91.2263H92.0133H95.4511H100.936H103.408H109.161H111.179H112.439H114.501H118.479H125.251H128.998H164.472H166.992H171.397H176.929H183.428H183.966H186.941H189.674H193.151H194.292H203.326H203.948H208.403H212.127H215.859H218.861H220.032H221.406H224.165H239.809H241.525H245.654H246.334H249.059H250.484H252.064H252.71H255.959H269.047H270.125H272.089H273.001H291.168H292.522H293.638H295.455H299.801H303.331H304.376H306.708H310.341H311.337H318.948H319.922H321.362H324.38H381.689H382.274H392.326H393.289H400.152H402.252H403.17H404.133H408.246H410.296H411.058H412.952H413.947H440.811H441.721H442.981H443.829H452.291H453.554H469.424H474.93H476.473H478.116H480.53H480.754H483.068H484.726H489.802H498.069H499.765H509.432H512.367H513.68H515.229H517.882H521.533H532.203H541.716H544.872H546.848H562.792H565.397H569.484H576V1.80808V5.13718V6.23987V7.00068V9.54965V341H31.4336H27.3436H23.2766H21.1646H17.38H16.3256H15.6514H14.0364H11.5626H8.65237H6.00866H4.38279H-27V331.704V322.741V321.941V318.455V309.359V293.454V254.822V248.784V246.493V241.797V238.982V235.543V232.944V220.187V215.796V210.515V207.147V201.175V141.721V137.599V55.4148V54.1726V53.0667V49.3235V48.2271V39.1277V37.4361V30.7689V19.7639V18.1187V17.8739V16.401V14.0867V9.99751V5.4226V0Z" fill="#FAFAFB"/>
