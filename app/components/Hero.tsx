@@ -63,7 +63,7 @@ export function Hero() {
     }
 
     return () => {
-      const targets = [glowRef.current];
+      const targets: (Element | null)[] = [glowRef.current];
       if (treePaths) targets.push(...Array.from(treePaths));
       if (textPaths) targets.push(...Array.from(textPaths));
       anime.remove(targets);
