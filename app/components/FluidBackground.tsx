@@ -5,6 +5,7 @@ import anime from "animejs";
 
 export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const interactiveRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
@@ -54,6 +55,21 @@ export function FluidBackground() {
           easing: 'easeOutExpo'
         });
       }
+
+      // Dynamic 3D tilt for the background isometric grid
+      if (gridRef.current) {
+        // Tilt up to 25 degrees based on mouse position
+        const tiltX = (mouseY / window.innerHeight - 0.5) * -25;
+        const tiltY = (mouseX / window.innerWidth - 0.5) * 25;
+        
+        anime({
+          targets: gridRef.current,
+          rotateX: tiltX,
+          rotateY: tiltY,
+          duration: 800,
+          easing: 'easeOutCirc'
+        });
+      }
     };
     
     window.addEventListener('mousemove', onMouseMove);
@@ -63,6 +79,7 @@ export function FluidBackground() {
     
     let animationFrameId: number;
     const animateInteractiveBlobs = () => {
+      // Animate generic trailing blobs
       interactiveRefs.current.forEach((ref, index) => {
         if (!ref) return;
         
@@ -77,7 +94,7 @@ export function FluidBackground() {
         
         ref.style.transform = `translate(${cx}px, ${cy}px)`;
       });
-      
+
       animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
     };
     
@@ -116,19 +133,23 @@ export function FluidBackground() {
           />
         </div>
 
-        {/* ─── LIGHT MODE BLOBS (Updated Colors: #629460 and #ec368d) ─── */}
-        <div className="absolute inset-0 opacity-70 block dark:hidden mix-blend-multiply">
+        {/* ─── LIGHT MODE BLOBS (Punchier, but not blindingly neon) ─── */}
+        <div className="absolute inset-0 opacity-80 block dark:hidden mix-blend-multiply">
           <div 
             className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[100px]" 
-            style={{ background: 'radial-gradient(circle at center, #629460 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }}
           />
           <div 
             className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[120px]" 
-            style={{ background: 'radial-gradient(circle at center, #96E6A1 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }}
           />
           <div 
             className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
-            style={{ background: 'radial-gradient(circle at center, #ec368d 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }}
+          />
+          <div 
+            className="light-fluid-blob absolute top-[60%] right-[30%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[70%_30%_50%_50%] blur-[120px]" 
+            style={{ background: 'radial-gradient(circle at center, #2ED69E 0%, transparent 70%)' }}
           />
         </div>
       </div>
@@ -147,14 +168,26 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
       </div>
       
-      {/* ─── GEOMETRIC CUBE GRID OVERLAY (Light Mode - Moving) ─── */}
-      <div 
-        className="absolute inset-0 opacity-[0.25] mix-blend-multiply block dark:hidden animate-grid-fall"
-        style={{
-          backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
+      {/* ─── INTERACTIVE TRAILING BLOBS (Light Mode) ─── */}
+      <div className="block dark:hidden">
+        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.7] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.5] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }} />
+      </div>
+      
+      {/* ─── INDIAN TEXTURE MANDALA OVERLAY (Light Mode - Fluid Moving & 3D Interactive) ─── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden block dark:hidden" style={{ perspective: '1200px' }}>
+        <div 
+          ref={gridRef}
+          className="absolute inset-[-20%] w-[140%] h-[140%] mix-blend-multiply animate-texture-fall opacity-[0.7]"
+          style={{
+            // A premium, intricate Indian Star Mandala pattern SVG with very subtle transparency (rgba(0,0,0,0.035))
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg stroke='rgba(0,0,0,0.035)' stroke-width='1.5' fill='none'%3E%3Cpath d='M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z'/%3E%3Cpath d='M50 20 L58 42 L80 50 L58 58 L50 80 L42 58 L20 50 L42 42 Z'/%3E%3Ccircle cx='50' cy='50' r='12'/%3E%3Cpath d='M0 0 L15 15 M100 0 L85 15 M0 100 L15 85 M100 100 L85 85'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '100px 100px',
+            transformOrigin: 'center center',
+          }}
+        />
+      </div>
 
       {/* ─── GEOMETRIC DOT GRID OVERLAY (Dark Mode - Static) ─── */}
       <div 

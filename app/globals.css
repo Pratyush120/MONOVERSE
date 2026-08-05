@@ -413,6 +413,27 @@ body {
     color: var(--bronze-accent);
   }
 
+  /* ─── TEXTURE GRID ANIMATION ────────────────────────────────── */
+  @keyframes texture-fall {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100px; }
+  }
+
+  .animate-texture-fall {
+    animation: texture-fall 8s linear infinite;
+  }
+
+  /* ─── 3D CUBE SPIN ANIMATION ────────────────────────────────── */
+  @keyframes spin-cube {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(360deg) rotateY(720deg) rotateZ(180deg); }
+  }
+
+  .animate-spin-cube {
+    animation: spin-cube 12s linear infinite;
+    transform-style: preserve-3d;
+  }
+
   .elegant-blockquote {
     border-left: 1px solid var(--bronze-accent);
     padding-left: 2rem;
