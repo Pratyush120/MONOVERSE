@@ -53,7 +53,7 @@ export function Header() {
           : "opacity-100 translate-y-0"
       } ${
         scrolled && !isHiddenOnHome
-          ? "bg-surface-low/95 backdrop-blur-md h-[64px] border-b border-glass-border-light shadow-float"
+          ? "bg-black/5 dark:bg-surface-low/95 backdrop-blur-md h-[64px] border-b border-glass-border-light shadow-float"
           : "bg-transparent h-[80px] border-b border-transparent"
       }`}
     >

@@ -71,8 +71,13 @@ export function FluidBackground() {
       currentY += (mouseY - currentY) * 0.04;
       
       if (interactiveBlobRef.current) {
-        // We offset by half the blob size (300px) so the center of the blob tracks the mouse
         interactiveBlobRef.current.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      }
+
+      // Also animate the light mode interactive cursor
+      const lightCursor = document.querySelector('.interactive-cursor-light') as HTMLElement;
+      if (lightCursor) {
+        lightCursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
       }
       
       animationFrameId = requestAnimationFrame(animateInteractiveBlob);
@@ -113,34 +118,39 @@ export function FluidBackground() {
       </div>
 
       {/* ─── LIGHT MODE BLOBS ─── */}
-      <div className="absolute inset-0 opacity-60 will-change-transform block dark:hidden mix-blend-multiply">
-        {/* Bright Lime Yellow */}
+      <div className="absolute inset-0 opacity-80 will-change-transform block dark:hidden">
+        {/* Soft Mint / Seafoam */}
         <div 
-          className="light-fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] blur-[100px]" 
-          style={{ background: 'radial-gradient(circle at center, #d6fb00 0%, transparent 70%)' }}
+          className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[120px]" 
+          style={{ background: 'radial-gradient(circle at center, #8EE4AF 0%, transparent 70%)' }}
         />
-        {/* Dusty Grass Green */}
+        {/* Vibrant Spring Green */}
         <div 
-          className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[60%_40%_30%_70%] blur-[120px]" 
-          style={{ background: 'radial-gradient(circle at center, #96E6A1 0%, transparent 70%)' }}
+          className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[130px]" 
+          style={{ background: 'radial-gradient(circle at center, #A8E6CF 0%, transparent 70%)' }}
         />
-        {/* Soft Pale Lime */}
+        {/* Soft Creamy Yellow / Sunlight */}
         <div 
-          className="light-fluid-blob absolute top-[40%] left-[30%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-[50%_50%_60%_40%] blur-[140px]" 
-          style={{ background: 'radial-gradient(circle at center, #ecffb6 0%, transparent 70%)' }}
-        />
-        {/* Deep Teal Accent */}
-        <div 
-          className="light-fluid-blob absolute top-[60%] right-[30%] w-[35vw] h-[35vw] max-w-[500px] max-h-[500px] rounded-[70%_30%_50%_50%] blur-[120px] opacity-30" 
-          style={{ background: 'radial-gradient(circle at center, #00545f 0%, transparent 70%)' }}
+          className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[150px]" 
+          style={{ background: 'radial-gradient(circle at center, #FDFFCC 0%, transparent 70%)' }}
         />
       </div>
 
-      {/* Interactive Cursor Blob (Hidden in Light Mode) */}
+      {/* Interactive Cursor Blob (Dark Mode) */}
       <div 
         ref={interactiveBlobRef}
         className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-screen blur-[120px] opacity-[0.8] will-change-transform hidden dark:block"
         style={{ background: 'radial-gradient(circle at center, #16A085 0%, #156F69 30%, transparent 70%)' }}
+      />
+
+      {/* Interactive Cursor Blob (Light Mode) */}
+      <div 
+        ref={(el) => {
+          // We can just use the same ref by assigning it here, but React doesn't like that easily.
+          // Since we animate interactiveBlobRef.current.style, we need to apply it to BOTH if they exist, or just use a class.
+        }}
+        className="interactive-cursor-light absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full blur-[100px] opacity-[0.5] will-change-transform block dark:hidden pointer-events-none mix-blend-multiply"
+        style={{ background: 'radial-gradient(circle at center, #72BF78 0%, #96E6A1 40%, transparent 70%)' }}
       />
       
       {/* SVG Grain Overlay */}

@@ -70,7 +70,7 @@
 
 /* ─── LIGHT MODE (Pastel Editorial) ──────────────── */
 :root {
-  --background: #F8FAF2; /* Soft pale grassy white */
+  --background: #FDFBF2; /* Soft pale creamy white */
   --bg-image: none; /* FluidBackground handles the gradient */
   
   --surface: rgba(236, 255, 182, 0.7); /* #ecffb6 */
