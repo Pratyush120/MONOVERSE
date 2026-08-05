@@ -116,11 +116,11 @@ export function FluidBackground() {
           />
         </div>
 
-        {/* ─── LIGHT MODE BLOBS (Soft, Toned Down Pastels) ─── */}
+        {/* ─── LIGHT MODE BLOBS (Updated Colors: #629460 and #ec368d) ─── */}
         <div className="absolute inset-0 opacity-70 block dark:hidden mix-blend-multiply">
           <div 
             className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[100px]" 
-            style={{ background: 'radial-gradient(circle at center, #d6fb00 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #629460 0%, transparent 70%)' }}
           />
           <div 
             className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[120px]" 
@@ -128,7 +128,7 @@ export function FluidBackground() {
           />
           <div 
             className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
-            style={{ background: 'radial-gradient(circle at center, #ecffb6 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #ec368d 0%, transparent 70%)' }}
           />
         </div>
       </div>
@@ -147,12 +147,12 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
       </div>
       
-      {/* ─── GEOMETRIC DOT GRID OVERLAY (Light Mode - Moving) ─── */}
+      {/* ─── GEOMETRIC CUBE GRID OVERLAY (Light Mode - Moving) ─── */}
       <div 
         className="absolute inset-0 opacity-[0.25] mix-blend-multiply block dark:hidden animate-grid-fall"
         style={{
-          backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
+          backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
         }}
       />
 
