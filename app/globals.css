@@ -141,8 +141,8 @@ body {
 }
 
 .dark {
-  --background: #140C30; 
-  --bg-image: radial-gradient(circle at 50% -20%, #153D4C 0%, #14253E 40%, #140C30 100%);
+  --background: #0A0713; /* Even darker version of #140C30 to make the bloom pop */
+  --bg-image: none; /* We use pseudo elements for the fluid gradient */
   --surface: #153D4C;
   --surface-dim: #15565B;
   --surface-container-lowest: #14253E;
@@ -188,6 +188,36 @@ body {
 
   --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(22, 160, 133, 0.05) inset;
   --shadow-float-high: 0 30px 60px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(22, 160, 133, 0.1) inset;
+}
+
+/* ─── FLUID AURORA & GRAIN TEXTURE (Dark Mode) ──────────────── */
+.dark body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* Ocean Aurora bloom colors from the user's palette */
+  background: 
+    radial-gradient(circle at 40% 40%, rgba(22, 160, 133, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 70% 60%, rgba(21, 111, 105, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 30% 70%, rgba(20, 37, 62, 0.8) 0%, transparent 60%);
+  animation: aurora-flow 25s cubic-bezier(0.4, 0.0, 0.2, 1) infinite alternate;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.dark body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  /* SVG Noise Grain */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.14; 
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: color-dodge;
 }
 
 @layer base {
@@ -402,6 +432,13 @@ body {
   0%   { transform: translate(0px, 0px) scale(1); }
   50%  { transform: translate(3px, -1px) scale(1.002); }
   100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes aurora-flow {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(3%, 5%) scale(1.05); }
+  66% { transform: translate(-2%, 4%) scale(1.02); }
+  100% { transform: translate(-4%, -2%) scale(1.08); }
 }
 
 /* ─── TYPOGRAPHIC READING EXPERIENCE ────────────────────────────── */
