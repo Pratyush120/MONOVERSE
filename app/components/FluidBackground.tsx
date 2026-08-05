@@ -6,6 +6,7 @@ import anime from "animejs";
 export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const interactiveRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const waterCutRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const darkBlobs = containerRef.current?.querySelectorAll(".dark-fluid-blob");
@@ -33,9 +34,15 @@ export function FluidBackground() {
     if (darkBlobs) animateBlobs(darkBlobs);
     if (lightBlobs) animateBlobs(lightBlobs);
 
-    // 2. Ultra-fluid Mouse tracking for liquid smear effect
+    // 2. Ultra-fluid Mouse tracking for liquid smear effect & Water Cut
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
+    
+    // For velocity and angle tracking (Water Cut effect)
+    let waterX = mouseX;
+    let waterY = mouseY;
+    let smoothedAngle = 0;
+    let smoothedSpeed = 0;
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -61,8 +68,26 @@ export function FluidBackground() {
     // Speeds for the interactive trailing blobs to create a liquid effect
     const speeds = [0.15, 0.08, 0.04, 0.15, 0.08, 0.04];
     
+    // Morph the water cut shape organically so it's a "fluid element other than a blob"
+    if (waterCutRef.current) {
+      anime({
+        targets: waterCutRef.current,
+        borderRadius: [
+          '50% 50% 50% 50% / 50% 50% 50% 50%',
+          '60% 40% 30% 70% / 60% 30% 70% 40%',
+          '30% 70% 70% 30% / 50% 60% 30% 60%',
+          '50% 50% 50% 50% / 50% 50% 50% 50%',
+        ],
+        duration: 4000,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: true
+      });
+    }
+
     let animationFrameId: number;
     const animateInteractiveBlobs = () => {
+      // 1. Update standard trailing blobs
       interactiveRefs.current.forEach((ref, index) => {
         if (!ref) return;
         
@@ -77,6 +102,36 @@ export function FluidBackground() {
         
         ref.style.transform = `translate(${cx}px, ${cy}px)`;
       });
+
+      // 2. Update Water Cut fluid dynamic lens
+      const dx = mouseX - waterX;
+      const dy = mouseY - waterY;
+      waterX += dx * 0.15; // Smooth tracking
+      waterY += dy * 0.15;
+      
+      const speed = Math.sqrt(dx*dx + dy*dy);
+      smoothedSpeed += (speed - smoothedSpeed) * 0.1;
+      
+      if (speed > 1) { // Only update angle if moving significantly to prevent snapping
+        const targetAngle = Math.atan2(dy, dx);
+        
+        // Ensure shortest path for angle rotation
+        let angleDiff = targetAngle - smoothedAngle;
+        while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+        while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+        
+        smoothedAngle += angleDiff * 0.15;
+      }
+      
+      if (waterCutRef.current) {
+        // Stretch based on speed (acting like a knife cutting water), squash slightly
+        const scaleX = 1 + Math.min(smoothedSpeed * 0.015, 1.8);
+        const scaleY = Math.max(0.4, 1 - smoothedSpeed * 0.006);
+        const angleDeg = smoothedAngle * (180 / Math.PI);
+        
+        // We center it by offsetting by half its width/height (-150px is handled in className)
+        waterCutRef.current.style.transform = `translate(${waterX}px, ${waterY}px) rotate(${angleDeg}deg) scale(${scaleX}, ${scaleY})`;
+      }
       
       animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
     };
@@ -147,6 +202,20 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
       </div>
       
+      {/* ─── WATER CUT RIPPLE (Refracts the grid, creating the fluid knife effect) ─── */}
+      <div 
+        ref={waterCutRef}
+        className="absolute top-[-150px] left-[-150px] w-[300px] h-[300px] will-change-transform mix-blend-overlay dark:mix-blend-normal"
+        style={{
+          // Creates a glassy lens that distorts the grid underneath it
+          background: 'rgba(255, 255, 255, 0.03)',
+          backdropFilter: 'blur(12px) contrast(1.2) brightness(1.1)',
+          WebkitBackdropFilter: 'blur(12px) contrast(1.2) brightness(1.1)',
+          boxShadow: 'inset 0 0 40px rgba(255, 255, 255, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+        }}
+      />
+
       {/* ─── GEOMETRIC DOT GRID OVERLAY ─── */}
       <div 
         className="absolute inset-0 opacity-[0.25] mix-blend-multiply dark:mix-blend-screen dark:opacity-[0.1]"
