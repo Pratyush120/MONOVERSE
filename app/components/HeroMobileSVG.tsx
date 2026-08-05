@@ -19,8 +19,8 @@ const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => {
     if (!treePaths.length) return;
 
     // ── will-change hints for GPU compositing on mobile ─────────────────────
-    Array.from(treePaths).forEach(el => { (el as HTMLElement).style.willChange = 'opacity, transform'; });
-    Array.from(textPaths).forEach(el => { (el as HTMLElement).style.willChange = 'opacity, transform'; });
+    Array.from(treePaths).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'opacity, transform'; });
+    Array.from(textPaths).forEach(el => { (el as unknown as HTMLElement).style.willChange = 'opacity, transform'; });
 
     // ── Hard reset: everything invisible before timeline fires ───────────────
     anime.set(treePaths, { opacity: 0, translateY: 30, scale: 0.88, transformOrigin: 'center bottom', transformBox: 'fill-box' });
