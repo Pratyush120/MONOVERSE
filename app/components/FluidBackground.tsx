@@ -116,23 +116,19 @@ export function FluidBackground() {
           />
         </div>
 
-        {/* ─── LIGHT MODE BLOBS (Punchy & Vibrant) ─── */}
-        <div className="absolute inset-0 opacity-90 block dark:hidden mix-blend-multiply">
+        {/* ─── LIGHT MODE BLOBS (Soft, Toned Down Pastels) ─── */}
+        <div className="absolute inset-0 opacity-70 block dark:hidden mix-blend-multiply">
           <div 
             className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[100px]" 
-            style={{ background: 'radial-gradient(circle at center, #CCFF00 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #d6fb00 0%, transparent 70%)' }}
           />
           <div 
             className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[120px]" 
-            style={{ background: 'radial-gradient(circle at center, #00FF9D 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #96E6A1 0%, transparent 70%)' }}
           />
           <div 
             className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
-            style={{ background: 'radial-gradient(circle at center, #FFE600 0%, transparent 70%)' }}
-          />
-          <div 
-            className="light-fluid-blob absolute top-[60%] right-[30%] w-[35vw] h-[35vw] max-w-[500px] max-h-[500px] rounded-[70%_30%_50%_50%] blur-[100px] opacity-60" 
-            style={{ background: 'radial-gradient(circle at center, #00E5FF 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #ecffb6 0%, transparent 70%)' }}
           />
         </div>
       </div>
@@ -144,12 +140,21 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[2] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-screen blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }} />
       </div>
 
-      {/* ─── INTERACTIVE FLUID TRAIL (Light Mode) ─── */}
+      {/* ─── INTERACTIVE FLUID TRAIL (Light Mode - Softer) ─── */}
       <div className="block dark:hidden">
-        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.8] will-change-transform" style={{ background: 'radial-gradient(circle at center, #CCFF00 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.6] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00FF9D 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00E5FF 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #96E6A1 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.3] will-change-transform" style={{ background: 'radial-gradient(circle at center, #72BF78 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
       </div>
+      
+      {/* ─── GEOMETRIC DOT GRID OVERLAY ─── */}
+      <div 
+        className="absolute inset-0 opacity-[0.25] mix-blend-multiply dark:mix-blend-screen dark:opacity-[0.1]"
+        style={{
+          backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+      />
       
       {/* SVG Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.12] mix-blend-color-dodge dark:opacity-[0.15]"
