@@ -103,16 +103,16 @@ export function FluidBackground() {
         ref.style.transform = `translate(${cx}px, ${cy}px)`;
       });
 
-      // 2. Update Water Cut fluid dynamic lens
+      // 2. Update Water Cut fluid dynamic lens (Snappier & more responsive)
       const dx = mouseX - waterX;
       const dy = mouseY - waterY;
-      waterX += dx * 0.15; // Smooth tracking
-      waterY += dy * 0.15;
+      waterX += dx * 0.35; // Much faster tracking for responsiveness
+      waterY += dy * 0.35;
       
       const speed = Math.sqrt(dx*dx + dy*dy);
-      smoothedSpeed += (speed - smoothedSpeed) * 0.1;
+      smoothedSpeed += (speed - smoothedSpeed) * 0.2; // Faster speed smoothing
       
-      if (speed > 1) { // Only update angle if moving significantly to prevent snapping
+      if (speed > 0.5) { // Lower threshold for snappier angle updates
         const targetAngle = Math.atan2(dy, dx);
         
         // Ensure shortest path for angle rotation
@@ -120,16 +120,16 @@ export function FluidBackground() {
         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
         
-        smoothedAngle += angleDiff * 0.15;
+        smoothedAngle += angleDiff * 0.3; // Faster angle snapping
       }
       
       if (waterCutRef.current) {
-        // Stretch based on speed (acting like a knife cutting water), squash slightly
-        const scaleX = 1 + Math.min(smoothedSpeed * 0.015, 1.8);
-        const scaleY = Math.max(0.4, 1 - smoothedSpeed * 0.006);
+        // Stretch aggressively based on speed (fluid knife), squash deeply
+        const scaleX = 1 + Math.min(smoothedSpeed * 0.03, 2.5); // More stretch
+        const scaleY = Math.max(0.25, 1 - smoothedSpeed * 0.01); // More squash
         const angleDeg = smoothedAngle * (180 / Math.PI);
         
-        // We center it by offsetting by half its width/height (-150px is handled in className)
+        // Offset by half its new width/height (-75px)
         waterCutRef.current.style.transform = `translate(${waterX}px, ${waterY}px) rotate(${angleDeg}deg) scale(${scaleX}, ${scaleY})`;
       }
       
@@ -205,14 +205,14 @@ export function FluidBackground() {
       {/* ─── WATER CUT RIPPLE (Refracts the grid, creating the fluid knife effect) ─── */}
       <div 
         ref={waterCutRef}
-        className="absolute top-[-150px] left-[-150px] w-[300px] h-[300px] will-change-transform mix-blend-overlay dark:mix-blend-normal"
+        className="absolute top-[-75px] left-[-75px] w-[150px] h-[150px] will-change-transform mix-blend-overlay dark:mix-blend-normal"
         style={{
           // Creates a glassy lens that distorts the grid underneath it
-          background: 'rgba(255, 255, 255, 0.03)',
-          backdropFilter: 'blur(12px) contrast(1.2) brightness(1.1)',
-          WebkitBackdropFilter: 'blur(12px) contrast(1.2) brightness(1.1)',
-          boxShadow: 'inset 0 0 40px rgba(255, 255, 255, 0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
+          background: 'rgba(255, 255, 255, 0.04)',
+          backdropFilter: 'blur(8px) contrast(1.3) brightness(1.1)',
+          WebkitBackdropFilter: 'blur(8px) contrast(1.3) brightness(1.1)',
+          boxShadow: 'inset 0 0 20px rgba(255, 255, 255, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
         }}
       />
 
