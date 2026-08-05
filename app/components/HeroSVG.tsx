@@ -10,11 +10,6 @@ const SvgHero = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <style>
-      {
-        "\r\n  .tree {\r\n    animation: treeIn 2.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;\r\n    opacity: 0;\r\n    transform-origin: bottom center;\r\n    transform-box: fill-box;\r\n  }\r\n  .monoverse {\r\n    animation: monoIn 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;\r\n    animation-delay: 1.2s;\r\n    opacity: 0;\r\n    transform-origin: center center;\r\n    transform-box: fill-box;\r\n  }\r\n  @keyframes treeIn {\r\n    from { opacity: 0; transform: scale(0.97) translateY(30px); }\r\n    to   { opacity: 1; transform: scale(1) translateY(0); }\r\n  }\r\n  @keyframes monoIn {\r\n    from { opacity: 0; transform: translateY(-20px); }\r\n    to   { opacity: 1; transform: translateY(0); }\r\n  }\r\n"
-      }
-    </style>
     <g clipPath="url(#clip0_719_2024)">
       <g className="tree">
         <rect width={1661} height={982} fill="white" />
