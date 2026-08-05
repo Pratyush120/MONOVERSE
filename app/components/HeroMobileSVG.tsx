@@ -2,7 +2,7 @@ import * as React from "react";
 import type { SVGProps } from "react";
 
 const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => (
-<svg width="412" height="766" viewBox="0 0 412 766" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<svg width="412" height="766" viewBox="0 0 412 766" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }} {...props}>
 
 
 

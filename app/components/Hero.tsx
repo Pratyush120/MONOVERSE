@@ -27,37 +27,39 @@ export function Hero() {
     
     if (!treePaths.length) return;
 
-    // Reset initial states
-    anime.set(treePaths, { opacity: 0, scale: 0.8, translateY: 50 });
-    anime.set(textPaths, { opacity: 0, scale: 0.9, translateY: -30 });
+    // Reset initial states — use smaller offsets for mobile's dense portrait SVG
+    const translateIn = isMobile ? 25 : 50;
+    const textTranslate = isMobile ? -15 : -30;
+    anime.set(treePaths, { opacity: 0, scale: 0.85, translateY: translateIn });
+    anime.set(textPaths, { opacity: 0, scale: 0.92, translateY: textTranslate });
     anime.set(glowRef.current, { opacity: 0, scale: 0.5 });
 
     const tl = anime.timeline({
       easing: "spring(1, 80, 10, 0)", // Premium spring easing
     });
 
-    // 1. Bloom the radial glow first to set the atmosphere
+    // 1. Bloom the radial glow
     tl.add({
       targets: glowRef.current,
-      opacity: [0, 0.4],
+      opacity: [0, isMobile ? 0.3 : 0.4],
       scale: [0.8, 1],
       duration: 3000,
       easing: "cubicBezier(0.19, 1, 0.22, 1)",
     })
-    // 2. Assemble the tree piece by piece with a very dynamic stagger and spring bounce
+    // 2. Assemble the tree — center stagger blooms outward organically
     .add({
       targets: treePaths,
       opacity: { value: [0, 1], duration: 1500, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
-      scale: [0.8, 1],
-      translateY: [50, 0],
-      delay: anime.stagger(2, { start: 0, from: 'center' }), // Center stagger for organic feel
-    }, "-=2800") // Start overlapping with glow bloom
-    // 3. Assemble the Monoverse typography gracefully
+      scale: [0.85, 1],
+      translateY: [translateIn, 0],
+      delay: anime.stagger(isMobile ? 1.5 : 2, { start: 0, from: 'center' }),
+    }, "-=2800")
+    // 3. Monoverse text reveal
     .add({
       targets: textPaths,
       opacity: { value: [0, 1], duration: 2000, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
-      scale: [0.9, 1],
-      translateY: [-30, 0],
+      scale: [0.92, 1],
+      translateY: [textTranslate, 0],
       delay: anime.stagger(20, { direction: 'normal' }),
     }, "-=2500");
 
@@ -74,7 +76,8 @@ export function Hero() {
     if (!ctx) return;
 
     let particles: {x: number, y: number, radius: number, vx: number, vy: number, alpha: number}[] = [];
-    const numParticles = 40; // Very sparse dust
+    const isMobile = window.innerWidth < 768;
+    const numParticles = isMobile ? 20 : 40; // Reduce on mobile for performance
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -196,7 +199,7 @@ export function Hero() {
         />
         <div
           ref={glowRef}
-          className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] rounded-full will-change-transform"
+          className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[600px] h-[280px] md:h-[600px] rounded-full will-change-transform"
           style={{ 
             background: "radial-gradient(circle, var(--bronze-accent) 0%, transparent 70%)", 
             filter: "blur(60px)",
@@ -210,11 +213,13 @@ export function Hero() {
         className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center"
         style={{ transformOrigin: "center bottom", transformStyle: "preserve-3d" }}
       >
-        <div className="desktop-svg-container hidden md:block absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
+        {/* Desktop: landscape SVG fills the full viewport with cover */}
+        <div className="desktop-svg-container hidden md:flex absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
           <SvgHero />
         </div>
-        <div className="mobile-svg-container block md:hidden absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
-          <SvgHeroMobile />
+        {/* Mobile: portrait SVG (412×766) — centered and fills full height */}
+        <div className="mobile-svg-container flex md:hidden absolute inset-0 w-full h-full items-center justify-center overflow-hidden [&>svg]:h-full [&>svg]:w-auto [&>svg]:max-w-none">
+          <SvgHeroMobile preserveAspectRatio="xMidYMid meet" />
         </div>
       </div>
 
