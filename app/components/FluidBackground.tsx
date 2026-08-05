@@ -5,6 +5,7 @@ import anime from "animejs";
 
 export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const interactiveBlobRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const blobs = containerRef.current?.querySelectorAll(".fluid-blob");
@@ -28,14 +29,61 @@ export function FluidBackground() {
       });
     });
 
+    // 2. Mouse tracking for parallax and interactive blob
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Subtle Parallax effect on the whole background
+      if (containerRef.current) {
+        const xOffset = (mouseX / window.innerWidth - 0.5) * 40; // Shift by up to 40px
+        const yOffset = (mouseY / window.innerHeight - 0.5) * 40;
+        
+        anime({
+          targets: containerRef.current,
+          translateX: -xOffset,
+          translateY: -yOffset,
+          duration: 1500,
+          easing: 'easeOutExpo'
+        });
+      }
+    };
+    
+    window.addEventListener('mousemove', onMouseMove);
+
+    // Animation loop for the interactive cursor blob
+    let animationFrameId: number;
+    const animateInteractiveBlob = () => {
+      // Smooth lerp for the cursor blob for fluid 'lag'
+      currentX += (mouseX - currentX) * 0.04;
+      currentY += (mouseY - currentY) * 0.04;
+      
+      if (interactiveBlobRef.current) {
+        // We offset by half the blob size (300px) so the center of the blob tracks the mouse
+        interactiveBlobRef.current.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      }
+      
+      animationFrameId = requestAnimationFrame(animateInteractiveBlob);
+    };
+    
+    animateInteractiveBlob();
+
     return () => {
       anime.remove(blobs);
+      if (containerRef.current) anime.remove(containerRef.current);
+      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[-2] overflow-hidden hidden dark:block bg-[#0A0713]">
-      <div ref={containerRef} className="absolute inset-0 opacity-70">
+      <div ref={containerRef} className="absolute inset-0 opacity-70 will-change-transform">
         {/* Blob 1: Vibrant Sea Green - Top Left */}
         <div 
           className="fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] mix-blend-screen blur-[120px]" 
@@ -60,6 +108,13 @@ export function FluidBackground() {
           style={{ background: 'radial-gradient(circle at center, #14253E 0%, transparent 70%)' }}
         />
       </div>
+
+      {/* Interactive Cursor Blob */}
+      <div 
+        ref={interactiveBlobRef}
+        className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-screen blur-[120px] opacity-[0.8] will-change-transform"
+        style={{ background: 'radial-gradient(circle at center, #16A085 0%, #156F69 30%, transparent 70%)' }}
+      />
       
       {/* SVG Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.15] mix-blend-color-dodge"
