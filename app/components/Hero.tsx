@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import anime from "animejs";
 import SvgHero from "./HeroSVG";
+import SvgHeroMobile from "./HeroMobileSVG";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,9 +14,16 @@ export function Hero() {
   useEffect(() => {
     if (!svgContainerRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
+    const activeContainer = isMobile 
+      ? svgContainerRef.current.querySelector('.mobile-svg-container')
+      : svgContainerRef.current.querySelector('.desktop-svg-container');
+
+    if (!activeContainer) return;
+
     // Target every single path in the tree and the text for a spectacular build-up
-    const treePaths = svgContainerRef.current.querySelectorAll('.tree path, .tree rect');
-    const textPaths = svgContainerRef.current.querySelectorAll('.monoverse path');
+    const treePaths = activeContainer.querySelectorAll('.tree path, .tree rect');
+    const textPaths = activeContainer.querySelectorAll('.monoverse path');
     
     if (!treePaths.length) return;
 
@@ -206,8 +214,11 @@ export function Hero() {
         className="relative z-10 pointer-events-none w-full h-full flex justify-center items-center"
         style={{ transformOrigin: "center bottom", transformStyle: "preserve-3d" }}
       >
-        <div className="absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
+        <div className="desktop-svg-container hidden md:block absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
           <SvgHero />
+        </div>
+        <div className="mobile-svg-container block md:hidden absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
+          <SvgHeroMobile />
         </div>
       </div>
 
