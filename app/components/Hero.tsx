@@ -15,56 +15,58 @@ export function Hero() {
     if (!svgContainerRef.current) return;
 
     const isMobile = window.innerWidth < 768;
-    const activeContainer = isMobile 
-      ? svgContainerRef.current.querySelector('.mobile-svg-container')
-      : svgContainerRef.current.querySelector('.desktop-svg-container');
 
-    if (!activeContainer) return;
-
-    // Target every single path in the tree and the text for a spectacular build-up
-    const treePaths = activeContainer.querySelectorAll('.tree path, .tree rect');
-    const textPaths = activeContainer.querySelectorAll('.monoverse path');
-    
-    if (!treePaths.length) return;
-
-    // Reset initial states — use smaller offsets for mobile's dense portrait SVG
-    const translateIn = isMobile ? 25 : 50;
-    const textTranslate = isMobile ? -15 : -30;
-    anime.set(treePaths, { opacity: 0, scale: 0.85, translateY: translateIn });
-    anime.set(textPaths, { opacity: 0, scale: 0.92, translateY: textTranslate });
+    // 1. Always animate the glow
     anime.set(glowRef.current, { opacity: 0, scale: 0.5 });
-
     const tl = anime.timeline({
       easing: "spring(1, 80, 10, 0)", // Premium spring easing
     });
 
-    // 1. Bloom the radial glow
     tl.add({
       targets: glowRef.current,
       opacity: [0, isMobile ? 0.3 : 0.4],
       scale: [0.8, 1],
       duration: 3000,
       easing: "cubicBezier(0.19, 1, 0.22, 1)",
-    })
-    // 2. Assemble the tree — center stagger blooms outward organically
-    .add({
-      targets: treePaths,
-      opacity: { value: [0, 1], duration: 1500, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
-      scale: [0.85, 1],
-      translateY: [translateIn, 0],
-      delay: anime.stagger(isMobile ? 1.5 : 2, { start: 0, from: 'center' }),
-    }, "-=2800")
-    // 3. Monoverse text reveal
-    .add({
-      targets: textPaths,
-      opacity: { value: [0, 1], duration: 2000, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
-      scale: [0.92, 1],
-      translateY: [textTranslate, 0],
-      delay: anime.stagger(20, { direction: 'normal' }),
-    }, "-=2500");
+    });
+
+    // 2. Only animate the desktop SVG if we are not on mobile
+    let treePaths: NodeListOf<Element> | undefined;
+    let textPaths: NodeListOf<Element> | undefined;
+
+    if (!isMobile) {
+      const activeContainer = svgContainerRef.current.querySelector('.desktop-svg-container');
+      if (activeContainer) {
+        treePaths = activeContainer.querySelectorAll('.tree path, .tree rect');
+        textPaths = activeContainer.querySelectorAll('.monoverse path');
+        
+        if (treePaths.length > 0) {
+          anime.set(treePaths, { opacity: 0, scale: 0.85, translateY: 50 });
+          anime.set(textPaths, { opacity: 0, scale: 0.92, translateY: -30 });
+
+          tl.add({
+            targets: treePaths,
+            opacity: { value: [0, 1], duration: 1500, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
+            scale: [0.85, 1],
+            translateY: [50, 0],
+            delay: anime.stagger(2, { start: 0, from: 'center' }),
+          }, "-=2800")
+          .add({
+            targets: textPaths,
+            opacity: { value: [0, 1], duration: 2000, easing: "cubicBezier(0.19, 1, 0.22, 1)" },
+            scale: [0.92, 1],
+            translateY: [-30, 0],
+            delay: anime.stagger(20, { direction: 'normal' }),
+          }, "-=2500");
+        }
+      }
+    }
 
     return () => {
-      anime.remove([treePaths, textPaths, glowRef.current]);
+      const targets = [glowRef.current];
+      if (treePaths) targets.push(...Array.from(treePaths));
+      if (textPaths) targets.push(...Array.from(textPaths));
+      anime.remove(targets);
     };
   }, []);
 
