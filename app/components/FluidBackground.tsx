@@ -5,7 +5,7 @@ import anime from "animejs";
 
 export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const interactiveBlobRef = useRef<HTMLDivElement>(null);
+  const interactiveRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
     const darkBlobs = containerRef.current?.querySelectorAll(".dark-fluid-blob");
@@ -13,7 +13,7 @@ export function FluidBackground() {
     
     // 1. Organic drifting for both background sets
     const animateBlobs = (targets: NodeListOf<Element>) => {
-      if (!targets) return;
+      if (!targets || targets.length === 0) return;
       targets.forEach((blob) => {
         anime({
           targets: blob,
@@ -30,17 +30,12 @@ export function FluidBackground() {
       });
     };
 
-    animateBlobs(darkBlobs as NodeListOf<Element>);
-    animateBlobs(lightBlobs as NodeListOf<Element>);
+    if (darkBlobs) animateBlobs(darkBlobs);
+    if (lightBlobs) animateBlobs(lightBlobs);
 
-    // 2. Mouse tracking for parallax and interactive blob
-    // We keep the interactive blob ONLY for dark mode (it will be hidden in light mode via CSS)
-    // The parallax effect stays for both modes, as the user wanted "something different"
-    // meaning the fluid ambient animation and parallax is enough for light mode without the cursor blob.
+    // 2. Ultra-fluid Mouse tracking for liquid smear effect
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let currentX = mouseX;
-    let currentY = mouseY;
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -48,14 +43,14 @@ export function FluidBackground() {
       
       // Subtle Parallax effect on the whole background
       if (containerRef.current) {
-        const xOffset = (mouseX / window.innerWidth - 0.5) * 40; // Shift by up to 40px
-        const yOffset = (mouseY / window.innerHeight - 0.5) * 40;
+        const xOffset = (mouseX / window.innerWidth - 0.5) * 60; // Increased parallax
+        const yOffset = (mouseY / window.innerHeight - 0.5) * 60;
         
         anime({
           targets: containerRef.current,
           translateX: -xOffset,
           translateY: -yOffset,
-          duration: 1500,
+          duration: 1000,
           easing: 'easeOutExpo'
         });
       }
@@ -63,27 +58,30 @@ export function FluidBackground() {
     
     window.addEventListener('mousemove', onMouseMove);
 
-    // Animation loop for the interactive cursor blob
+    // Speeds for the interactive trailing blobs to create a liquid effect
+    const speeds = [0.15, 0.08, 0.04, 0.15, 0.08, 0.04];
+    
     let animationFrameId: number;
-    const animateInteractiveBlob = () => {
-      // Smooth lerp for the cursor blob for fluid 'lag'
-      currentX += (mouseX - currentX) * 0.04;
-      currentY += (mouseY - currentY) * 0.04;
+    const animateInteractiveBlobs = () => {
+      interactiveRefs.current.forEach((ref, index) => {
+        if (!ref) return;
+        
+        let cx = parseFloat(ref.dataset.x || mouseX.toString());
+        let cy = parseFloat(ref.dataset.y || mouseY.toString());
+        
+        cx += (mouseX - cx) * speeds[index];
+        cy += (mouseY - cy) * speeds[index];
+        
+        ref.dataset.x = cx.toString();
+        ref.dataset.y = cy.toString();
+        
+        ref.style.transform = `translate(${cx}px, ${cy}px)`;
+      });
       
-      if (interactiveBlobRef.current) {
-        interactiveBlobRef.current.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      }
-
-      // Also animate the light mode interactive cursor
-      const lightCursor = document.querySelector('.interactive-cursor-light') as HTMLElement;
-      if (lightCursor) {
-        lightCursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      }
-      
-      animationFrameId = requestAnimationFrame(animateInteractiveBlob);
+      animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
     };
     
-    animateInteractiveBlob();
+    animateInteractiveBlobs();
 
     return () => {
       if (darkBlobs) anime.remove(darkBlobs);
@@ -97,61 +95,61 @@ export function FluidBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none z-[-2] overflow-hidden bg-background">
       
-      {/* ─── DARK MODE BLOBS ─── */}
-      <div ref={containerRef} className="absolute inset-0 opacity-70 will-change-transform hidden dark:block">
-        <div 
-          className="dark-fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] mix-blend-screen blur-[120px]" 
-          style={{ background: 'radial-gradient(circle at center, #16A085 0%, transparent 70%)' }}
-        />
-        <div 
-          className="dark-fluid-blob absolute bottom-[10%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[60%_40%_30%_70%] mix-blend-screen blur-[140px]" 
-          style={{ background: 'radial-gradient(circle at center, #156F69 0%, transparent 70%)' }}
-        />
-        <div 
-          className="dark-fluid-blob absolute top-[40%] left-[30%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-[50%_50%_60%_40%] mix-blend-screen blur-[160px]" 
-          style={{ background: 'radial-gradient(circle at center, #153D4C 0%, transparent 70%)' }}
-        />
-        <div 
-          className="dark-fluid-blob absolute top-[-10%] right-[20%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-[70%_30%_50%_50%] mix-blend-screen blur-[100px]" 
-          style={{ background: 'radial-gradient(circle at center, #14253E 0%, transparent 70%)' }}
-        />
+      <div ref={containerRef} className="absolute inset-0 will-change-transform">
+        {/* ─── DARK MODE BLOBS (Punchy & Vibrant) ─── */}
+        <div className="absolute inset-0 opacity-80 hidden dark:block">
+          <div 
+            className="dark-fluid-blob absolute top-[10%] left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[40%_60%_70%_30%] mix-blend-screen blur-[100px]" 
+            style={{ background: 'radial-gradient(circle at center, #00FF87 0%, transparent 70%)' }}
+          />
+          <div 
+            className="dark-fluid-blob absolute bottom-[10%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[60%_40%_30%_70%] mix-blend-screen blur-[120px]" 
+            style={{ background: 'radial-gradient(circle at center, #00F0FF 0%, transparent 70%)' }}
+          />
+          <div 
+            className="dark-fluid-blob absolute top-[40%] left-[30%] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-[50%_50%_60%_40%] mix-blend-screen blur-[140px]" 
+            style={{ background: 'radial-gradient(circle at center, #1A75FF 0%, transparent 70%)' }}
+          />
+          <div 
+            className="dark-fluid-blob absolute top-[-10%] right-[20%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-[70%_30%_50%_50%] mix-blend-screen blur-[100px]" 
+            style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }}
+          />
+        </div>
+
+        {/* ─── LIGHT MODE BLOBS (Punchy & Vibrant) ─── */}
+        <div className="absolute inset-0 opacity-90 block dark:hidden mix-blend-multiply">
+          <div 
+            className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[100px]" 
+            style={{ background: 'radial-gradient(circle at center, #CCFF00 0%, transparent 70%)' }}
+          />
+          <div 
+            className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[120px]" 
+            style={{ background: 'radial-gradient(circle at center, #00FF9D 0%, transparent 70%)' }}
+          />
+          <div 
+            className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
+            style={{ background: 'radial-gradient(circle at center, #FFE600 0%, transparent 70%)' }}
+          />
+          <div 
+            className="light-fluid-blob absolute top-[60%] right-[30%] w-[35vw] h-[35vw] max-w-[500px] max-h-[500px] rounded-[70%_30%_50%_50%] blur-[100px] opacity-60" 
+            style={{ background: 'radial-gradient(circle at center, #00E5FF 0%, transparent 70%)' }}
+          />
+        </div>
       </div>
 
-      {/* ─── LIGHT MODE BLOBS ─── */}
-      <div className="absolute inset-0 opacity-80 will-change-transform block dark:hidden">
-        {/* Soft Mint / Seafoam */}
-        <div 
-          className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[120px]" 
-          style={{ background: 'radial-gradient(circle at center, #8EE4AF 0%, transparent 70%)' }}
-        />
-        {/* Vibrant Spring Green */}
-        <div 
-          className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[130px]" 
-          style={{ background: 'radial-gradient(circle at center, #A8E6CF 0%, transparent 70%)' }}
-        />
-        {/* Soft Creamy Yellow / Sunlight */}
-        <div 
-          className="light-fluid-blob absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[150px]" 
-          style={{ background: 'radial-gradient(circle at center, #FDFFCC 0%, transparent 70%)' }}
-        />
+      {/* ─── INTERACTIVE FLUID TRAIL (Dark Mode) ─── */}
+      <div className="hidden dark:block">
+        <div ref={el => { interactiveRefs.current[0] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-screen blur-[80px] opacity-[0.9] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00FF87 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[1] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-screen blur-[120px] opacity-[0.6] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00F0FF 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[2] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-screen blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }} />
       </div>
 
-      {/* Interactive Cursor Blob (Dark Mode) */}
-      <div 
-        ref={interactiveBlobRef}
-        className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-screen blur-[120px] opacity-[0.8] will-change-transform hidden dark:block"
-        style={{ background: 'radial-gradient(circle at center, #16A085 0%, #156F69 30%, transparent 70%)' }}
-      />
-
-      {/* Interactive Cursor Blob (Light Mode) */}
-      <div 
-        ref={(el) => {
-          // We can just use the same ref by assigning it here, but React doesn't like that easily.
-          // Since we animate interactiveBlobRef.current.style, we need to apply it to BOTH if they exist, or just use a class.
-        }}
-        className="interactive-cursor-light absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full blur-[100px] opacity-[0.5] will-change-transform block dark:hidden pointer-events-none mix-blend-multiply"
-        style={{ background: 'radial-gradient(circle at center, #72BF78 0%, #96E6A1 40%, transparent 70%)' }}
-      />
+      {/* ─── INTERACTIVE FLUID TRAIL (Light Mode) ─── */}
+      <div className="block dark:hidden">
+        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.8] will-change-transform" style={{ background: 'radial-gradient(circle at center, #CCFF00 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.6] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00FF9D 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #00E5FF 0%, transparent 70%)' }} />
+      </div>
       
       {/* SVG Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.12] mix-blend-color-dodge dark:opacity-[0.15]"
