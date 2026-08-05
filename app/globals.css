@@ -70,61 +70,57 @@
 
 /* ─── LIGHT MODE (Pastel Editorial) ──────────────── */
 :root {
-  --background: #FAF7FA;
-  --bg-image: radial-gradient(circle at 15% 50%, rgba(242, 221, 220, 0.6), transparent 50%), /* #F2DDDC */
-              radial-gradient(circle at 85% 30%, rgba(246, 188, 186, 0.5), transparent 50%), /* #F6BCBA */
-              radial-gradient(circle at 50% 80%, rgba(227, 170, 221, 0.4), transparent 50%), /* #E3AADD */
-              radial-gradient(circle at 80% 80%, rgba(200, 168, 233, 0.5), transparent 50%), /* #C8A8E9 */
-              radial-gradient(circle at 20% 20%, rgba(195, 199, 244, 0.5), transparent 50%); /* #C3C7F4 */
+  --background: #F8FAF2; /* Soft pale grassy white */
+  --bg-image: none; /* FluidBackground handles the gradient */
   
-  --surface: rgba(250, 247, 250, 0.7);
-  --surface-dim: rgba(242, 221, 220, 0.5);
+  --surface: rgba(236, 255, 182, 0.7); /* #ecffb6 */
+  --surface-dim: rgba(212, 252, 121, 0.5); /* #D4FC79 */
   --surface-container-lowest: rgba(255, 255, 255, 0.9);
-  --surface-container-low: rgba(250, 247, 250, 0.6);
-  --surface-container: rgba(242, 221, 220, 0.4);
-  --surface-container-high: rgba(227, 170, 221, 0.3);
-  --surface-container-highest: rgba(200, 168, 233, 0.3);
+  --surface-container-low: rgba(254, 255, 159, 0.6); /* #FEFF9F */
+  --surface-container: rgba(211, 238, 152, 0.4); /* #D3EE98 */
+  --surface-container-high: rgba(160, 214, 131, 0.3); /* #A0D683 */
+  --surface-container-highest: rgba(150, 230, 161, 0.3); /* #96E6A1 */
 
-  --foreground: #1A1A24; /* Deep, soft dark purple/black for readability */
-  --on-surface: #1A1A24;
-  --on-surface-variant: #5B5B6B; /* Softened dark gray/purple */
+  --foreground: #002B30; /* Deepest teal for maximum contrast and readability */
+  --on-surface: #002B30;
+  --on-surface-variant: #00545F; /* The deep teal from the image */
 
-  --outline: #C8A8E9; /* Soft purple */
-  --outline-variant: rgba(200, 168, 233, 0.3);
+  --outline: #72BF78; 
+  --outline-variant: rgba(114, 191, 120, 0.3);
 
-  --bronze-accent: #9D74C0; /* Darker tone of #C8A8E9 for contrast */
-  --charcoal: #1A1A24;
-  --observatory-navy: #4A4A68;
-  --manuscript-lavender: #E3AADD;
+  --bronze-accent: #00545F; /* Deep teal for buttons and highlights */
+  --charcoal: #002B30;
+  --observatory-navy: #00545F;
+  --manuscript-lavender: #72BF78;
 
   /* Glass panel specific variables */
   --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-bg-hover: rgba(255, 255, 255, 0.6);
-  --glass-border-light: rgba(200, 168, 233, 0.2);
-  --glass-border-strong: rgba(200, 168, 233, 0.5);
+  --glass-bg-hover: rgba(255, 255, 255, 0.65);
+  --glass-border-light: rgba(150, 230, 161, 0.3);
+  --glass-border-strong: rgba(114, 191, 120, 0.5);
 
   /* Shadcn compatibility */
   --card: rgba(255, 255, 255, 0.6);
-  --card-foreground: #1A1A24;
-  --popover: rgba(250, 247, 250, 0.9);
-  --popover-foreground: #1A1A24;
-  --primary: #C8A8E9;
-  --primary-foreground: #1A1A24;
-  --secondary: rgba(242, 221, 220, 0.5);
-  --secondary-foreground: #1A1A24;
-  --muted: rgba(227, 170, 221, 0.2);
-  --muted-foreground: #5B5B6B;
-  --accent: rgba(200, 168, 233, 0.3);
-  --accent-foreground: #1A1A24;
+  --card-foreground: #002B30;
+  --popover: rgba(248, 250, 242, 0.9);
+  --popover-foreground: #002B30;
+  --primary: #00545F;
+  --primary-foreground: #FFFFFF;
+  --secondary: rgba(212, 252, 121, 0.5);
+  --secondary-foreground: #002B30;
+  --muted: rgba(211, 238, 152, 0.4);
+  --muted-foreground: #00545F;
+  --accent: rgba(150, 230, 161, 0.3);
+  --accent-foreground: #002B30;
   --destructive: #BA1A1A;
-  --border: rgba(200, 168, 233, 0.3);
-  --input: rgba(200, 168, 233, 0.3);
-  --ring: #C8A8E9;
+  --border: rgba(114, 191, 120, 0.3);
+  --input: rgba(114, 191, 120, 0.3);
+  --ring: #00545F;
   --radius: 0px; 
 
   /* ─── SPATIAL SHADOWS (Softened for light theme) ──────────────── */
-  --shadow-float: 0 20px 40px -10px rgba(26, 26, 36, 0.05), 0 0 20px rgba(255, 255, 255, 0.6) inset;
-  --shadow-float-high: 0 30px 60px -15px rgba(26, 26, 36, 0.08), 0 0 30px rgba(255, 255, 255, 0.8) inset;
+  --shadow-float: 0 20px 40px -10px rgba(0, 43, 48, 0.05), 0 0 20px rgba(255, 255, 255, 0.6) inset;
+  --shadow-float-high: 0 30px 60px -15px rgba(0, 43, 48, 0.08), 0 0 30px rgba(255, 255, 255, 0.8) inset;
 }
 
 /* ─── DARK MODE ─────────────────────────────────────────────── */
