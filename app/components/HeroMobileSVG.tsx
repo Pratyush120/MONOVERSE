@@ -1,8 +1,93 @@
+"use client";
 import * as React from "react";
+import { useRef, useEffect } from "react";
+import anime from "animejs";
 import type { SVGProps } from "react";
 
-const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => (
-<svg width="412" height="766" viewBox="0 0 412 766" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }} {...props}>
+const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    // ── Collect animation targets ───────────────────────────────────────────
+    // The SVG has two semantic groups: .tree (forest/landscape) and .monoverse (wordmark)
+    const treePaths  = svg.querySelectorAll<SVGElement>('.tree path, .tree rect');
+    const textPaths  = svg.querySelectorAll<SVGElement>('.monoverse path');
+
+    if (!treePaths.length) return;
+
+    // ── will-change hints for GPU compositing on mobile ─────────────────────
+    Array.from(treePaths).forEach(el => { (el as HTMLElement).style.willChange = 'opacity, transform'; });
+    Array.from(textPaths).forEach(el => { (el as HTMLElement).style.willChange = 'opacity, transform'; });
+
+    // ── Hard reset: everything invisible before timeline fires ───────────────
+    anime.set(treePaths, { opacity: 0, translateY: 30, scale: 0.88, transformOrigin: 'center bottom', transformBox: 'fill-box' });
+    anime.set(textPaths, { opacity: 0, translateY: -18, scale: 0.94, transformOrigin: 'center center', transformBox: 'fill-box' });
+
+    // ── Premium cinematic timeline ───────────────────────────────────────────
+    const tl = anime.timeline({ autoplay: true });
+
+    // STAGE 1 — Forest / tree paths bloom outward from center
+    // Stagger from center gives an organic "breathing" emerge feel
+    tl.add({
+      targets: treePaths,
+      opacity: [
+        { value: 0,    duration: 0 },
+        { value: 1,    duration: 900,  easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
+      ],
+      translateY:  [30, 0],
+      scale:       [0.88, 1],
+      easing:      'spring(1, 72, 9, 0)', // natural spring — slight overshoot
+      delay:        anime.stagger(1.8, { from: 'center' }),
+    })
+
+    // STAGE 2 — Wordmark drifts in from above with a soft elastic settle
+    // Overlaps the tail of stage 1 for seamless choreography
+    .add({
+      targets:    textPaths,
+      opacity: [
+        { value: 0,  duration: 0 },
+        { value: 1,  duration: 1200, easing: 'cubicBezier(0.19, 1, 0.22, 1)' },
+      ],
+      translateY: [-18, 0],
+      scale:      [0.94, 1],
+      easing:     'spring(1, 60, 12, 0)', // softer spring — the text is more refined
+      delay:       anime.stagger(22, { direction: 'normal' }),
+    }, '-=1800') // tightly overlapped with the tree stage
+
+    // STAGE 3 — Subtle breathing loop: the entire tree group gently pulses
+    // This keeps the composition alive after the reveal completes
+    .add({
+      targets:   treePaths,
+      scale:     [1, 1.008, 1],
+      translateY: [0, -2, 0],
+      duration:  4000,
+      easing:    'easeInOutSine',
+      loop:       true,
+      direction: 'alternate',
+      delay:      anime.stagger(3, { from: 'center' }),
+    }, '+=400');
+
+    return () => {
+      tl.pause();
+      anime.remove([...Array.from(treePaths), ...Array.from(textPaths)]);
+    };
+  }, []);
+
+  return (
+<svg
+      ref={svgRef}
+      width="412"
+      height="766"
+      viewBox="0 0 412 766"
+      preserveAspectRatio="xMidYMid meet"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: '100%', height: '100%' }}
+      {...props}
+    >
 
 
 
@@ -3793,6 +3878,7 @@ const SvgHeroMobile = (props: SVGProps<SVGSVGElement>) => (
 </clipPath>
 </defs>
 </svg>
-);
+  );
+};
 
 export default SvgHeroMobile;
