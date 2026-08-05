@@ -35,41 +35,18 @@ export function FluidBackground() {
     if (lightBlobs) animateBlobs(lightBlobs);
 
     // 2. Ultra-fluid Mouse tracking for liquid smear effect
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    
+    // Smoothed physics values
+    let currentTiltX = 0;
+    let currentTiltY = 0;
+    let currentParallaxX = 0;
+    let currentParallaxY = 0;
     
     const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      
-      // Subtle Parallax effect on the whole background
-      if (containerRef.current) {
-        const xOffset = (mouseX / window.innerWidth - 0.5) * 60; // Increased parallax
-        const yOffset = (mouseY / window.innerHeight - 0.5) * 60;
-        
-        anime({
-          targets: containerRef.current,
-          translateX: -xOffset,
-          translateY: -yOffset,
-          duration: 1000,
-          easing: 'easeOutExpo'
-        });
-      }
-
-      // Dynamic 3D tilt for the background isometric grid
-      if (gridRef.current) {
-        // Tilt up to 25 degrees based on mouse position
-        const tiltX = (mouseY / window.innerHeight - 0.5) * -25;
-        const tiltY = (mouseX / window.innerWidth - 0.5) * 25;
-        
-        anime({
-          targets: gridRef.current,
-          rotateX: tiltX,
-          rotateY: tiltY,
-          duration: 800,
-          easing: 'easeOutCirc'
-        });
-      }
+      targetX = e.clientX;
+      targetY = e.clientY;
     };
     
     window.addEventListener('mousemove', onMouseMove);
@@ -78,27 +55,51 @@ export function FluidBackground() {
     const speeds = [0.15, 0.08, 0.04, 0.15, 0.08, 0.04];
     
     let animationFrameId: number;
-    const animateInteractiveBlobs = () => {
-      // Animate generic trailing blobs
+    const physicsLoop = () => {
+      // A. Smooth Parallax for entire background container
+      if (containerRef.current) {
+        const targetParallaxX = (targetX / window.innerWidth - 0.5) * -60;
+        const targetParallaxY = (targetY / window.innerHeight - 0.5) * -60;
+        
+        currentParallaxX += (targetParallaxX - currentParallaxX) * 0.05;
+        currentParallaxY += (targetParallaxY - currentParallaxY) * 0.05;
+        
+        // Translate3d forces hardware acceleration
+        containerRef.current.style.transform = `translate3d(${currentParallaxX}px, ${currentParallaxY}px, 0)`;
+      }
+
+      // B. Smooth 3D Tilt for the texture grid
+      if (gridRef.current) {
+        const targetTiltX = (targetY / window.innerHeight - 0.5) * -25;
+        const targetTiltY = (targetX / window.innerWidth - 0.5) * 25;
+        
+        currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+        
+        gridRef.current.style.transform = `rotateX(${currentTiltX}deg) rotateY(${currentTiltY}deg) translateZ(0)`;
+      }
+
+      // C. Liquid Smear for trailing blobs
       interactiveRefs.current.forEach((ref, index) => {
         if (!ref) return;
         
-        let cx = parseFloat(ref.dataset.x || mouseX.toString());
-        let cy = parseFloat(ref.dataset.y || mouseY.toString());
+        let cx = parseFloat(ref.dataset.x || targetX.toString());
+        let cy = parseFloat(ref.dataset.y || targetY.toString());
         
-        cx += (mouseX - cx) * speeds[index];
-        cy += (mouseY - cy) * speeds[index];
+        cx += (targetX - cx) * speeds[index];
+        cy += (targetY - cy) * speeds[index];
         
         ref.dataset.x = cx.toString();
         ref.dataset.y = cy.toString();
         
-        ref.style.transform = `translate(${cx}px, ${cy}px)`;
+        // Translate3d forces hardware acceleration
+        ref.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
       });
 
-      animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
+      animationFrameId = requestAnimationFrame(physicsLoop);
     };
     
-    animateInteractiveBlobs();
+    physicsLoop();
 
     return () => {
       if (darkBlobs) anime.remove(darkBlobs);
@@ -161,13 +162,6 @@ export function FluidBackground() {
         <div ref={el => { interactiveRefs.current[2] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-screen blur-[150px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #8A2BE2 0%, transparent 70%)' }} />
       </div>
 
-      {/* ─── INTERACTIVE FLUID TRAIL (Light Mode - Softer) ─── */}
-      <div className="block dark:hidden">
-        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.4] will-change-transform" style={{ background: 'radial-gradient(circle at center, #96E6A1 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.3] will-change-transform" style={{ background: 'radial-gradient(circle at center, #72BF78 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.2] will-change-transform" style={{ background: 'radial-gradient(circle at center, #A0D683 0%, transparent 70%)' }} />
-      </div>
-      
       {/* ─── INTERACTIVE TRAILING BLOBS (Light Mode) ─── */}
       <div className="block dark:hidden">
         <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.7] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }} />
