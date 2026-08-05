@@ -219,9 +219,9 @@ export function Hero() {
         <div className="desktop-svg-container hidden md:flex absolute inset-0 w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
           <SvgHero />
         </div>
-        {/* Mobile: portrait SVG (412×766) — centered and fills full height */}
-        <div className="mobile-svg-container flex md:hidden absolute inset-0 w-full h-full items-center justify-center overflow-hidden [&>svg]:h-full [&>svg]:w-auto [&>svg]:max-w-none">
-          <SvgHeroMobile preserveAspectRatio="xMidYMid meet" />
+        {/* Mobile: portrait SVG (412×766) — centered and fills full width while maintaining aspect ratio */}
+        <div className="mobile-svg-container flex md:hidden absolute inset-0 w-full h-full items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover">
+          <SvgHeroMobile preserveAspectRatio="xMidYMid slice" />
         </div>
       </div>
 
