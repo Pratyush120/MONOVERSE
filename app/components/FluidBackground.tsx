@@ -7,6 +7,7 @@ export function FluidBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const interactiveRefs = useRef<(HTMLDivElement | null)[]>([]);
   const waterCutRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const darkBlobs = containerRef.current?.querySelectorAll(".dark-fluid-blob");
@@ -43,6 +44,7 @@ export function FluidBackground() {
     let waterY = mouseY;
     let smoothedAngle = 0;
     let smoothedSpeed = 0;
+    let time = 0; // For water-like drifting grid
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -133,6 +135,16 @@ export function FluidBackground() {
         waterCutRef.current.style.transform = `translate(${waterX}px, ${waterY}px) rotate(${angleDeg}deg) scale(${scaleX}, ${scaleY})`;
       }
       
+      // 3. Update Isometric Grid (Water-like movement & Parallax)
+      time += 0.5; // Slow ambient drift
+      if (gridRef.current) {
+        // Opposite parallax so it looks like it has depth
+        const gridX = (mouseX / window.innerWidth - 0.5) * -120;
+        const gridY = (mouseY / window.innerHeight - 0.5) * -120;
+        // Apply drifting + parallax
+        gridRef.current.style.backgroundPosition = `${gridX + time}px ${gridY + time}px, ${gridX + time}px ${gridY + time}px`;
+      }
+      
       animationFrameId = requestAnimationFrame(animateInteractiveBlobs);
     };
     
@@ -216,12 +228,18 @@ export function FluidBackground() {
         }}
       />
 
-      {/* ─── GEOMETRIC DOT GRID OVERLAY ─── */}
+      {/* ─── ISOMETRIC GEOMETRY (Floating & Moving) ─── */}
       <div 
-        className="absolute inset-0 opacity-[0.25] mix-blend-multiply dark:mix-blend-screen dark:opacity-[0.1]"
+        ref={gridRef}
+        className="absolute inset-0 opacity-[0.25] mix-blend-multiply dark:mix-blend-screen dark:opacity-[0.15] will-change-[background-position]"
         style={{
-          backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
+          // Creates a stunning isometric diamond grid
+          backgroundImage: `
+            linear-gradient(30deg, currentColor 1px, transparent 1px),
+            linear-gradient(150deg, currentColor 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 138px', // Proportional for true isometric 30/150 deg
+          backgroundPosition: '0 0, 0 0',
         }}
       />
       
