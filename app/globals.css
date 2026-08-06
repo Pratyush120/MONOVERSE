@@ -520,3 +520,53 @@ html:not(.dark) .theme-seaside section:nth-of-type(odd) {
 html:not(.dark) .theme-seaside section:nth-of-type(even) {
   background-color: rgba(238, 229, 159, 0.35) !important; /* Soft Vanilla tint of #EEE59F */
 }
+
+/* ─── CHARMING SEASIDE PALETTE (Dark Mode Overrides) ──────────────── */
+.dark .theme-seaside {
+  --background: #021826; /* Sambucus dark background */
+  --surface: #01595A; /* Fanfare as surface container */
+  --surface-dim: #5C1966; /* Ripe Plum */
+  --surface-container-lowest: #021826;
+  --surface-container-low: rgba(2, 24, 38, 0.5); /* Sambucus with opacity */
+  --surface-container: #01595A; /* Fanfare */
+  --surface-container-high: rgba(1, 89, 90, 0.8);
+  --surface-container-highest: #06F284; /* Spearmint */
+
+  --foreground: #F8F9FA;
+  --on-surface: #F8F9FA;
+  --on-surface-variant: rgba(248, 249, 250, 0.7);
+
+  --outline: #06F284; /* Spearmint outline */
+  --outline-variant: rgba(6, 242, 132, 0.15);
+
+  --bronze-accent: #06F284; /* Spearmint highlight */
+  --charcoal: #F8F9FA;
+  --observatory-navy: #021826;
+  --manuscript-lavender: #01595A;
+
+  --card: rgba(2, 24, 38, 0.6);
+  --card-foreground: #F8F9FA;
+  
+  --glass-bg: rgba(2, 24, 38, 0.45);
+  --glass-border-light: rgba(6, 242, 132, 0.15);
+  --glass-border-strong: rgba(6, 242, 132, 0.35);
+}
+
+/* Alternating Section Backgrounds in Dark Mode */
+.dark .theme-seaside section {
+  margin-bottom: 0 !important;
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+@media (min-width: 768px) {
+  .dark .theme-seaside section {
+    padding-top: 120px !important;
+    padding-bottom: 120px !important;
+  }
+}
+.dark .theme-seaside section:nth-of-type(odd) {
+  background-color: #021826 !important; /* Sambucus */
+}
+.dark .theme-seaside section:nth-of-type(even) {
+  background-color: rgba(92, 25, 102, 0.15) !important; /* Soft Ripe Plum tint of #5C1966 */
+}
