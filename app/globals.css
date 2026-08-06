@@ -566,7 +566,52 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
 }
 .dark .theme-seaside section:nth-of-type(odd) {
   background-color: #013E37 !important; /* Green */
+  --background: #013E37;
+  --foreground: #FFEFB3;
+  --on-surface: #FFEFB3;
+  --on-surface-variant: rgba(255, 239, 179, 0.8);
+  --bronze-accent: #FFEFB3;
+  --charcoal: #FFEFB3;
+  --border: rgba(255, 239, 179, 0.2);
+  --outline: #FFEFB3;
+  --outline-variant: rgba(255, 239, 179, 0.2);
+  color: #FFEFB3 !important;
 }
+.dark .theme-seaside section:nth-of-type(odd) h1,
+.dark .theme-seaside section:nth-of-type(odd) h2,
+.dark .theme-seaside section:nth-of-type(odd) h3,
+.dark .theme-seaside section:nth-of-type(odd) h4,
+.dark .theme-seaside section:nth-of-type(odd) p,
+.dark .theme-seaside section:nth-of-type(odd) span,
+.dark .theme-seaside section:nth-of-type(odd) a,
+.dark .theme-seaside section:nth-of-type(odd) time,
+.dark .theme-seaside section:nth-of-type(odd) select,
+.dark .theme-seaside section:nth-of-type(odd) label {
+  color: #FFEFB3 !important;
+}
+
 .dark .theme-seaside section:nth-of-type(even) {
-  background-color: rgba(255, 239, 179, 0.05) !important; /* Soft Butter tint of #FFEFB3 */
+  background-color: #FFEFB3 !important; /* Solid Butter */
+  --background: #FFEFB3;
+  --foreground: #013E37;
+  --on-surface: #013E37;
+  --on-surface-variant: rgba(1, 62, 55, 0.8);
+  --bronze-accent: #013E37;
+  --charcoal: #013E37;
+  --border: rgba(1, 62, 55, 0.2);
+  --outline: #013E37;
+  --outline-variant: rgba(1, 62, 55, 0.2);
+  color: #013E37 !important;
+}
+.dark .theme-seaside section:nth-of-type(even) h1,
+.dark .theme-seaside section:nth-of-type(even) h2,
+.dark .theme-seaside section:nth-of-type(even) h3,
+.dark .theme-seaside section:nth-of-type(even) h4,
+.dark .theme-seaside section:nth-of-type(even) p,
+.dark .theme-seaside section:nth-of-type(even) span,
+.dark .theme-seaside section:nth-of-type(even) a,
+.dark .theme-seaside section:nth-of-type(even) time,
+.dark .theme-seaside section:nth-of-type(even) select,
+.dark .theme-seaside section:nth-of-type(even) label {
+  color: #013E37 !important;
 }
