@@ -2,10 +2,14 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import prisma from "@/lib/prisma";
 
 const CONTENT_DIRS = [
   path.join(process.cwd(), 'content', 'essays'),
-  path.join(process.cwd(), 'content', 'cinema')
+  path.join(process.cwd(), 'content', 'cinema', 'articles'),
+  path.join(process.cwd(), 'content', 'cinema', 'lists'),
+  path.join(process.cwd(), 'content', 'cinema', 'movies'),
+  path.join(process.cwd(), 'content', 'cinema', 'people')
 ];
 
 export interface MDXArticle {
@@ -56,6 +60,38 @@ export async function getAllArticles(): Promise<MDXArticle[]> {
     }
   }
 
+  // Load from database as fallback/additional content
+  try {
+    const dbContents = await prisma.content.findMany({
+      include: {
+        authors: { include: { person: true } },
+        coverImage: true,
+        type: true,
+        desk: true,
+      }
+    });
+
+    for (const c of dbContents) {
+      if (articles.some(a => a.slug === c.slug)) continue;
+
+      const author = c.authors?.[0]?.person;
+      articles.push({
+        slug: c.slug,
+        title: c.title,
+        description: c.summary || "",
+        author: author ? author.name : "Monoverse",
+        image: c.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
+        date: c.publishedAt ? new Date(c.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date(c.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        readingTime: `${c.readingTime || 5} min read`,
+        domain: c.desk?.name || "Cinema",
+        disciplines: [],
+        body: c.body || ""
+      });
+    }
+  } catch (e) {
+    console.error("Error loading articles from database in getAllArticles:", e);
+  }
+
   // Sort by date descending
   return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
@@ -67,10 +103,43 @@ export async function getRecentArticles(limit = 10): Promise<MDXArticle[]> {
 
 export async function getArticleBySlug(slug: string): Promise<MDXArticle | null> {
   const all = await getAllArticles();
-  return all.find(a => a.slug === slug) || null;
+  const mdxArticle = all.find(a => a.slug === slug);
+  if (mdxArticle) return mdxArticle;
+
+  try {
+    const c = await prisma.content.findUnique({
+      where: { slug },
+      include: {
+        authors: { include: { person: true } },
+        coverImage: true,
+        type: true,
+        desk: true,
+      }
+    });
+    if (c) {
+      const author = c.authors?.[0]?.person;
+      return {
+        slug: c.slug,
+        title: c.title,
+        description: c.summary || "",
+        author: author ? author.name : "Monoverse",
+        image: c.coverImage?.url || "https://images.unsplash.com/photo-1542401886-65d6c61db217?auto=format&fit=crop&q=80&w=1200",
+        date: c.publishedAt ? new Date(c.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date(c.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        readingTime: `${c.readingTime || 5} min read`,
+        domain: c.desk?.name || "Cinema",
+        disciplines: [],
+        body: c.body || ""
+      };
+    }
+  } catch (e) {
+    console.error(`Error loading article by slug from database (${slug}):`, e);
+  }
+
+  return null;
 }
 
 export async function getAllArticleSlugs(): Promise<{ slug: string }[]> {
   const all = await getAllArticles();
   return all.map(a => ({ slug: a.slug }));
 }
+
