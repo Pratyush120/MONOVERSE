@@ -1,13 +1,14 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SectionLabel } from "../components/SectionLabel";
+import { Newsletter } from "../components/Newsletter";
 
 export const metadata: Metadata = {
-  title: "Community Desk",
+  title: "Community Desk | Monoverse",
   description: "Monoverse Community: An editorial desk dedicated to meaningful participation.",
 };
 
-// Dummy Data for the Community Desk
 const communityData = {
   theme: {
     title: "The Architecture of Silence",
@@ -64,153 +65,127 @@ const communityData = {
 
 export default function CommunityPage() {
   return (
-    <div className="bg-transparent overflow-hidden selection:bg-bronze-accent/20 pb-[120px]">
+    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
       
-      {/* 
-        SECTION 01: HERO & MONTHLY THEME
-        Massive typography defining the desk, followed by the current theme.
-      */}
-      <section className="pt-[160px] pb-[80px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light">
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent block mb-[24px]">
-          Editorial Desk
-        </span>
-        <h1 className="font-display text-[64px] md:text-[120px] lg:text-[160px] text-foreground leading-[0.85] tracking-[-0.02em] mb-[40px]">
+      {/* 1. HERO */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] md:mb-[120px] text-center">
+        <h1 className="font-headline text-[64px] md:text-[96px] lg:text-[120px] leading-[1] text-foreground mb-[32px] tracking-tight">
           Community
         </h1>
-        <p className="font-body text-[20px] md:text-[28px] text-text-secondary leading-[1.6] max-w-[800px] mb-[80px]">
-          A space dedicated to meaningful participation, collaborative research, and long-form intellectual exchange.
+        <p className="font-body text-[20px] md:text-[24px] leading-[1.6] text-text-secondary max-w-[700px] mx-auto">
+          An editorial desk dedicated to meaningful reader participation, intellectual dialogue, and shared research.
         </p>
+      </section>
 
-        <div className="glass-panel p-[40px] md:p-[80px] border-l-4 border-l-bronze-accent">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary block mb-[16px]">Current Theme</span>
-          <h2 className="font-display text-[40px] md:text-[64px] text-foreground leading-[1.1] mb-[24px]">
-            {communityData.theme.title}
-          </h2>
-          <p className="font-body text-[18px] md:text-[22px] text-text-secondary max-w-[800px] leading-[1.6]">
+      {/* 2. MONTHLY THEME */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Monthly Theme" />
+        <div className="border border-glass-border-light bg-surface-low/10 p-8 md:p-12 rounded-xl">
+          <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">{communityData.theme.title}</h2>
+          <p className="font-body text-lg text-text-secondary leading-relaxed max-w-[800px]">
             {communityData.theme.description}
           </p>
         </div>
       </section>
 
-      {/* 
-        SECTION 02: FEATURED DISCUSSION
-        Massive pull quote prompt with a curated response. No upvotes.
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light">
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary block mb-[48px]">Featured Discussion</span>
-        
-        <div className="flex flex-col lg:flex-row gap-[80px]">
-          <div className="w-full lg:w-[50%]">
-            <span className="font-display text-[80px] md:text-[120px] text-bronze-accent/20 leading-none absolute -ml-[40px] -mt-[20px]">"</span>
-            <h3 className="font-display text-[40px] md:text-[56px] text-foreground leading-[1.1] relative z-10 mb-[24px]">
-              {communityData.featuredDiscussion.question}
-            </h3>
-            <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-secondary">— Prompt by {communityData.featuredDiscussion.author}</span>
+      {/* 3. FEATURED DISCUSSION */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Featured Discussion" />
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          <div className="w-full md:w-1/2">
+            <span className="font-mono text-xs text-bronze-accent block mb-2">Question from {communityData.featuredDiscussion.author}</span>
+            <h2 className="font-display text-3xl md:text-4xl text-foreground leading-snug">
+              &ldquo;{communityData.featuredDiscussion.question}&rdquo;
+            </h2>
           </div>
-          
-          <div className="w-full lg:w-[50%] pt-[20px] lg:pt-[80px]">
-            <p className="font-body text-[20px] md:text-[24px] text-foreground leading-[1.8] border-l border-glass-border-light pl-[32px] mb-[32px]">
+          <div className="w-full md:w-1/2 border-l border-glass-border-strong pl-6 py-2">
+            <p className="font-body text-base text-text-secondary leading-relaxed mb-4">
               {communityData.featuredDiscussion.response}
             </p>
-            <div className="pl-[32px]">
-              <span className="font-display text-[24px] text-foreground block mb-[4px]">{communityData.featuredDiscussion.responseAuthor}</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-bronze-accent">{communityData.featuredDiscussion.role}</span>
-            </div>
+            <span className="font-mono text-xs text-foreground">— {communityData.featuredDiscussion.responseAuthor} ({communityData.featuredDiscussion.role})</span>
           </div>
         </div>
       </section>
 
-      {/* 
-        SECTION 03: OPEN QUESTIONS
-        Minimalist list of prompts.
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light">
-        <div className="flex justify-between items-end mb-[80px]">
-          <h2 className="font-display text-[40px] md:text-[64px] text-foreground">Open Prompts</h2>
-          <Link href="#" className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent hover:text-foreground transition-colors hidden md:block">View All Archive →</Link>
-        </div>
-
-        <div className="space-y-[40px]">
+      {/* 4. OPEN QUESTIONS */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Open Questions" />
+        <div className="space-y-6">
           {communityData.openQuestions.map((q, idx) => (
-            <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between gap-[24px] border-b border-glass-border-light pb-[40px] group">
-              <h3 className="font-display text-[28px] md:text-[40px] text-text-secondary group-hover:text-foreground transition-colors max-w-[900px] leading-[1.2]">
+            <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-glass-border-light pb-6 group">
+              <h3 className="font-display text-xl md:text-2xl text-foreground group-hover:text-bronze-accent transition-colors leading-snug">
                 {q.title}
               </h3>
-              <div className="flex items-center gap-[32px] shrink-0">
-                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-secondary">{q.responses} Contributions</span>
-                <Link href="#" className="btn-primary py-[8px] px-[24px] text-[11px]">Contribute</Link>
+              <div className="flex items-center gap-6 shrink-0">
+                <span className="font-mono text-xs text-text-secondary">{q.responses} contributions</span>
+                <Link href="#" className="btn-primary py-2 px-6 text-xs">Contribute</Link>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 
-        SECTION 04: COMMUNITY ESSAYS
-        Elegant grid of reader submissions.
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light">
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary block mb-[80px]">Community Essays</span>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px] md:gap-[64px]">
+      {/* 5. COMMUNITY ESSAYS */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Community Essays" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {communityData.essays.map((essay, idx) => (
-            <Link href="#" key={idx} className="group block">
-              <div className="relative h-[280px] w-full mb-[24px] grayscale group-hover:grayscale-0 transition-all duration-500 overflow-hidden">
+            <Link href="#" key={idx} className="group block border border-glass-border-light bg-surface-low/10 p-4 rounded-xl hover:border-bronze-accent/50 transition-all duration-300">
+              <div className="relative h-[200px] w-full mb-4 grayscale group-hover:grayscale-0 transition-all duration-500 overflow-hidden rounded-lg">
                 <Image src={essay.cover} alt={essay.title} fill className="object-cover transform group-hover:scale-105 transition-transform duration-700" />
               </div>
-              <div className="flex gap-[16px] font-mono text-[10px] uppercase tracking-[0.1em] text-text-secondary mb-[16px]">
+              <div className="flex justify-between items-center font-mono text-[10px] uppercase tracking-wider text-text-secondary mb-3">
                 <span className="text-bronze-accent">{essay.desk}</span>
-                <span>•</span>
                 <span>{essay.readingTime}</span>
               </div>
-              <h3 className="font-display text-[32px] text-foreground leading-[1.1] mb-[12px] group-hover:text-bronze-accent transition-colors">
+              <h3 className="font-display text-xl text-foreground group-hover:text-bronze-accent transition-colors mb-2 line-clamp-2">
                 {essay.title}
               </h3>
-              <span className="font-body text-[15px] text-text-secondary">By {essay.author}</span>
+              <span className="font-body text-xs text-text-secondary">By {essay.author}</span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* 
-        SECTION 05 & 06: READING CIRCLES & FILM CLUBS
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light flex flex-col lg:flex-row gap-[80px]">
-        
-        {/* Reading Circle */}
-        <div className="w-full lg:w-[50%] glass-panel p-[40px] md:p-[64px]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze-accent block mb-[48px]">Reading Circle</span>
-          <div className="flex flex-col sm:flex-row gap-[40px]">
-            <div className="relative h-[240px] w-[160px] shrink-0 grayscale">
+      {/* 6. READING CIRCLE & FILM CLUB */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Intellectual Circles" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Reading Circle */}
+          <div className="border border-glass-border-light bg-surface-low/20 p-6 md:p-8 rounded-xl flex flex-col sm:flex-row gap-6">
+            <div className="relative h-[200px] w-[140px] shrink-0 grayscale rounded-lg overflow-hidden">
               <Image src={communityData.readingCircle.cover} alt={communityData.readingCircle.book} fill className="object-cover" />
             </div>
-            <div className="flex flex-col justify-center">
-              <h3 className="font-display text-[40px] text-foreground leading-[1.1] mb-[8px]">{communityData.readingCircle.book}</h3>
-              <span className="font-body text-[18px] text-text-secondary block mb-[24px]">by {communityData.readingCircle.author}</span>
-              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-foreground border border-glass-border-light px-[16px] py-[8px] self-start mb-[32px]">
-                {communityData.readingCircle.schedule}
-              </span>
-              <Link href="#" className="font-mono text-[11px] uppercase tracking-[0.1em] text-bronze-accent hover:text-foreground transition-colors">
-                Join Discussion →
+            <div className="flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[10px] uppercase text-bronze-accent block mb-2">Reading Circle</span>
+                <h3 className="font-display text-2xl text-foreground leading-tight mb-1">{communityData.readingCircle.book}</h3>
+                <span className="font-body text-sm text-text-secondary block mb-4">by {communityData.readingCircle.author}</span>
+                <span className="font-mono text-xs text-foreground bg-glass-border-light/20 border border-glass-border-light px-3 py-1 rounded inline-block">
+                  {communityData.readingCircle.schedule}
+                </span>
+              </div>
+              <Link href="#" className="font-mono text-xs uppercase tracking-wider text-bronze-accent hover:text-foreground transition-colors pt-4">
+                Join Seminar Discussion →
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* Film Club */}
-        <div className="w-full lg:w-[50%] glass-panel p-[40px] md:p-[64px]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze-accent block mb-[48px]">Film Club</span>
-          <div className="flex flex-col sm:flex-row gap-[40px]">
-            <div className="relative h-[240px] w-[160px] shrink-0 grayscale">
+          {/* Film Club */}
+          <div className="border border-glass-border-light bg-surface-low/20 p-6 md:p-8 rounded-xl flex flex-col sm:flex-row gap-6">
+            <div className="relative h-[200px] w-[140px] shrink-0 grayscale rounded-lg overflow-hidden">
               <Image src={communityData.filmClub.cover} alt={communityData.filmClub.film} fill className="object-cover" />
             </div>
-            <div className="flex flex-col justify-center">
-              <h3 className="font-display text-[40px] text-foreground leading-[1.1] mb-[8px]">{communityData.filmClub.film}</h3>
-              <span className="font-body text-[18px] text-text-secondary block mb-[24px]">dir. {communityData.filmClub.director}</span>
-              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-foreground border border-glass-border-light px-[16px] py-[8px] self-start mb-[32px]">
-                {communityData.filmClub.theme}
-              </span>
-              <Link href="#" className="font-mono text-[11px] uppercase tracking-[0.1em] text-bronze-accent hover:text-foreground transition-colors">
+            <div className="flex flex-col justify-between">
+              <div>
+                <span className="font-mono text-[10px] uppercase text-bronze-accent block mb-2">Film Club</span>
+                <h3 className="font-display text-2xl text-foreground leading-tight mb-1">{communityData.filmClub.film}</h3>
+                <span className="font-body text-sm text-text-secondary block mb-4">dir. {communityData.filmClub.director}</span>
+                <span className="font-mono text-xs text-foreground bg-glass-border-light/20 border border-glass-border-light px-3 py-1 rounded inline-block line-clamp-1">
+                  {communityData.filmClub.theme}
+                </span>
+              </div>
+              <Link href="#" className="font-mono text-xs uppercase tracking-wider text-bronze-accent hover:text-foreground transition-colors pt-4">
                 Read Review & Discuss →
               </Link>
             </div>
@@ -218,123 +193,83 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* 
-        SECTION 07 & 08: WRITING CHALLENGES & EDITORIAL PICKS
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light flex flex-col lg:flex-row gap-[120px]">
-        
-        {/* Writing Challenge */}
-        <div className="w-full lg:w-[40%]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block mb-[48px]">Writing Challenge</span>
-          <h3 className="font-display text-[48px] text-foreground leading-[1.1] mb-[24px]">{communityData.challenge.title}</h3>
-          <p className="font-body text-[18px] text-text-secondary leading-[1.6] mb-[40px]">{communityData.challenge.description}</p>
-          <div className="border-t border-glass-border-light pt-[24px] flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-secondary mb-[4px]">Deadline</span>
-              <span className="font-mono text-[12px] text-foreground">{communityData.challenge.deadline}</span>
+      {/* 7. EVENTS & CONTRIBUTORS */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Contributors */}
+          <div>
+            <SectionLabel label="Contributors" />
+            <div className="space-y-4">
+              {communityData.contributors.map((c, idx) => (
+                <div key={idx} className="flex justify-between items-center border-b border-glass-border-light pb-4">
+                  <h4 className="font-display text-xl text-foreground">{c.name}</h4>
+                  <span className="font-mono text-xs text-text-secondary">{c.focus}</span>
+                </div>
+              ))}
             </div>
-            <Link href="/write/studio/editor" className="btn-primary py-[10px] px-[32px] text-[11px]">Submit</Link>
           </div>
-        </div>
 
-        {/* Editorial Picks */}
-        <div className="w-full lg:w-[60%]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block mb-[48px]">Editorial Picks</span>
-          <div className="space-y-[40px]">
-            {communityData.picks.map((pick, idx) => (
-              <div key={idx} className="border-l border-bronze-accent/30 pl-[32px] py-[8px]">
-                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-bronze-accent block mb-[12px]">{pick.type}</span>
-                <p className="font-body text-[20px] text-foreground leading-[1.6] italic mb-[16px]">"{pick.snippet}"</p>
-                <div className="flex items-center gap-[16px]">
-                  <span className="font-display text-[20px] text-text-secondary">{pick.author}</span>
-                  <span className="text-glass-border-light">—</span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-secondary">{pick.title}</span>
+          {/* Events */}
+          <div>
+            <SectionLabel label="Upcoming Events" />
+            <div className="space-y-6">
+              {communityData.events.map((e, idx) => (
+                <div key={idx} className="flex gap-4 items-start group">
+                  <span className="font-mono text-sm text-bronze-accent pt-1 shrink-0">{e.date}</span>
+                  <div>
+                    <h4 className="font-display text-xl text-foreground group-hover:text-bronze-accent transition-colors leading-tight mb-1">{e.title}</h4>
+                    <p className="font-body text-sm text-text-secondary">{e.desc}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 
-        SECTION 09 & 10: CONTRIBUTORS & EVENTS
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light flex flex-col md:flex-row gap-[120px]">
-        
-        {/* Contributors */}
-        <div className="w-full md:w-[50%]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block mb-[48px]">Featured Contributors</span>
-          <div className="grid grid-cols-1 gap-[32px]">
-            {communityData.contributors.map((c, idx) => (
-              <div key={idx} className="flex justify-between items-center border-b border-glass-border-light pb-[16px]">
-                <h4 className="font-display text-[28px] text-foreground">{c.name}</h4>
-                <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-secondary text-right">{c.focus}</span>
-              </div>
-            ))}
+      {/* 8. WRITING CHALLENGE */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Writing Challenge" />
+        <div className="border border-glass-border-light p-8 md:p-12 bg-surface-low/10 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="max-w-[800px]">
+            <h3 className="font-display text-3xl text-foreground mb-4">{communityData.challenge.title}</h3>
+            <p className="font-body text-base text-text-secondary leading-relaxed mb-6">{communityData.challenge.description}</p>
+            <div className="flex gap-6 font-mono text-xs">
+              <span className="text-text-secondary">Deadline: <strong className="text-foreground">{communityData.challenge.deadline}</strong></span>
+            </div>
           </div>
-        </div>
-
-        {/* Events */}
-        <div className="w-full md:w-[50%]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary block mb-[48px]">Upcoming Events</span>
-          <div className="space-y-[40px]">
-            {communityData.events.map((e, idx) => (
-              <div key={idx} className="flex gap-[32px] group">
-                <span className="font-mono text-[14px] text-bronze-accent pt-[4px] shrink-0">{e.date}</span>
-                <div>
-                  <h4 className="font-display text-[28px] text-foreground mb-[8px] group-hover:text-bronze-accent transition-colors cursor-pointer">{e.title}</h4>
-                  <p className="font-body text-[16px] text-text-secondary">{e.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Link href="/write/studio/editor" className="btn-primary py-3 px-8 text-xs uppercase tracking-widest font-mono shrink-0">Submit Entry</Link>
         </div>
       </section>
 
-      {/* 
-        SECTION 11: COMMUNITY GUIDELINES
-      */}
-      <section className="py-[120px] px-[24px] md:px-[64px] max-w-[1440px] mx-auto border-b border-glass-border-light text-center">
-        <h2 className="font-display text-[48px] md:text-[80px] text-foreground mb-[64px]">Editorial Principles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-[40px] text-left">
+      {/* 9. PRINCIPLES */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Principles" />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent block mb-[16px]">01</span>
-            <h4 className="font-display text-[28px] text-foreground mb-[12px]">Respect</h4>
-            <p className="font-body text-[15px] text-text-secondary">Address the argument, never the individual. Maintain intellectual grace.</p>
+            <span className="font-mono text-sm text-bronze-accent block mb-2">01</span>
+            <h4 className="font-display text-xl text-foreground mb-2">Respect</h4>
+            <p className="font-body text-sm text-text-secondary leading-relaxed">Address the argument, never the individual. Maintain civilizational grace.</p>
           </div>
           <div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent block mb-[16px]">02</span>
-            <h4 className="font-display text-[28px] text-foreground mb-[12px]">Evidence</h4>
-            <p className="font-body text-[15px] text-text-secondary">Anchor your claims in text, history, or logic. Opinions must be substantiated.</p>
+            <span className="font-mono text-sm text-bronze-accent block mb-2">02</span>
+            <h4 className="font-display text-xl text-foreground mb-2">Evidence</h4>
+            <p className="font-body text-sm text-text-secondary leading-relaxed">Anchor claims in historical context, raw text, or logical deductions.</p>
           </div>
           <div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent block mb-[16px]">03</span>
-            <h4 className="font-display text-[28px] text-foreground mb-[12px]">Curiosity</h4>
-            <p className="font-body text-[15px] text-text-secondary">Listen to understand before replying to contradict. Prioritize truth over being right.</p>
+            <span className="font-mono text-sm text-bronze-accent block mb-2">03</span>
+            <h4 className="font-display text-xl text-foreground mb-2">Curiosity</h4>
+            <p className="font-body text-sm text-text-secondary leading-relaxed">Listen to understand before replying to contradict. Prioritize civil truth.</p>
           </div>
           <div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze-accent block mb-[16px]">04</span>
-            <h4 className="font-display text-[28px] text-foreground mb-[12px]">Constructive</h4>
-            <p className="font-body text-[15px] text-text-secondary">Disagreement is encouraged, but cynicism is not. Build upon the conversation.</p>
+            <span className="font-mono text-sm text-bronze-accent block mb-2">04</span>
+            <h4 className="font-display text-xl text-foreground mb-2">Constructive</h4>
+            <p className="font-body text-sm text-text-secondary leading-relaxed">Disagreement is crucial, but empty cynicism is rejected. Build conversations.</p>
           </div>
         </div>
       </section>
 
-      {/* 
-        SECTION 12: JOIN CTA
-      */}
-      <section className="py-[160px] px-[24px] md:px-[64px] text-center max-w-[800px] mx-auto">
-        <h2 className="font-display text-[56px] md:text-[80px] text-foreground leading-[1.1] mb-[32px]">
-          Join the Conversation
-        </h2>
-        <p className="font-body text-[20px] text-text-secondary mb-[64px]">
-          Become a part of the Monoverse intellectual ecosystem. Read deeply, respond thoughtfully, and submit your own essays for review.
-        </p>
-        <Link href="/write" className="btn-primary py-[16px] px-[48px] text-[12px] hover:scale-105 transition-transform duration-300">
-          Become a Contributor
-        </Link>
-      </section>
-
+      <Newsletter />
     </div>
   );
 }

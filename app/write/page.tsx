@@ -9,39 +9,45 @@ import { EditorialStandards } from "../components/write/EditorialStandards";
 import { EditorialTimeline } from "../components/write/EditorialTimeline";
 import { ContributorBenefits } from "../components/write/ContributorBenefits";
 import { FAQSection } from "../components/write/FAQSection";
+import { SectionLabel } from "../components/SectionLabel";
+import { Newsletter } from "../components/Newsletter";
 
 export default function WriteLandingPage() {
   return (
-    <div className="bg-transparent overflow-hidden pb-[120px]">
-      <WriteHero />
+    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
+      {/* 1. HERO */}
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] md:mb-[120px] text-center">
+        <h1 className="font-headline text-[64px] md:text-[96px] lg:text-[120px] leading-[1] text-foreground mb-[32px] tracking-tight">
+          Write
+        </h1>
+        <p className="font-body text-[20px] md:text-[24px] leading-[1.6] text-text-secondary max-w-[700px] mx-auto">
+          Monoverse is a home for writing that refuses to compromise on depth. Learn how to pitch your work.
+        </p>
+      </section>
 
       {/* WHY WRITE FOR MONOVERSE */}
-      <section className="py-[64px] md:py-[120px] relative z-10 px-[24px] max-w-[1440px] mx-auto">
-        <div className="glass-panel p-[40px] md:p-[80px] text-center max-w-[900px] mx-auto">
-          <span className="section-label block mb-[24px]">Our Promise</span>
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Our Promise" />
+        <div className="border border-glass-border-light bg-surface-low/10 p-8 md:p-12 rounded-xl text-center max-w-[900px] mx-auto">
           <p className="font-body text-[20px] md:text-[24px] leading-[1.75] text-foreground font-medium mb-[24px]">
             We offer a home for writing that refuses to compromise on depth.
           </p>
           <p className="font-body text-[18px] leading-[1.8] text-text-secondary">
             In an ecosystem optimized for virality and engagement algorithms, Monoverse is engineered for permanence. 
             We do not publish content; we build an editorial archive. When you write for Monoverse, you are not posting 
-            to a feed—you are contributing to a long-term body of knowledge built on editorial integrity and curated publishing.
+            to a feed—you are contributing to a long-term body of knowledge built on editorial integrity.
           </p>
         </div>
       </section>
 
-      <EditorialPhilosophy />
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Philosophy" />
+        <EditorialPhilosophy />
+      </section>
 
       {/* EDITORIAL DESKS */}
-      <section className="py-[64px] md:py-[120px] relative z-10 px-[24px] max-w-[1440px] mx-auto">
-        <div className="text-center mb-[64px]">
-          <h2 className="font-display text-[32px] md:text-[48px] leading-[1.15] text-foreground mb-[24px]">
-            Editorial Desks
-          </h2>
-          <p className="font-body text-[18px] text-text-secondary max-w-[600px] mx-auto">
-            Monoverse is organized into distinct editorial domains. Ensure your submission aligns with the mandate of the desk you are pitching.
-          </p>
-        </div>
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Editorial Desks" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[32px]">
           <EditorialDeskCard 
             name="Essays & Research"
@@ -68,12 +74,8 @@ export default function WriteLandingPage() {
       </section>
 
       {/* SUBMISSION CATEGORIES */}
-      <section className="py-[64px] md:py-[120px] relative z-10 px-[24px] max-w-[1440px] mx-auto">
-        <div className="mb-[64px]">
-          <h2 className="font-display text-[32px] md:text-[48px] leading-[1.15] text-foreground mb-[24px]">
-            Submission Categories
-          </h2>
-        </div>
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Submission Categories" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
           <SubmissionCategoryCard 
             name="Research Article"
@@ -102,17 +104,30 @@ export default function WriteLandingPage() {
         </div>
       </section>
 
-      <EditorialStandards />
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Standards" />
+        <EditorialStandards />
+      </section>
       
-      <EditorialTimeline />
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Timeline" />
+        <EditorialTimeline />
+      </section>
       
-      <ContributorBenefits />
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Benefits" />
+        <ContributorBenefits />
+      </section>
       
-      <FAQSection />
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="FAQ" />
+        <FAQSection />
+      </section>
 
       {/* FINAL CTA */}
-      <section className="py-[120px] relative z-10 px-[24px] text-center max-w-[800px] mx-auto">
-        <div className="glass-panel p-[64px] flex flex-col items-center">
+      <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[120px]">
+        <SectionLabel label="Apply" />
+        <div className="glass-panel p-[64px] flex flex-col items-center max-w-[800px] mx-auto">
           <h2 className="font-display text-[32px] md:text-[40px] leading-[1.15] text-foreground mb-[24px]">
             Ready to Publish?
           </h2>
@@ -129,6 +144,8 @@ export default function WriteLandingPage() {
           </div>
         </div>
       </section>
+
+      <Newsletter />
     </div>
   );
 }
