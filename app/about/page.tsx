@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
+    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px] theme-seaside">
       
       {/* Hero section styled like Cinema */}
       <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] md:mb-[120px] text-center">

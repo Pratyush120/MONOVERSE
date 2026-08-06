@@ -75,7 +75,7 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
     }));
 
   return (
-    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
+    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px] theme-seaside">
       <CollectionJourney
         collectionTitle={collectionInfo.title}
         description={collectionInfo.description}

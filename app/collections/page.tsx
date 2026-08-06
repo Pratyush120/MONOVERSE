@@ -72,7 +72,7 @@ export default async function CollectionsPage() {
   ];
 
   return (
-    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px]">
+    <div className="bg-background pt-[120px] md:pt-[160px] pb-[80px] theme-seaside">
       {/* 1. HERO */}
       <section className="max-w-[1440px] mx-auto px-[24px] md:px-[64px] mb-[80px] md:mb-[120px] text-center">
         <h1 className="font-headline text-[64px] md:text-[96px] lg:text-[120px] leading-[1] text-foreground mb-[32px] tracking-tight">

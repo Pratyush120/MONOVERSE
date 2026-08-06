@@ -56,7 +56,7 @@ export default function PrivateProfilePage() {
   const isContributor = memberData.role === "Contributor" || memberData.role === "Editor";
 
   return (
-    <div className="bg-background min-h-screen pb-[120px] selection:bg-bronze-accent/20">
+    <div className="bg-background min-h-screen pb-[120px] selection:bg-bronze-accent/20 theme-seaside">
       
       {/* 
         SECTION 01: HERO & SECTION 02: ABOUT 

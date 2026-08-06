@@ -48,7 +48,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const disciplines = article.disciplines || [article.domain];
   
   return (
-    <div className="bg-background">
+    <div className="bg-background theme-seaside">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
