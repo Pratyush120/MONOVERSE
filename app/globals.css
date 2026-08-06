@@ -484,22 +484,22 @@ body {
 
 /* ─── CHARMING SEASIDE PALETTE (Cinema & other sections) ──────────────── */
 .theme-seaside {
-  --background: #C9FDF2; /* Base light mint/cyan background */
-  --surface: rgba(179, 235, 242, 0.7); /* #B3EBF2 with alpha */
-  --surface-dim: rgba(133, 209, 219, 0.5); /* #85D1DB with alpha */
+  --background: #FFFAE0; /* Cornsilk background */
+  --surface: rgba(240, 247, 234, 0.7); /* #F0F7EA (Honeydew) with alpha */
+  --surface-dim: rgba(238, 229, 159, 0.5); /* #EEE59F (Vanilla) with alpha */
   --surface-container-lowest: rgba(255, 255, 255, 0.95);
-  --surface-container-low: rgba(201, 253, 242, 0.6); /* #C9FDF2 */
-  --surface-container: rgba(182, 242, 209, 0.4); /* #B6F2D1 */
-  --surface-container-high: rgba(133, 209, 219, 0.3); /* #85D1DB */
-  --surface-container-highest: rgba(179, 235, 242, 0.5); /* #B3EBF2 */
+  --surface-container-low: rgba(240, 247, 234, 0.6); /* #F0F7EA (Honeydew) */
+  --surface-container: rgba(170, 212, 128, 0.4); /* #AAD480 (Willow) */
+  --surface-container-high: rgba(238, 229, 159, 0.3); /* #EEE59F (Vanilla) */
+  --surface-container-highest: rgba(240, 247, 234, 0.5); /* #F0F7EA (Honeydew) */
 
-  --outline: #85D1DB;
-  --outline-variant: rgba(133, 209, 219, 0.3);
-  --manuscript-lavender: #B6F2D1;
+  --outline: #75C97F; /* Emerald */
+  --outline-variant: rgba(117, 201, 127, 0.3);
+  --manuscript-lavender: #AAD480; /* Willow */
   
   --glass-bg: rgba(255, 255, 255, 0.5);
-  --glass-border-light: rgba(133, 209, 219, 0.3);
-  --glass-border-strong: rgba(133, 209, 219, 0.5);
+  --glass-border-light: rgba(117, 201, 127, 0.3);
+  --glass-border-strong: rgba(117, 201, 127, 0.5);
 }
 
 /* ─── ALTERNATING SECTION BACKGROUNDS (Light Mode Only) ──────────────── */
@@ -515,8 +515,8 @@ html:not(.dark) .theme-seaside section {
   }
 }
 html:not(.dark) .theme-seaside section:nth-of-type(odd) {
-  background-color: rgba(44, 144, 196, 0.08) !important; /* Soft blue tint of #2C90C4 */
+  background-color: #F0F7EA !important; /* Honeydew */
 }
 html:not(.dark) .theme-seaside section:nth-of-type(even) {
-  background-color: rgba(49, 204, 176, 0.08) !important; /* Soft teal/mint tint of #31CCB0 */
+  background-color: rgba(238, 229, 159, 0.35) !important; /* Soft Vanilla tint of #EEE59F */
 }
