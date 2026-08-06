@@ -601,6 +601,11 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
   --border: rgba(1, 62, 55, 0.2);
   --outline: #013E37;
   --outline-variant: rgba(1, 62, 55, 0.2);
+  --card: #FFF7D4;
+  --glass-bg: #FFF7D4;
+  --glass-bg-hover: #FFF7D4;
+  --glass-border-light: rgba(1, 62, 55, 0.1);
+  --glass-border-strong: rgba(1, 62, 55, 0.2);
   color: #013E37 !important;
 }
 .dark .theme-seaside section:nth-of-type(even) h1,
@@ -614,4 +619,10 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
 .dark .theme-seaside section:nth-of-type(even) select,
 .dark .theme-seaside section:nth-of-type(even) label {
   color: #013E37 !important;
+}
+.dark .theme-seaside section:nth-of-type(even) .glass-panel {
+  background-color: #FFF7D4 !important;
+}
+.dark .theme-seaside section:nth-of-type(even) .glass-panel:hover {
+  background-color: #FFF7D4 !important;
 }
