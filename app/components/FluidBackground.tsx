@@ -145,20 +145,20 @@ export function FluidBackground() {
         <div className="absolute inset-0 opacity-80 block dark:hidden mix-blend-multiply">
           <div 
             className="light-fluid-blob absolute top-[5%] left-[5%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-[40%_60%_70%_30%] blur-[60px] md:blur-[100px]" 
-            style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #75C97F 0%, transparent 70%)' }} // Emerald
           />
           <div 
             className="light-fluid-blob absolute bottom-[10%] right-[10%] w-[65vw] h-[65vw] max-w-[900px] max-h-[900px] rounded-[60%_40%_30%_70%] blur-[80px] md:blur-[120px]" 
-            style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #FFFAE0 0%, transparent 70%)' }} // Cornsilk
           />
           {/* Hide excessive blobs on mobile */}
           <div 
             className="light-fluid-blob hidden md:block absolute top-[30%] left-[30%] w-[75vw] h-[75vw] max-w-[1000px] max-h-[1000px] rounded-[50%_50%_60%_40%] blur-[140px]" 
-            style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #EEE59F 0%, transparent 70%)' }} // Vanilla
           />
           <div 
             className="light-fluid-blob hidden md:block absolute top-[60%] right-[30%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-[70%_30%_50%_50%] blur-[120px]" 
-            style={{ background: 'radial-gradient(circle at center, #2ED69E 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle at center, #AAD480 0%, transparent 70%)' }} // Willow
           />
         </div>
       </div>
@@ -172,9 +172,9 @@ export function FluidBackground() {
 
       {/* ─── INTERACTIVE TRAILING BLOBS (Light Mode) ─── */}
       <div className="hidden md:block dark:hidden">
-        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.7] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FFF05A 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.5] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FF1493 0%, transparent 70%)' }} />
-        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #00E676 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[3] = el; }} className="absolute top-[-200px] left-[-200px] w-[400px] h-[400px] rounded-full mix-blend-multiply blur-[80px] opacity-[0.7] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #FFFAE0 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[4] = el; }} className="absolute top-[-300px] left-[-300px] w-[600px] h-[600px] rounded-full mix-blend-multiply blur-[120px] opacity-[0.5] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #EEE59F 0%, transparent 70%)' }} />
+        <div ref={el => { interactiveRefs.current[5] = el; }} className="absolute top-[-400px] left-[-400px] w-[800px] h-[800px] rounded-full mix-blend-multiply blur-[150px] opacity-[0.4] will-change-transform pointer-events-none" style={{ background: 'radial-gradient(circle at center, #75C97F 0%, transparent 70%)' }} />
       </div>
       
       {/* ─── INDIAN TEXTURE MANDALA OVERLAY (Light Mode - Fluid Moving & 3D Interactive) ─── */}
