@@ -80,7 +80,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         </div>
         <div className="w-full md:w-[35%] relative h-[400px] md:h-[600px] grayscale border border-glass-border-light">
           <Image 
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
+            src="/images/PRATYUSH.jpeg" 
             alt={authorName}
             fill
             className="object-cover"

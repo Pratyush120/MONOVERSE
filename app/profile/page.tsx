@@ -14,7 +14,7 @@ const memberData = {
   role: "Contributor",
   joined: "October 2022",
   bio: "Exploring systems theory, cinema, and digital anthropology.",
-  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+  avatar: "/images/PRATYUSH.jpeg",
   about: "I am a researcher and writer based in India, focusing on the intersection of human psychology, emerging technology, and historical cycles. My current research investigates how algorithmic systems alter cultural memory.",
   links: {
     website: "pratyush.xyz",
