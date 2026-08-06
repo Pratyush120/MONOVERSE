@@ -565,7 +565,7 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
   }
 }
 .dark .theme-seaside section:nth-of-type(odd) {
-  background-color: #021826 !important; /* Sambucus */
+  background-color: rgba(6, 242, 132, 0.12) !important; /* Soft Spearmint tint of #06F284 */
 }
 .dark .theme-seaside section:nth-of-type(even) {
   background-color: rgba(92, 25, 102, 0.15) !important; /* Soft Ripe Plum tint of #5C1966 */
