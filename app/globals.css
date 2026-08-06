@@ -501,3 +501,22 @@ body {
   --glass-border-light: rgba(133, 209, 219, 0.3);
   --glass-border-strong: rgba(133, 209, 219, 0.5);
 }
+
+/* ─── ALTERNATING SECTION BACKGROUNDS (Light Mode Only) ──────────────── */
+html:not(.dark) .theme-seaside section {
+  margin-bottom: 0 !important;
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+@media (min-width: 768px) {
+  html:not(.dark) .theme-seaside section {
+    padding-top: 120px !important;
+    padding-bottom: 120px !important;
+  }
+}
+html:not(.dark) .theme-seaside section:nth-of-type(odd) {
+  background-color: rgba(44, 144, 196, 0.08) !important; /* Soft blue tint of #2C90C4 */
+}
+html:not(.dark) .theme-seaside section:nth-of-type(even) {
+  background-color: rgba(49, 204, 176, 0.08) !important; /* Soft teal/mint tint of #31CCB0 */
+}
