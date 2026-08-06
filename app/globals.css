@@ -523,33 +523,33 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
 
 /* ─── CHARMING SEASIDE PALETTE (Dark Mode Overrides) ──────────────── */
 .dark .theme-seaside {
-  --background: #021826; /* Sambucus dark background */
-  --surface: #01595A; /* Fanfare as surface container */
-  --surface-dim: #5C1966; /* Ripe Plum */
-  --surface-container-lowest: #021826;
-  --surface-container-low: rgba(2, 24, 38, 0.5); /* Sambucus with opacity */
-  --surface-container: #01595A; /* Fanfare */
-  --surface-container-high: rgba(1, 89, 90, 0.8);
-  --surface-container-highest: #06F284; /* Spearmint */
+  --background: #013E37; /* Green dark background */
+  --surface: rgba(255, 239, 179, 0.1); /* Butter with alpha as surface container */
+  --surface-dim: rgba(1, 62, 55, 0.7); /* Muted Green */
+  --surface-container-lowest: #013E37;
+  --surface-container-low: rgba(1, 62, 55, 0.5); /* Green with opacity */
+  --surface-container: rgba(255, 239, 179, 0.15); /* Butter with alpha */
+  --surface-container-high: rgba(255, 239, 179, 0.2);
+  --surface-container-highest: #FFEFB3; /* Butter */
 
-  --foreground: #F8F9FA;
-  --on-surface: #F8F9FA;
-  --on-surface-variant: rgba(248, 249, 250, 0.7);
+  --foreground: #FFEFB3; /* Butter text */
+  --on-surface: #FFEFB3;
+  --on-surface-variant: rgba(255, 239, 179, 0.8);
 
-  --outline: #06F284; /* Spearmint outline */
-  --outline-variant: rgba(6, 242, 132, 0.15);
+  --outline: #FFEFB3; /* Butter outline */
+  --outline-variant: rgba(255, 239, 179, 0.2);
 
-  --bronze-accent: #06F284; /* Spearmint highlight */
-  --charcoal: #F8F9FA;
-  --observatory-navy: #021826;
-  --manuscript-lavender: #01595A;
+  --bronze-accent: #FFEFB3; /* Butter highlight */
+  --charcoal: #FFEFB3;
+  --observatory-navy: #013E37;
+  --manuscript-lavender: rgba(255, 239, 179, 0.1);
 
-  --card: rgba(2, 24, 38, 0.6);
-  --card-foreground: #F8F9FA;
+  --card: rgba(1, 62, 55, 0.6);
+  --card-foreground: #FFEFB3;
   
-  --glass-bg: rgba(2, 24, 38, 0.45);
-  --glass-border-light: rgba(6, 242, 132, 0.15);
-  --glass-border-strong: rgba(6, 242, 132, 0.35);
+  --glass-bg: rgba(1, 62, 55, 0.45);
+  --glass-border-light: rgba(255, 239, 179, 0.2);
+  --glass-border-strong: rgba(255, 239, 179, 0.4);
 }
 
 /* Alternating Section Backgrounds in Dark Mode */
@@ -565,8 +565,8 @@ html:not(.dark) .theme-seaside section:nth-of-type(even) {
   }
 }
 .dark .theme-seaside section:nth-of-type(odd) {
-  background-color: rgba(6, 242, 132, 0.12) !important; /* Soft Spearmint tint of #06F284 */
+  background-color: #013E37 !important; /* Green */
 }
 .dark .theme-seaside section:nth-of-type(even) {
-  background-color: rgba(92, 25, 102, 0.15) !important; /* Soft Ripe Plum tint of #5C1966 */
+  background-color: rgba(255, 239, 179, 0.05) !important; /* Soft Butter tint of #FFEFB3 */
 }
